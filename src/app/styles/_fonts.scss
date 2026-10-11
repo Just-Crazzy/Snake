@@ -1,0 +1,8 @@
+@use "mixins"as *;
+@include font("Halvar Breitschrift", "HalvarBreit-Lt", "300", "normal");
+@include font("Halvar Breitschrift", "HalvarBreit-Rg", "400", "normal");
+@include font("Halvar Breitschrift", "HalvarBreit-Md", "500", "normal");
+@include font("Halvar Breitschrift", "HalvarBreit-Bd", "700", "normal");
+@include font("Halvar Breitschrift", "HalvarBreit-Bd", "900", "normal");
+@include font("Stolzl", "Stolzl-Lt", "300", "normal");
+@include font("Stolzl", "Stolzl-Rg", "400", "normal");

@@ -1,0 +1,67 @@
+// :root {
+//   --minWindthContainer: 320px;
+//   --maxWindthContainer: 1110px;
+//   --containerPaddingLaptop: 15px;
+//   --containerPaddingTablet: 10px;
+// }
+
+/* Global */
+$maxWidth: 1440; // Ширина макета. Используется для миксина adaptive и pixToVw-Vh
+$maxWidthContainer: 1226; // Используется для миксина adaptive и в global.scss
+$minWidthContainer: 320; // Используется для миксина adaptive и в global.scss
+$paddingLaptop: 15; // Исопльзуется в global.scss
+$paddingTablet: 10; // Исопльзуется в global.scss
+
+/* Fonts */
+$font-family-system: system-ui, -apple-system, "Segoe UI", roboto, ubuntu, cantarell, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+$font-family-main: "Halvar Breitschrift", $font-family-system;
+$font-family-second: "Stolzl", $font-family-system;
+$font-fontsize: 16px;
+$font-lineheight: 1.5;
+$font-fontweight: 400;
+
+/* main colors */
+$c-main: #9e13e0;
+$c-second: #fee97d;
+
+/* background colors */
+$c-bg-main: #9e13e0;
+$c-bg-second: #DC8400;
+
+/* buttons colors */
+$c-btn-main: #fee97d;
+$c-btn-second: #f9f9f9;
+
+/* borders colors */
+$c-bd-main: #fee97d;
+$c-bd-second: #0c090e;
+
+/* text colors */
+$c-text-main: #fee97d ;
+$c-text-second: #ffffff;
+$c-text-third: #0c090e;
+
+/* Default colors */
+$c-white: #fff;
+$c-black: #111;
+$с-silver: #ddd;
+$с-gray: #b0b0b0;
+
+// $c-success: #26de81;
+// $c-danger: #fc5c65;
+// $c-warning: #fed330;
+
+// $c-aqua: #7fdbff;
+// $c-blue: #0074d9;
+// $c-navy: #001f3f;
+// $c-teal: #39cccc;
+// $c-green: #2ecc40;
+// $c-olive: #3d9970;
+// $c-lime: #01ff70;
+// $c-yellow: #ffdc00;
+// $c-orange: #ff851b;
+// $c-red: #ff4136;
+// $c-fuchsia: #f012be;
+// $c-purple: #b10dc9;
+// $c-maroon: #85144b;

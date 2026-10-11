@@ -1,0 +1,241 @@
+@use "sass:string";
+@use "vars"as *;
+@use "mixins"as *;
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+:-moz-focusring {
+  outline: string.unquote("max(1px, .1em) dashed currentColor");
+  outline-offset: .15em; // Может быть отрицательным
+  transition: outline-offset .25s ease;
+}
+
+:focus-visible {
+  outline: string.unquote("max(1px, .1em) dashed currentColor");
+  outline-offset: .15em; // Может быть отрицательным
+  transition: outline-offset .25s ease;
+}
+
+input:focus {
+  outline: none;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // чтобы rem считался от 10px (в px не ставить)
+  line-height: $font-lineheight;
+  -moz-tab-size: 2;
+  tab-size: 2;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+//* Минимизация кол-ва движения и анимаций
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    background-attachment: initial !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+    -webkit-animation-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    -webkit-animation-delay: -1ms !important;
+    animation-delay: -1ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  font-family: $font-family-main;
+  font-size: $font-fontsize;
+  font-weight: $font-fontweight;
+  color: $c-text-main;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &.lock {
+    overflow: hidden;
+  }
+}
+
+/* Добавил - Чтобы футер был прижат к низу */
+main {
+  flex: 1 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  font: inherit;
+  overflow-wrap: break-word;
+}
+
+a {
+  display: inline-block;
+  color: inherit;
+  -webkit-text-decoration-skip: none;
+  text-decoration-skip: none;
+  text-decoration: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  display: inline-block;
+  cursor: pointer;
+}
+
+img,
+picture,
+canvas,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+// * Обязательно оборачивать в div
+img {
+  object-fit: cover;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+p {
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+ul,
+ol,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.visible {
+  pointer-events: auto;
+  touch-action: manipulation;
+  visibility: visible;
+  user-select: auto;
+  opacity: 1;
+  transition: visibility .3s, opacity .3s;
+}
+
+.hidden {
+  pointer-events: none;
+  touch-action: none;
+  visibility: hidden;
+  user-select: none;
+  opacity: 0;
+  transition: visibility .3s, opacity .3s;
+}
+
+// Убрать возможность выделения
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// Перенос строки, указывать span'у
+.br:before {
+  white-space: pre;
+  content: "\A";
+
+  @include max-992 {
+    content: "";
+  }
+}
+
+.container {
+  max-width: #{$maxWidthContainer + px};
+  margin: 0 auto;
+
+  @include max-1200 {
+    // max-width: 960px;
+    padding-right: #{$paddingLaptop + px};
+    padding-left: #{$paddingLaptop + px};
+
+    @supports (padding: max(0)) {
+      padding-right: string.unquote("max(#{$paddingLaptop + px}, env(safe-area-inset-right))");
+      padding-left: string.unquote("max(#{$paddingLaptop + px}, env(safe-area-inset-left))");
+    }
+  }
+
+  // @include max-992 {
+  // 	max-width: 720px;
+  // }
+
+  @include max-768 {
+    // max-width: 540px;
+    padding-right: #{$paddingTablet + px};
+    padding-left: #{$paddingTablet + px};
+
+    @supports (padding: max(0)) {
+      padding-right: string.unquote("max(#{$paddingTablet + px}, env(safe-area-inset-right))");
+      padding-left: string.unquote("max(#{$paddingTablet + px}, env(safe-area-inset-left))");
+    }
+  }
+
+  // @include max-576 {
+  // 	width: 100%;
+  // }
+}

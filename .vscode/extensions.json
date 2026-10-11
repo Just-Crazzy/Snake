@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "christian-kohler.path-intellisense",
+    "usernamehw.errorlens",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "mrmlnc.vscode-scss",
+  ]
+}

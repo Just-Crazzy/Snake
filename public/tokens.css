@@ -1,0 +1,25 @@
+/* Extracted from Figma "CPA-F (Copy)" via MCP. Font files are NOT included (see README note in chat). */
+:root {
+  /* colors (named styles in Figma) */
+  --color-dark: #14091a;   /* "Dark" */
+  --color-yell: #fee97d;   /* "Yell"  — accent, buttons, carousel words */
+  --color-main: #9e13e0;   /* "main"  — purple cards */
+  --color-ink: #0c090e;    /* text on yellow buttons */
+  --color-white: #ffffff;
+
+  /* page background (BG component, 1440x900) */
+  --bg-gradient:
+    linear-gradient(121.64deg, rgb(220, 132, 0) 3.49%, rgb(86, 0, 128) 49.69%, rgb(34, 0, 50) 91.86%),
+    linear-gradient(90deg, #9e13e0, #9e13e0);
+
+  /* fonts */
+  --font-display: "Halvar Breitschrift", sans-serif; /* Bold 700 */
+  --font-body: "Stolzl", sans-serif;                 /* Regular 400 */
+}
+
+/* type styles */
+.t-button   { font: 700 23px/normal var(--font-display); letter-spacing: 4.6px; text-transform: uppercase; color: var(--color-ink); }
+.t-p        { font: 700 20px/24px var(--font-display); color: var(--color-white); }
+.t-carousel { font: 700 80px/100px var(--font-display); letter-spacing: -1.74px; text-transform: uppercase; color: var(--color-yell); }
+.t-h1       { font: 700 71.5px/0.9 var(--font-display); letter-spacing: -1.56px; text-transform: uppercase; color: var(--color-white); }
+.t-lead     { font: 400 17.9px/21.46px var(--font-body); color: var(--color-white); }

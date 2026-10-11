@@ -1,0 +1,19 @@
+@use "sass:string";
+
+@mixin transition($properties, $time, $animate:"ease") {
+  $transitions: "";
+
+  @each $property in $properties {
+    @if not (string.length($transitions) > 0) {
+      $transitions: string.insert($transitions, "#{$property} #{$time} #{$animate}", 1000);
+    }
+    @else {
+      $transitions: string.insert($transitions, ", #{$property} #{$time} #{$animate}", 1000);
+    }
+  }
+
+  transition: string.unquote($transitions);
+}
+
+//* @include transition([color, border-color, bacground-color], .15s)
+//* @include transition([color, opacity, stroke], 250ms, ease-in-out)

@@ -1,0 +1,35 @@
+@use "vars"as *;
+@use "decimal"as *;
+@use "sass:math";
+
+@function vw($pixels) {
+  $maketWidth: $maxWidth;
+
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($maketWidth)) {
+    $maketWidth: $maketWidth * 1px;
+  }
+
+  @return decimal-round(math.div($pixels, $maketWidth) * 100vw, 5);
+}
+
+//* padding-top: vw(20px) / vw(20)
+
+@function vh($pixels) {
+  $maketWidth: $maxWidth;
+
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($maketWidth)) {
+    $maketWidth: $maketWidth * 1px;
+  }
+
+  @return decimal-round(math.div($pixels, $maketWidth) * 100vh, 5);
+}
+
+//* padding-top: vh(20px) / vh(20)

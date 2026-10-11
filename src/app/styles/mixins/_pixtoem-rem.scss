@@ -1,0 +1,34 @@
+@use "vars"as *;
+@use "decimal"as *;
+@use "sass:math";
+
+// Базовый шрифт умножается на .625, т.к. у html в global.scss font-size: 62.5%
+$font-context: $font-fontsize * .625;
+
+@function rem($pixels, $context: $font-context) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return decimal-round(math.div($pixels, $context) * 1rem, 5);
+}
+
+//* font-size: rem(20px, 16px) / rem(20, 16) or em(20)
+
+@function em($pixels, $context: $font-context) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return decimal-round(math.div($pixels, $context) * 1em, 5);
+}
+
+//* padding-top: em(20px, 16px) / em(20, 16) or em(20)
