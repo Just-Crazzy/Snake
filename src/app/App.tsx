@@ -3,11 +3,14 @@ import './App.scss'; // eslint-disable-line
 import { StrictMode } from 'react';
 
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 
-import { Home } from '@/pages';
+import { AppRouter } from '@/app/router';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Home />
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   </StrictMode>
 );

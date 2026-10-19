@@ -1,20 +1,9 @@
-import { useState } from 'react';
-
-import cls from './Home.module.scss';
+import { useParams } from 'react-router-dom';
 
 function Home() {
-  const [count, setCount] = useState(0);
+  const { lang } = useParams();
 
-  return (
-    <>
-      <section className={cls.center}>
-        <h1>Счетчик чекните</h1>
-        <button type="button" className={cls.counter} onClick={() => setCount((count) => count + 1)}>
-          Ткнули {count}
-        </button>
-      </section>
-    </>
-  );
+  return <h1>Язык: {lang}</h1>;
 }
 
 export { Home };
