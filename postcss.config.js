@@ -11,7 +11,7 @@ export default {
     postcssCalc({ precision: 5, warnWhenCannotResolve: false }),
     postcssClipPathPolyfill(),
     pxtorem({
-      rootValue: 16,
+      rootValue: 10,
       unitPrecision: 5,
       propList: ['font', 'font-size', 'line-height', 'letter-spacing'],
       selectorBlackList: [/^html$/],
