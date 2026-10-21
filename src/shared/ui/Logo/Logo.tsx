@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom';
+
+import { Link } from '@/shared/UI';
+
 import Logotip from '@public/icons/mask.svg?react';
-import { Link } from '../Link/Link';
+
 import cls from './Logo.module.scss';
 
 export const Logo = () => {
