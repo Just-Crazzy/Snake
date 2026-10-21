@@ -1,7 +1,9 @@
 import { Outlet, useParams } from 'react-router-dom';
 
-import { NotFound } from '@/pages';
 import { LANGUAGES } from '@/shared/config';
+
+import { NotFound } from '@/pages';
+
 import type { Lang } from '@/shared/config';
 
 export const LangGuard = () => {
