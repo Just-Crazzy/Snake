@@ -1,0 +1,26 @@
+@use 'vars' as *;
+
+// .header {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   z-index: 10;
+//   width: 100%;
+// }
+
+.nav {
+  display: flex;
+  align-items: center;
+  max-width: #{$maxWidthContainer}px;
+  margin: 0 auto;
+  padding: 16px 0px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  margin-left: auto;
+}
