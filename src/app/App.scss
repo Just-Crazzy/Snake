@@ -1,16 +1,16 @@
-@use "libs/normalize"as *;
+@use "libs/normalize" as *;
 
 // Переменные
-@use "vars"as *;
+@use "vars" as *;
 
 // Миксины
-@use "mixins"as *;
+@use "mixins" as *;
 
 // Шрифты
-@use "fonts"as *;
+@use "fonts" as *;
 
 // Глобальные стили
-@use "global"as *;
+@use "global" as *;
 
 :root {
   --text: #6b6375;
@@ -28,7 +28,6 @@
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,11 +51,6 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -77,7 +71,7 @@ h2 {
 h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
-  margin: 32px 0;
+  // margin: 32px 0;
   @media (max-width: 1024px) {
     font-size: 36px;
     margin: 20px 0;

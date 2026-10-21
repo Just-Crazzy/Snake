@@ -1,16 +1,17 @@
-@use 'vars' as *;
+@use "vars" as *;
 
 .link {
-   font-weight: 700;
-   font-size: 20px;
-   text-decoration: underline 1px;
-   text-underline-offset: 3px;
-   text-decoration-skip-ink: none;
-   text-transform: uppercase;
-   color: $c-second;
-   padding: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: underline 1px;
+  text-underline-offset: 3px;
+  text-decoration-skip-ink: none;
+  text-transform: uppercase;
+  color: $c-second;
+  padding: 10px;
+  cursor: pointer;
 
-   &:hover {
-      color: $c-white;
-   }
+  &:hover {
+    color: $c-white;
+  }
 }

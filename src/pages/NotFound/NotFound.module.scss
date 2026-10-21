@@ -1,0 +1,165 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.page {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
+  @include max-media(1024) {
+    background: linear-gradient(160deg, #7b21bb 0%, #3f0063 100%);
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: #{$maxWidthContainer}px;
+  margin: 0 auto;
+
+  @include max-media(1024) {
+    padding: 0 20px;
+    padding-bottom: 70vw;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+
+  @include max-media(1024) {
+    padding-top: 20px;
+  }
+}
+
+.header .logoLink {
+  padding: 0;
+  line-height: 0;
+}
+.header .menu {
+  padding: 0;
+  display: none;
+
+  @include max-media(1024) {
+    display: block;
+  }
+}
+.logo {
+  width: 36px;
+  height: auto;
+  color: $c-white;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 82px;
+  margin-top: 110px;
+  @include max-media(1024) {
+    margin-top: 0;
+    gap: 37px;
+  }
+}
+.oops {
+  @include max-media(1024) {
+    display: none;
+  }
+}
+.digits {
+  display: flex;
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: 35.9rem;
+  line-height: 0.9;
+  user-select: none;
+  color: $c-white;
+
+  @include max-media(1024) {
+    flex-direction: column;
+    align-items: center;
+    font-size: 170px;
+    line-height: 146px;
+  }
+}
+
+.main .button {
+  --bw: 2px;
+  --depth: 13px;
+
+  position: relative;
+  padding: 20px 13px;
+
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: 23px;
+  letter-spacing: 4.6px;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  color: $c-text-third;
+  background: $c-btn-main;
+  border: var(--bw) solid $c-bd-second;
+
+  &:hover {
+    color: $c-text-third;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    box-sizing: border-box;
+    background: inherit;
+    border: var(--bw) solid $c-bd-second;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: calc(var(--bw) * -1);
+    right: calc(var(--bw) * -1);
+    bottom: 100%;
+    height: var(--depth);
+    transform-origin: bottom left;
+    transform: skewX(-45deg);
+  }
+
+  &::after {
+    left: 100%;
+    top: calc(var(--bw) * -1);
+    width: var(--depth);
+    height: calc(100% + var(--bw) * 2);
+    transform-origin: top left;
+    transform: skewY(-45deg);
+  }
+
+  @include max-media(1024) {
+    padding: 14px 24px;
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
+}
+
+.snake {
+  position: absolute;
+  left: 0vw;
+  bottom: -4vw;
+  pointer-events: none;
+
+  @include max-media(1024) {
+    left: auto;
+    right: -15vw;
+    bottom: -10vh;
+    transform: scaleX(-1);
+    width: 120vw;
+  }
+}
