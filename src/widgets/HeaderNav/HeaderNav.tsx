@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
-import { LANGUAGES } from "@/shared/config";
-import { Link } from "@/shared/ui";
+import { LANGUAGES } from '@/shared/config';
+import { Link } from '@/shared/UI';
 
-import cls from "./HeaderNav.module.scss";
+import cls from './HeaderNav.module.scss';
 
 const anchors = [
-  { id: "team", label: "Team" },
-  { id: "benefits", label: "Benefits" },
-  { id: "joinUs", label: "Join Us" },
+  { id: 'team', label: 'Team' },
+  { id: 'benefits', label: 'Benefits' },
+  { id: 'joinUs', label: 'Join Us' },
 ];
 
 export const HeaderNav = () => {
@@ -30,10 +30,7 @@ export const HeaderNav = () => {
       ))}
       {LANGUAGES.map((code) => (
         <li key={code}>
-          <Link
-            href={`/${code}`}
-            className={code === lang ? cls.active : undefined}
-          >
+          <Link href={`/${code}`} className={code === lang && cls.active}>
             {code.toUpperCase()}
           </Link>
         </li>
@@ -47,15 +44,15 @@ export const HeaderNav = () => {
 
       <button
         className={cls.burger}
-        type="button"
+        type='button'
         aria-expanded={isOpen}
-        aria-label="Menu"
+        aria-label='Menu'
         onClick={() => setIsOpen((prev) => !prev)}
       >
         Menu
       </button>
 
-      {isOpen && <ul className={cls.mobileMenu}>{navItems}</ul>}
+      {!!isOpen && <ul className={cls.mobileMenu}>{navItems}</ul>}
     </>
   );
 };
