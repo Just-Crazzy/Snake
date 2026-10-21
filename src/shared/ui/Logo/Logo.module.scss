@@ -1,0 +1,10 @@
+@use "vars" as *;
+
+.logo {
+  color: $c-white;
+  cursor: pointer;
+}
+.icon {
+  width: 50px;
+  height: auto;
+}

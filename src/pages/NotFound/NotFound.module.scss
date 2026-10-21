@@ -1,5 +1,5 @@
-@use 'vars' as *;
-@use 'mixins' as *;
+@use "vars" as *;
+@use "mixins" as *;
 
 .page {
   position: relative;
@@ -7,7 +7,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);  @include max-media(1024) {
+  background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
+  @include max-media(1024) {
     background: linear-gradient(160deg, #7b21bb 0%, #3f0063 100%);
   }
 }
@@ -21,16 +22,15 @@ background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);  @in
   width: 100%;
   max-width: #{$maxWidthContainer}px;
   margin: 0 auto;
-  padding: 0 40px;
 
   @include max-media(1024) {
     padding: 0 20px;
-     padding-bottom: 70vw; 
+    padding-bottom: 70vw;
   }
 }
 
 .header {
-   display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 32px;
@@ -46,7 +46,7 @@ background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);  @in
 }
 .header .menu {
   padding: 0;
-    display: none;
+  display: none;
 
   @include max-media(1024) {
     display: block;
@@ -63,20 +63,23 @@ background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);  @in
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(40px, 7vw, 100px);
-  margin-top: clamp(60px, 10vh, 140px);
-
+  gap: 82px;
+  margin-top: 110px;
   @include max-media(1024) {
-    gap: 36px;
-
+    margin-top: 0;
+    gap: 37px;
   }
 }
-
+.oops {
+  @include max-media(1024) {
+    display: none;
+  }
+}
 .digits {
   display: flex;
   font-family: $font-family-main;
   font-weight: 700;
-  font-size: 378px;
+  font-size: 35.9rem;
   line-height: 0.9;
   user-select: none;
   color: $c-white;
@@ -84,18 +87,17 @@ background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);  @in
   @include max-media(1024) {
     flex-direction: column;
     align-items: center;
-    font-size: 150px;
-    line-height: 0.85;
-    font-size: 144px;
+    font-size: 170px;
+    line-height: 146px;
   }
 }
 
 .main .button {
   --bw: 2px;
-  --depth: 8px;
+  --depth: 13px;
 
   position: relative;
-  padding: 20px 36px;
+  padding: 20px 13px;
 
   font-family: $font-family-main;
   font-weight: 700;
@@ -114,7 +116,7 @@ background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);  @in
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     box-sizing: border-box;
     background: inherit;
@@ -149,13 +151,13 @@ background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);  @in
 
 .snake {
   position: absolute;
-  left: 0;
-  bottom: -8vw;
+  left: 0vw;
+  bottom: -4vw;
   pointer-events: none;
 
   @include max-media(1024) {
     left: auto;
-    right: -10vw;
+    right: -15vw;
     bottom: -10vh;
     transform: scaleX(-1);
     width: 120vw;

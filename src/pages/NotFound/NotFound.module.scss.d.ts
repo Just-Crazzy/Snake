@@ -4,6 +4,7 @@ declare const classNames: {
   readonly header: "header";
   readonly menu: "menu";
   readonly main: "main";
+  readonly oops: "oops";
   readonly digits: "digits";
   readonly button: "button";
   readonly snake: "snake";
