@@ -1,17 +1,18 @@
-import { Link, Logo } from "@/shared/ui";
-import { Header, HeaderNav } from "@/widgets";
+import { Link, Logo } from '@/shared/ui';
 
-import snake from "@public/img/snake-hero.png";
-import Instagram from "@public/icons/instagram.svg?react";
-import Telegram from "@public/icons/telegram.svg?react";
-import Linkedin from "@public/icons/linkedin.svg?react"; // добавь файл иконки
+import { Header, HeaderNav } from '@/widgets';
 
-import cls from "./Section1.module.scss";
+import Instagram from '@public/icons/instagram.svg?react';
+import Linkedin from '@public/icons/linkedin.svg?react'; // добавь файл иконки
+import Telegram from '@public/icons/telegram.svg?react';
+import snake from '@public/img/snake-hero.png';
+
+import cls from './Section1.module.scss';
 
 const socials = [
-  { href: "#", label: "Instagram", Icon: Instagram },
-  { href: "#", label: "Telegram", Icon: Telegram },
-  { href: "#", label: "LinkedIn", Icon: Linkedin },
+  { href: '#', label: 'Instagram', Icon: Instagram },
+  { href: '#', label: 'Telegram', Icon: Telegram },
+  { href: '#', label: 'LinkedIn', Icon: Linkedin },
 ];
 
 function Section1() {
@@ -40,12 +41,7 @@ function Section1() {
         <ul className={cls.socials}>
           {socials.map(({ href, label, Icon }) => (
             <li key={label}>
-              <a
-                href={href}
-                aria-label={label}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={href} aria-label={label} target="_blank" rel="noreferrer">
                 <Icon />
               </a>
             </li>
