@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
-import { LANGUAGES } from "@/shared/config";
-import { Link } from "@/shared/ui";
+import { LANGUAGES } from '@/shared/config';
+import { Link } from '@/shared/ui';
 
-import cls from "./HeaderNav.module.scss";
+import cls from './HeaderNav.module.scss';
+
+import type { Lang } from '@/shared/config';
 
 const anchors = [
-  { id: "team", label: "Team" },
-  { id: "benefits", label: "Benefits" },
-  { id: "joinUs", label: "Join Us" },
+  { id: 'team', label: 'Team' },
+  { id: 'benefits', label: 'Benefits' },
+  { id: 'joinUs', label: 'Join Us' },
 ];
 
-export const HeaderNav = () => {
+const langLabels: Record<Lang, string> = {
+  ru: 'РУС',
+  en: 'ENG',
+};
+
+const HeaderNav = () => {
   const { lang } = useParams();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,29 +28,33 @@ export const HeaderNav = () => {
 
   const navItems = (
     <>
-      {anchors.map(({ id, label }) => (
-        <li key={id}>
-          <Link href={`#${id}`} onClick={closeMenu}>
-            {label}
-          </Link>
-        </li>
-      ))}
-      {LANGUAGES.map((code) => (
-        <li key={code}>
-          <Link
-            href={`/${code}`}
-            className={code === lang ? cls.active : undefined}
-          >
-            {code.toUpperCase()}
-          </Link>
-        </li>
-      ))}
+      <ul className={cls.anchors}>
+        {anchors.map(({ id, label }) => (
+          <li key={id}>
+            <Link href={`#${id}`} onClick={closeMenu}>
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <ul className={cls.langs}>
+        {LANGUAGES.map((code, i) => (
+          <li key={code}>
+            {i > 0 && <span>/</span>}
+
+            <Link href={`/${code}`} className={(code === lang && cls.active) || undefined}>
+              {langLabels[code]}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </>
   );
 
   return (
     <>
-      <ul className={cls.links}>{navItems}</ul>
+      <div className={cls.links}>{navItems}</div>
 
       <button
         className={cls.burger}
@@ -55,7 +66,9 @@ export const HeaderNav = () => {
         Menu
       </button>
 
-      {!!isOpen && <ul className={cls.mobileMenu}>{navItems}</ul>}
+      {!!isOpen && <div className={cls.mobileMenu}>{navItems}</div>}
     </>
   );
 };
+
+export { HeaderNav };

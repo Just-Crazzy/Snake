@@ -3,7 +3,7 @@ import { Link, Logo } from '@/shared/ui';
 import { Header, HeaderNav } from '@/widgets';
 
 import Instagram from '@public/icons/instagram.svg?react';
-import Linkedin from '@public/icons/linkedin.svg?react'; // добавь файл иконки
+import Linkedin from '@public/icons/linkedin.svg?react';
 import Telegram from '@public/icons/telegram.svg?react';
 import snake from '@public/img/snake-hero.png';
 

@@ -11,20 +11,36 @@
     display: none;
   }
 }
+
+.anchors,
 .langs {
   display: flex;
   align-items: center;
-  margin-left: 55px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.anchors {
+  gap: 20px;
+}
+
+.langs {
+  gap: 0;
 
   a {
     padding: 0;
+    color: $c-white;
+    text-decoration: none;
+  }
+
+  .active {
+    color: $c-second;
+    text-decoration: underline 1px;
+    text-underline-offset: 3px;
   }
 }
-.anchors {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
+
 .burger {
   display: none;
   padding: 0;
@@ -57,9 +73,4 @@
   @include max-media(1024) {
     display: none;
   }
-}
-
-.active {
-  color: $c-white;
-  text-decoration: none;
 }

@@ -6,7 +6,7 @@ import Logotip from "@public/icons/mask.svg?react";
 
 import cls from "./Logo.module.scss";
 
-export const Logo = () => {
+const Logo = () => {
   const { lang } = useParams();
 
   return (
@@ -15,3 +15,5 @@ export const Logo = () => {
     </Link>
   );
 };
+
+export { Logo };
