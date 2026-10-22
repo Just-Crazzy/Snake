@@ -102,7 +102,7 @@ export default defineConfig([
           tabWidth: 2,
           useTabs: false,
           semi: true,
-          endOfLine: 'auto',
+          endOfLine: 'LF',
           singleQuote: true,
           quoteProps: 'as-needed',
           jsxSingleQuote: false,
