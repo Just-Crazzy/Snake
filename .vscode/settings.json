@@ -1,0 +1,20 @@
+{
+  "editor.tabSize": 2,
+  "errorLens.margin": "2.5ch",
+  "errorLens.padding": "0px 5px 0px 0px",
+  "errorLens.messageBackgroundMode": "message",
+  "errorLens.gutterIconSet": "defaultOutline",
+  "errorLens.gutterIconsEnabled": true,
+  "errorLens.messageTemplate": "[1/$count] $message [$source]<$code>",
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports": "always",
+    "source.sortImports": "always",
+    "source.fixAll.stylelint": "always",
+    "source.fixAll.eslint": "always",
+  },
+  "path-intellisense.mappings": {
+    "@": "${workspaceFolder}/src/",
+    "@public": "${workspaceFolder}/public",
+    // "../img": "${workspaceFolder}/static/img", // Указать для SCSS
+  },
+}
