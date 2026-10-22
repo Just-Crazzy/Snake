@@ -3,7 +3,7 @@
 
 .page {
   position: relative;
-  overflow: hidden; // змея обрезается краем экрана
+  overflow: hidden;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -17,44 +17,44 @@
 
 .container {
   position: relative;
-  z-index: 1; // контент поверх змеи
+  z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: #{$maxWidthContainer}px;
+  max-width: rem($maxWidthContainer);
   margin: 0 auto;
 
   @include max-media(1024) {
-    padding: 0 20px;
+    padding: 0 rem(20);
   }
 }
 
 .content {
-  flex: 1; // отталкивает соцсети вниз
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 20px;
+  gap: rem(20);
 
   @include max-media(1024) {
     justify-content: flex-start;
-    gap: 16px;
-    margin-top: 48px;
+    gap: 0;
+    margin-top: rem(48);
   }
 }
 
 .title {
   font-family: $font-family-main;
   font-weight: 700;
-  font-size: 60px;
+  font-size: rem(60);
   line-height: 1;
   text-transform: uppercase;
   color: $c-white;
 
   @include max-media(1024) {
-    font-size: 40px;
+    font-size: rem(40);
   }
 }
 
@@ -63,9 +63,9 @@
 }
 
 .text {
-  max-width: 429px;
+  max-width: rem(428);
   font-family: $font-family-second;
-  font-size: 15px;
+  font-size: rem(14);
   line-height: 1.5;
   color: $c-white;
 
@@ -76,23 +76,22 @@
   }
 
   @include max-media(1024) {
-    font-size: 16px;
+    font-size: rem(16);
   }
 }
 
-// 3D-кнопка (потом лучше вынести в shared/ui/Button)
 .button {
-  --bw: 2px;
-  --depth: 13px;
+  --bw: #{rem(2)};
+  --depth: #{rem(12)};
 
   position: relative;
-  margin-top: 16px; // место под верхнюю грань объёма
-  padding: 17px 28px;
+  margin-top: rem(16);
+  padding: rem(18) rem(28);
 
   font-family: $font-family-main;
   font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 4.6px;
+  font-size: rem(20);
+  letter-spacing: rem(4);
   text-transform: uppercase;
   text-decoration: none;
 
@@ -114,7 +113,6 @@
     pointer-events: none;
   }
 
-  // верхняя грань
   &::before {
     left: calc(var(--bw) * -1);
     right: calc(var(--bw) * -1);
@@ -124,7 +122,6 @@
     transform: skewX(-45deg);
   }
 
-  // правая грань
   &::after {
     left: 100%;
     top: calc(var(--bw) * -1);
@@ -135,17 +132,18 @@
   }
 
   @include max-media(1024) {
-    padding: 14px 24px;
-    font-size: 16px;
-    letter-spacing: 3px;
+    margin-top: rem(20);
+    padding: rem(14) rem(36);
+    font-size: rem(16);
+    letter-spacing: rem(4);
   }
 }
 
 .socials {
   display: flex;
-  gap: 32px;
+  gap: rem(32);
   color: $c-white;
-  padding: 0px 0px 31px 12px;
+  padding: 0 0 rem(30) rem(12);
   a {
     display: block;
     line-height: 0;
@@ -158,35 +156,27 @@
   }
 
   svg {
-    width: 35px;
+    width: rem(36);
     height: auto;
-    fill: currentColor; // цвет иконки берётся из color
+    fill: currentColor;
   }
 
   @include max-media(1024) {
-    position: relative;
-    z-index: 2;
-    padding-bottom: 24px;
-    gap: 24px;
-
-    svg {
-      width: 32px;
-      height: 32px;
-    }
+    display: none;
   }
 }
 
 .snake {
   position: absolute;
-  right: 2vw;
-  bottom: -7vw;
-  width: 55vw;
+  right: rem(28);
+  bottom: rem(-70);
+  width: 56vw;
   height: auto;
   pointer-events: none;
   transform: scaleX(-1) scale(1.1);
   @include max-media(1024) {
-    right: -15vw;
-    bottom: -8vh;
+    right: rem(-26);
+    bottom: rem(40);
     width: 110vw;
   }
 }
