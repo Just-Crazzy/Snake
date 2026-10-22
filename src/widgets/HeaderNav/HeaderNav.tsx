@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { LANGUAGES } from '@/shared/config';
-import { Link } from '@/shared/UI';
+import { Link } from '@/shared/ui';
 
 import cls from './HeaderNav.module.scss';
 

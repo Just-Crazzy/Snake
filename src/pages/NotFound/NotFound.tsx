@@ -1,4 +1,4 @@
-import { Link, Logo } from '@/shared/UI';
+import { Link, Logo } from '@/shared/ui';
 
 import { Header } from '@/widgets';
 
