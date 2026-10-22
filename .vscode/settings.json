@@ -1,4 +1,6 @@
 {
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "editor.tabSize": 2,
   "errorLens.margin": "2.5ch",
   "errorLens.padding": "0px 5px 0px 0px",
