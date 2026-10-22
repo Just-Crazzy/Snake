@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { Link } from "@/shared/ui";
+import { Link } from '@/shared/ui';
 
 import Logotip from "@public/icons/mask.svg?react";
 
