@@ -1,5 +1,2 @@
-const LANGUAGES = ['en', 'ru'] as const;
-type Lang = (typeof LANGUAGES)[number];
-
-export { LANGUAGES };
-export type { Lang };
+export const LANGUAGES = ['ru', 'en'] as const;
+export type Lang = (typeof LANGUAGES)[number];

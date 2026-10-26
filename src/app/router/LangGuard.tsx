@@ -6,7 +6,7 @@ import { NotFound } from '@/pages';
 
 import type { Lang } from '@/shared/config';
 
-const LangGuard = () => {
+export const LangGuard = () => {
   const { lang } = useParams();
 
   if (!LANGUAGES.includes(lang as Lang)) {
@@ -15,5 +15,3 @@ const LangGuard = () => {
 
   return <Outlet />;
 };
-
-export { LangGuard };

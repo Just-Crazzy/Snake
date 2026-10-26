@@ -1,5 +1,5 @@
-@use "vars" as *;
-@use "mixins" as *;
+@use 'vars' as *;
+@use 'mixins' as *;
 
 .page {
   position: relative;
@@ -7,55 +7,80 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
-
-  @include max-media(1024) {
-    background: linear-gradient(160deg, #7b21bb 0%, #3f0063 100%);
-  }
 }
 
-.container {
+.content {
   position: relative;
   z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: rem($maxWidthContainer);
-  margin: 0 auto;
-
-  @include max-media(1024) {
-    padding: 0 rem(20);
-  }
+  padding: 0 50px;
 }
 
-.content {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.header .logoLink {
+  padding: 0;
+  line-height: 0;
+}
+
+.logo {
+  width: 46px;
+  height: auto;
+  color: $c-white;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.navList {
+  display: flex;
+  gap: 42px;
+}
+
+.navList a,
+.lang a {
+  padding: 0; // убираем 10px из Link, иначе расстояния между пунктами завышены
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  color: $c-white;
+}
+
+.lang a[aria-current='true'] {
+  color: $c-white;
+  text-decoration: none;
+}
+
+.main {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  gap: rem(20);
-
-  @include max-media(1024) {
-    justify-content: flex-start;
-    gap: 0;
-    margin-top: rem(48);
-  }
+  margin-top: clamp(60px, 16vh, 150px);
 }
 
 .title {
+  max-width: 700px; // обеспечивает перенос после PRACTICE
   font-family: $font-family-main;
   font-weight: 700;
-  font-size: rem(60);
-  line-height: 1;
+  font-size: 80px;
+  line-height: 1.05;
   text-transform: uppercase;
   color: $c-white;
-
-  @include max-media(1024) {
-    font-size: rem(40);
-  }
 }
 
 .accent {
@@ -63,35 +88,26 @@
 }
 
 .text {
-  max-width: rem(428);
+    display: block;
+  max-width: 530px;
+  margin-bottom: 30px;
   font-family: $font-family-second;
-  font-size: rem(14);
-  line-height: 1.5;
+  font-size: 22px;
+  line-height: 1.15;
   color: $c-white;
-
-  br {
-    @include max-media(1024) {
-      display: none;
-    }
-  }
-
-  @include max-media(1024) {
-    font-size: rem(16);
-  }
 }
 
 .button {
-  --bw: #{rem(2)};
-  --depth: #{rem(12)};
+  --bw: 2px;
+  --depth: 8px;
 
   position: relative;
-  margin-top: rem(16);
-  padding: rem(18) rem(28);
+  padding: 20px 36px;
 
   font-family: $font-family-main;
   font-weight: 700;
-  font-size: rem(20);
-  letter-spacing: rem(4);
+  font-size: 23px;
+  letter-spacing: 4.6px;
   text-transform: uppercase;
   text-decoration: none;
 
@@ -105,7 +121,7 @@
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     box-sizing: border-box;
     background: inherit;
@@ -132,51 +148,31 @@
   }
 
   @include max-media(1024) {
-    margin-top: rem(20);
-    padding: rem(14) rem(36);
-    font-size: rem(16);
-    letter-spacing: rem(4);
+    padding: 14px 24px;
+    font-size: 16px;
+    letter-spacing: 3px;
   }
+}
+.footer {
+  padding-bottom: 55px;
 }
 
 .socials {
   display: flex;
-  gap: rem(32);
+  gap: 40px;
+}
+
+.socials a {
+  display: block;
+  width: 30px;
+  height: 30px;
   color: $c-white;
-  padding: 0 0 rem(30) rem(12);
-  a {
-    display: block;
-    line-height: 0;
-    color: inherit;
-    transition: color 0.2s;
-
-    &:hover {
-      color: $c-second;
-    }
-  }
-
-  svg {
-    width: rem(36);
-    height: auto;
-    fill: currentColor;
-  }
-
-  @include max-media(1024) {
-    display: none;
-  }
 }
 
 .snake {
   position: absolute;
-  right: rem(28);
-  bottom: rem(-70);
-  width: 56vw;
-  height: auto;
+  right: 0;
+  bottom: 0;
+  width: 52vw;
   pointer-events: none;
-  transform: scaleX(-1) scale(1.1);
-  @include max-media(1024) {
-    right: rem(-26);
-    bottom: rem(40);
-    width: 110vw;
-  }
 }

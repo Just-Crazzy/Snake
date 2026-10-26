@@ -4,7 +4,7 @@ import { Home, NotFound } from '@/pages';
 
 import { LangGuard } from './LangGuard';
 
-const AppRouter = () => (
+export const AppRouter = () => (
   <Routes>
     <Route path="/" element={<Navigate to="/en" replace />} />
     <Route path="/:lang" element={<LangGuard />}>
@@ -13,5 +13,3 @@ const AppRouter = () => (
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
-
-export { AppRouter };
