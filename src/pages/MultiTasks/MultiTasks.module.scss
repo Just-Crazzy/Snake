@@ -1,0 +1,211 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.page {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  padding: rem(62) 0 rem(120);
+  background: linear-gradient(160deg, #0f0a14 0%, #1d0830 100%);
+
+  @include max-media(1024) {
+    padding: 0 0 rem(40);
+    background: linear-gradient(180deg, #5b0090 0%, #45006e 100%);
+  }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: rem(1344);
+  margin: 0 auto;
+
+  @include max-media(1440) {
+    padding: 0 rem(48);
+  }
+
+  @include max-media(1024) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 rem(16);
+  }
+}
+
+/* Хедер только на мобильном */
+.header {
+  display: none;
+
+  @include max-media(1024) {
+    display: block;
+    margin-bottom: rem(20);
+  }
+}
+
+.title {
+  margin-bottom: rem(68);
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(44);
+  line-height: 1;
+  text-align: right;
+  text-transform: uppercase;
+  color: $c-second;
+
+  @include max-media(1024) {
+    order: 2;
+    margin: rem(20) rem(6) 0;
+    padding-top: rem(40);
+    border-top: rem(1) solid rgb(255 255 255 / 0.15);
+    font-size: rem(24);
+    text-align: center;
+  }
+}
+
+/* Десктоп: 3 колонки 558 / 369 / 369, 6 строк, высота 610, зазор 24 */
+.grid {
+  display: grid;
+  grid-template-columns: 1.512fr 1fr 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  gap: rem(24);
+  height: rem(610);
+
+  @include max-media(1024) {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    height: auto;
+  }
+}
+
+.intro {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1 / span 6;
+  overflow: hidden;
+  padding: rem(30) rem(40);
+  border-radius: rem(4);
+  background: linear-gradient(180deg, #8b25d6 0%, #3d0a66 100%);
+
+  @include max-media(1024) {
+    min-height: rem(500);
+    padding: rem(22) rem(11);
+    border-radius: rem(8);
+    background: linear-gradient(200deg, #8a10e0 0%, #5a0a96 50%, #2a0745 100%);
+  }
+}
+
+.introText {
+  position: relative;
+  z-index: 1;
+  max-width: rem(480);
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(18);
+  line-height: 1.33;
+  color: $c-white;
+
+  @include max-media(1024) {
+    font-size: rem(17);
+    line-height: 1.4;
+  }
+}
+
+.accent {
+  color: $c-second;
+}
+
+/* Натуральный размер snake-gem.png 507x420 */
+.snake {
+  position: absolute;
+  bottom: 0;
+  left: rem(25);
+  width: rem(507);
+  max-width: none;
+  height: auto;
+
+  @include max-media(1024) {
+    bottom: rem(10);
+    left: 0;
+    width: 100%;
+  }
+}
+
+/* Десктоп: обёртка не влияет на сетку, карточки остаются её элементами */
+.cards {
+  display: contents;
+
+  /* Мобильная версия: карусель, по одной карточке */
+  @include max-media(1024) {
+    display: flex;
+    gap: rem(16);
+    min-width: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.card {
+  padding: rem(10) rem(11);
+  border-radius: rem(4);
+  background: #9330d8;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: inset 0 0 0 rem(2) #6d3df0;
+  }
+
+  @include max-media(1024) {
+    flex: 0 0 100%;
+    border-radius: rem(8);
+    background: #9a1be0;
+    scroll-snap-align: start;
+  }
+}
+
+.cardTitle {
+  margin-bottom: rem(8);
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(24);
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: $c-second;
+}
+
+.cardText {
+  font-family: $font-family-second;
+  font-size: rem(20);
+  line-height: 1.2;
+  color: rgb(255 255 255 / 0.7);
+}
+
+/* Размещение карточек на десктопе (индексы внутри .cards) */
+.card:nth-child(1) { /* Flexible infrastructure */
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+.card:nth-child(3) { /* High-performing creatives */
+  grid-column: 2;
+  grid-row: 4 / span 3;
+}
+
+.card:nth-child(2) { /* Compelling copywriting */
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.card:nth-child(4) { /* Adaptive media buying */
+  grid-column: 3;
+  grid-row: 3 / span 2;
+}
+
+.card:nth-child(5) { /* Full-cycle support */
+  grid-column: 3;
+  grid-row: 5 / span 2;
+}
