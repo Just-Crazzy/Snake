@@ -7,7 +7,7 @@ import Linkedin from '@public/icons/linkedin.svg?react';
 import Telegram from '@public/icons/telegram.svg?react';
 import snake from '@public/img/snake-hero.png';
 
-import cls from './Section1.module.scss';
+import cls from './Hero.module.scss';
 
 const socials = [
   { href: '#', label: 'Instagram', Icon: Instagram },
@@ -15,7 +15,7 @@ const socials = [
   { href: '#', label: 'LinkedIn', Icon: Linkedin },
 ];
 
-function Section1() {
+function Hero() {
   return (
     <section className={cls.page}>
       <div className={cls.container}>
@@ -54,4 +54,4 @@ function Section1() {
   );
 }
 
-export { Section1 };
+export { Hero };

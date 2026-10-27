@@ -1,10 +1,10 @@
 import { Link, Logo } from '@/shared/ui';
 
-import { Header } from "@/widgets";
+import { Header } from '@/widgets';
 
-import snake from "@public/img/snake-hero.png";
+import snake from '@public/img/snake-hero.png';
 
-import cls from "./NotFound.module.scss";
+import cls from './NotFound.module.scss';
 
 function NotFound() {
   return (

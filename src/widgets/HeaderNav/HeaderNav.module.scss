@@ -69,8 +69,4 @@
   padding: 24px #{$paddingLaptop}px;
   list-style: none;
   background: $c-bg-main;
-
-  @include max-media(1024) {
-    display: none;
-  }
 }

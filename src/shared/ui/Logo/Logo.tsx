@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 import { Link } from '@/shared/ui';
 
-import Logotip from "@public/icons/mask.svg?react";
+import Logotip from '@public/icons/mask.svg?react';
 
-import cls from "./Logo.module.scss";
+import cls from './Logo.module.scss';
 
 const Logo = () => {
   const { lang } = useParams();
