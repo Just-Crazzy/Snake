@@ -30,7 +30,7 @@ export const HeaderNav = () => {
       ))}
       {LANGUAGES.map((code) => (
         <li key={code}>
-          <Link href={`/${code}`} className={code === lang && cls.active}>
+          <Link href={`/${code}`} className={(code === lang && cls.active) || undefined}>
             {code.toUpperCase()}
           </Link>
         </li>

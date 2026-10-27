@@ -1,9 +1,7 @@
-import { useParams } from 'react-router-dom';
+import { MultiTasks } from '../MultiTasks/MultiTasks';
 
 function Home() {
-  const { lang } = useParams();
-
-  return <h1>Язык: {lang}</h1>;
+  return <MultiTasks />;
 }
 
 export { Home };
