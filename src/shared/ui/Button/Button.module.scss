@@ -1,0 +1,59 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.button {
+  --bw: #{rem(2)};
+  --depth: #{rem(12)};
+
+  position: relative;
+  display: inline-block;
+  padding: rem(18) rem(28);
+
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(20);
+  letter-spacing: rem(4);
+  text-transform: uppercase;
+  text-decoration: none;
+
+  color: $c-text-third;
+  background: $c-btn-main;
+  border: var(--bw) solid $c-bd-second;
+
+  &:hover {
+    color: $c-text-third;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    box-sizing: border-box;
+    background: inherit;
+    border: var(--bw) solid $c-bd-second;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: calc(var(--bw) * -1);
+    right: calc(var(--bw) * -1);
+    bottom: 100%;
+    height: var(--depth);
+    transform-origin: bottom left;
+    transform: skewX(-45deg);
+  }
+
+  &::after {
+    left: 100%;
+    top: calc(var(--bw) * -1);
+    width: var(--depth);
+    height: calc(100% + var(--bw) * 2);
+    transform-origin: top left;
+    transform: skewY(-45deg);
+  }
+
+  @include max-media(1024) {
+    padding: rem(14) rem(36);
+    font-size: rem(16);
+  }
+}
