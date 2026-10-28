@@ -1,7 +1,11 @@
-// import { useParams } from "react-router-dom";
-import { Hero } from '@/pages/index';
+import { MultiBenefits } from '@/pages/index';
+
 function Home() {
-  return <Hero />;
+  return (
+    <>
+      <MultiBenefits />
+    </>
+  );
 }
 
 export { Home };
