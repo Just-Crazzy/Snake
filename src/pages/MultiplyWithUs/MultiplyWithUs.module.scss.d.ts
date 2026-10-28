@@ -1,0 +1,20 @@
+declare const classNames: {
+  readonly page: "page";
+  readonly logo: "logo";
+  readonly menu: "menu";
+  readonly label: "label";
+  readonly container__content: "container__content";
+  readonly tabs: "tabs";
+  readonly tab: "tab";
+  readonly panel: "panel";
+  readonly text: "text";
+  readonly footer: "footer";
+  readonly bottomLabel: "bottomLabel";
+  readonly container: "container";
+  readonly tabActive: "tabActive";
+  readonly tabArrow: "tabArrow";
+  readonly right: "right";
+  readonly arrowDown: "arrowDown";
+  readonly button: "button";
+};
+export default classNames;
