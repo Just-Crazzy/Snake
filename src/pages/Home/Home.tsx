@@ -1,7 +1,7 @@
-import { MultiTasks } from '../MultiTasks/MultiTasks';
-
+// import { useParams } from "react-router-dom";
+import { Hero } from '@/pages/index';
 function Home() {
-  return <MultiTasks />;
+  return <Hero />;
 }
 
 export { Home };

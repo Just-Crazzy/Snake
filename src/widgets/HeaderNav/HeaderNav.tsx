@@ -1,46 +1,20 @@
 import { useState } from 'react';
 
-import { useParams } from 'react-router-dom';
-
-import { LANGUAGES } from '@/shared/config';
-import { Link } from '@/shared/ui';
-
+import { AnchorLinks } from './AnchorLinks';
 import cls from './HeaderNav.module.scss';
+import { LangSwitcher } from './LangSwitcher';
 
-const anchors = [
-  { id: 'team', label: 'Team' },
-  { id: 'benefits', label: 'Benefits' },
-  { id: 'joinUs', label: 'Join Us' },
-];
-
-export const HeaderNav = () => {
-  const { lang } = useParams();
+const HeaderNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = () => setIsOpen(false);
 
-  const navItems = (
-    <>
-      {anchors.map(({ id, label }) => (
-        <li key={id}>
-          <Link href={`#${id}`} onClick={closeMenu}>
-            {label}
-          </Link>
-        </li>
-      ))}
-      {LANGUAGES.map((code) => (
-        <li key={code}>
-          <Link href={`/${code}`} className={(code === lang && cls.active) || undefined}>
-            {code.toUpperCase()}
-          </Link>
-        </li>
-      ))}
-    </>
-  );
-
   return (
     <>
-      <ul className={cls.links}>{navItems}</ul>
+      <div className={cls.links}>
+        <AnchorLinks />
+        <LangSwitcher />
+      </div>
 
       <button
         className={cls.burger}
@@ -52,7 +26,14 @@ export const HeaderNav = () => {
         Menu
       </button>
 
-      {!!isOpen && <ul className={cls.mobileMenu}>{navItems}</ul>}
+      {!!isOpen && (
+        <div className={cls.mobileMenu}>
+          <AnchorLinks onNavigate={closeMenu} />
+          <LangSwitcher />
+        </div>
+      )}
     </>
   );
 };
+
+export { HeaderNav };

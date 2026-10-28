@@ -1,4 +1,4 @@
-@use 'vars' as *;
+@use "vars" as *;
 
 // .header {
 //   position: absolute;
@@ -13,7 +13,7 @@
   align-items: center;
   max-width: #{$maxWidthContainer}px;
   margin: 0 auto;
-  padding: 16px 0px;
+  padding: 10px 0px;
 }
 
 .left {

@@ -1,10 +1,16 @@
 @use "vars" as *;
+@use "mixins" as *;
 
 .logo {
   color: $c-white;
   cursor: pointer;
 }
+
 .icon {
   width: 50px;
   height: auto;
+
+  @include max-media(1024) {
+    width: 26px;
+  }
 }
