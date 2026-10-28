@@ -12,11 +12,11 @@
     "source.addMissingImports": "always",
     "source.sortImports": "always",
     "source.fixAll.stylelint": "always",
-    "source.fixAll.eslint": "always",
+    "source.fixAll.eslint": "always"
   },
   "path-intellisense.mappings": {
     "@": "${workspaceFolder}/src/",
-    "@public": "${workspaceFolder}/public",
+    "@public": "${workspaceFolder}/public"
     // "../img": "${workspaceFolder}/static/img", // Указать для SCSS
-  },
+  }
 }
