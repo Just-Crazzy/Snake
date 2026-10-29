@@ -1,7 +1,14 @@
-// import { useParams } from "react-router-dom";
 import { Hero } from '@/pages/index';
+
+import { ApplicationModal } from '@/widgets';
+
 function Home() {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <ApplicationModal />
+    </>
+  );
 }
 
 export { Home };
