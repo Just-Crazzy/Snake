@@ -1,0 +1,20 @@
+declare const classNames: {
+  readonly modal: 'modal';
+  readonly row: 'row';
+  readonly close: 'close';
+  readonly logo: 'logo';
+  readonly form: 'form';
+  readonly hint: 'hint';
+  readonly star: 'star';
+  readonly field: 'field';
+  readonly fieldError: 'fieldError';
+  readonly cell: 'cell';
+  readonly selectWrap: 'selectWrap';
+  readonly error: 'error';
+  readonly serverError: 'serverError';
+  readonly submit: 'submit';
+  readonly success: 'success';
+  readonly title: 'title';
+  readonly text: 'text';
+};
+export default classNames;
