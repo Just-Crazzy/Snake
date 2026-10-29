@@ -5,9 +5,10 @@
   position: relative;
   overflow: hidden;
   display: flex;
+      flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
-  padding: rem(62) 0 rem(120);
+
   background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
 
   @include max-media(1024) {
@@ -20,7 +21,7 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: rem(1344);
+  max-width: #{$maxWidthContainer}px;
   margin: 0 auto;
 
   @include max-media(1024) {
@@ -134,7 +135,6 @@
   display: block;
   width: 100%;
   height: auto;
-  margin-top: rem(130);
   pointer-events: none;
 
   @include max-media(1024) {

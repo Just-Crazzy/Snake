@@ -2,11 +2,11 @@
 @use "vars"as *;
 @use "mixins"as *;
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
+// *,
+// *:before,
+// *:after {
+//   box-sizing: inherit;
+// }
 
 :-moz-focusring {
   outline: string.unquote("max(1px, .1em) dashed currentColor");
