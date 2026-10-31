@@ -1,23 +1,23 @@
-@use "sass:string";
-@use "vars"as *;
-@use "mixins"as *;
+@use 'sass:string';
+@use 'vars' as *;
+@use 'mixins' as *;
 
-// *,
-// *:before,
-// *:after {
-//   box-sizing: inherit;
-// }
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 
 :-moz-focusring {
-  outline: string.unquote("max(1px, .1em) dashed currentColor");
-  outline-offset: .15em; // Может быть отрицательным
-  transition: outline-offset .25s ease;
+  outline: string.unquote('max(1px, .1em) dashed currentColor');
+  outline-offset: 0.15em; // Может быть отрицательным
+  transition: outline-offset 0.25s ease;
 }
 
 :focus-visible {
-  outline: string.unquote("max(1px, .1em) dashed currentColor");
-  outline-offset: .15em; // Может быть отрицательным
-  transition: outline-offset .25s ease;
+  outline: string.unquote('max(1px, .1em) dashed currentColor');
+  outline-offset: 0.15em; // Может быть отрицательным
+  transition: outline-offset 0.25s ease;
 }
 
 input:focus {
@@ -175,7 +175,9 @@ li {
   visibility: visible;
   user-select: auto;
   opacity: 1;
-  transition: visibility .3s, opacity .3s;
+  transition:
+    visibility 0.3s,
+    opacity 0.3s;
 }
 
 .hidden {
@@ -184,7 +186,9 @@ li {
   visibility: hidden;
   user-select: none;
   opacity: 0;
-  transition: visibility .3s, opacity .3s;
+  transition:
+    visibility 0.3s,
+    opacity 0.3s;
 }
 
 // Убрать возможность выделения
@@ -198,10 +202,10 @@ li {
 // Перенос строки, указывать span'у
 .br:before {
   white-space: pre;
-  content: "\A";
+  content: '\A';
 
   @include max-992 {
-    content: "";
+    content: '';
   }
 }
 
@@ -215,8 +219,12 @@ li {
     padding-left: #{$paddingLaptop + px};
 
     @supports (padding: max(0)) {
-      padding-right: string.unquote("max(#{$paddingLaptop + px}, env(safe-area-inset-right))");
-      padding-left: string.unquote("max(#{$paddingLaptop + px}, env(safe-area-inset-left))");
+      padding-right: string.unquote(
+        'max(#{$paddingLaptop + px}, env(safe-area-inset-right))'
+      );
+      padding-left: string.unquote(
+        'max(#{$paddingLaptop + px}, env(safe-area-inset-left))'
+      );
     }
   }
 
@@ -230,8 +238,12 @@ li {
     padding-left: #{$paddingTablet + px};
 
     @supports (padding: max(0)) {
-      padding-right: string.unquote("max(#{$paddingTablet + px}, env(safe-area-inset-right))");
-      padding-left: string.unquote("max(#{$paddingTablet + px}, env(safe-area-inset-left))");
+      padding-right: string.unquote(
+        'max(#{$paddingTablet + px}, env(safe-area-inset-right))'
+      );
+      padding-left: string.unquote(
+        'max(#{$paddingTablet + px}, env(safe-area-inset-left))'
+      );
     }
   }
 

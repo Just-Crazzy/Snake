@@ -1,11 +1,11 @@
-@use "vars" as *;
-@use "mixins" as *;
+@use 'vars' as *;
+@use 'mixins' as *;
 
 .page {
   position: relative;
   overflow: hidden;
   display: flex;
-      flex-grow: 1;
+  flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
 
@@ -23,7 +23,7 @@
   width: 100%;
   max-width: #{$maxWidthContainer}px;
   margin: 0 auto;
-
+  padding: 10px;
   @include max-media(1024) {
     display: contents;
   }
@@ -37,13 +37,13 @@
   min-height: rem(460);
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 31%;
     bottom: -16%;
     width: 28%;
     aspect-ratio: 1;
-    background: url("@public/img/snake-tongue.png") center / contain no-repeat;
+    background: url('@public/img/snake-tongue.png') center / contain no-repeat;
     pointer-events: none;
   }
 
