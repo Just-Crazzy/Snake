@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
+import { ApplicationForm } from '@/widgets/ApplicationForm';
+
 import { useHashModal } from '@/shared/lib';
 import { Modal } from '@/shared/ui';
 
 import Logotip from '@public/icons/mask.svg?react';
 
-import { ApplicationForm } from './ApplicationForm';
 import cls from './ApplicationModal.module.scss';
 import { SuccessMessage } from './SuccessMessage';
 
