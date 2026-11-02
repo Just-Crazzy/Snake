@@ -1,0 +1,36 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.modal {
+  width: min(100% - #{rem(32)}, #{rem(558)});
+  max-width: none;
+  padding: rem(48) rem(30) rem(52);
+  color: $c-text-third;
+  background: $c-white;
+  border: rem(1) solid $c-main;
+  border-radius: rem(12);
+
+  &::backdrop {
+    background: rgba($c-bd-second, 0.4);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  @include max-media(1024) {
+    padding: rem(40) rem(16) rem(32);
+  }
+}
+
+.close {
+  position: absolute;
+  top: rem(14);
+  right: rem(20);
+  padding: 0;
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(28);
+  color: $c-main;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}

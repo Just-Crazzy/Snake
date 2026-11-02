@@ -1,0 +1,1 @@
+export { useHashModal } from './useHashModal';

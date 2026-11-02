@@ -1,0 +1,46 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: rem(4);
+}
+
+.selectWrap {
+  position: relative;
+
+  &::after {
+    content: "▼";
+    position: absolute;
+    top: 50%;
+    right: rem(12);
+    font-size: rem(10);
+    color: $c-main;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+.select {
+  width: 100%;
+  height: rem(36);
+  padding: 0 rem(32) 0 rem(12);
+  font-family: $font-family-second;
+  font-size: rem(16);
+  color: $c-text-third;
+  background: $c-white;
+  border: rem(1) solid #d9a3f5;
+  border-radius: rem(8);
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
+  &:focus {
+    border-color: $c-main;
+  }
+}
+
+.selectError {
+  border-color: #e5484d;
+}

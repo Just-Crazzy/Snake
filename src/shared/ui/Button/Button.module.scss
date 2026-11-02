@@ -1,0 +1,20 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.button {
+  min-width: rem(138);
+  padding: rem(8) rem(24);
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(16);
+  color: $c-text-third;
+  background: $c-btn-main;
+  border: 0;
+  border-radius: rem(8);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}

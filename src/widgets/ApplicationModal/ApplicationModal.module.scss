@@ -1,0 +1,33 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.logo {
+  display: block;
+  width: rem(58);
+  height: auto;
+  margin: 0 auto rem(36);
+  color: $c-main;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(16);
+  text-align: center;
+}
+
+.title {
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(20);
+  text-transform: uppercase;
+  color: inherit;
+}
+
+
+.text {
+  font-family: $font-family-second;
+  font-size: rem(20);
+  line-height: 1.3;
+}
