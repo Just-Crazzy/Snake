@@ -2,12 +2,12 @@ import cls from './Button.module.scss';
 
 import type { ComponentProps } from 'react';
 
-type ButtonProps = ComponentProps<'a'>;
+type ButtonProps = ComponentProps<'button'>;
 
-const Button = ({ children, className, ...props }: ButtonProps) => (
-  <a {...props} className={[cls.button, className].filter(Boolean).join(' ')}>
+const Button = ({ children, className, type = 'button', ...props }: ButtonProps) => (
+  <button {...props} type={type} className={[cls.button, className].filter(Boolean).join(' ')}>
     {children}
-  </a>
+  </button>
 );
 
 export { Button };
