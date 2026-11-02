@@ -1,0 +1,38 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12);
+}
+
+.hint {
+  margin-bottom: rem(8);
+  font-family: $font-family-second;
+  font-size: rem(16);
+}
+
+.star {
+  color: $c-main;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: rem(192) 1fr;
+  gap: rem(12);
+
+  @include max-media(1024) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.serverError {
+  font-size: rem(14);
+  text-align: center;
+}
+
+.submit {
+  align-self: center;
+  margin-top: rem(24);
+}

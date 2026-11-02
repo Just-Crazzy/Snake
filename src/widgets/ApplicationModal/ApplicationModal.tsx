@@ -1,36 +1,29 @@
 import { useState } from 'react';
 
+import { useHashModal } from '@/shared/lib';
+import { Modal } from '@/shared/ui';
+
 import Logotip from '@public/icons/mask.svg?react';
 
+import { ApplicationForm } from './ApplicationForm';
 import cls from './ApplicationModal.module.scss';
-import { ContactForm } from './ContactForm';
 import { SuccessMessage } from './SuccessMessage';
-import { useHashModal } from './useHashModal';
 
 const ApplicationModal = () => {
-  const { dialogRef, closeModal, clearHash } = useHashModal();
+  const { isOpen, close } = useHashModal('#joinUs');
   const [isSuccess, setIsSuccess] = useState(false);
-  const [formKey, setFormKey] = useState(0);
 
   const handleClose = () => {
-    clearHash();
+    close();
     setIsSuccess(false);
-    setFormKey((key) => key + 1);
   };
 
-  const isFormVisible = !isSuccess;
-
   return (
-    <dialog ref={dialogRef} className={cls.modal} onClose={handleClose}>
-      <button type="button" className={cls.close} aria-label="Close" onClick={closeModal}>
-        X
-      </button>
-
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <Logotip className={cls.logo} />
 
-      {!!isFormVisible && <ContactForm key={formKey} onSuccess={() => setIsSuccess(true)} />}
-      {!!isSuccess && <SuccessMessage onDone={closeModal} />}
-    </dialog>
+      {isSuccess ? <SuccessMessage onDone={handleClose} /> : <ApplicationForm onSuccess={() => setIsSuccess(true)} />}
+    </Modal>
   );
 };
 

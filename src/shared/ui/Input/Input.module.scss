@@ -1,0 +1,33 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: rem(4);
+}
+
+.input {
+  width: 100%;
+  height: rem(36);
+  padding: 0 rem(12);
+  font-family: $font-family-second;
+  font-size: rem(16);
+  color: $c-text-third;
+  background: $c-white;
+  border: rem(1) solid #d9a3f5;
+  border-radius: rem(8);
+  outline: none;
+
+  &:focus {
+    border-color: $c-main;
+  }
+
+  &::placeholder {
+    color: $c-text-third;
+  }
+}
+
+.inputError {
+  border-color: #e5484d;
+}

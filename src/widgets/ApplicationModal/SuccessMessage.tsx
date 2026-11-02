@@ -1,3 +1,5 @@
+import { Button } from '@/shared/ui';
+
 import cls from './ApplicationModal.module.scss';
 
 type SuccessMessageProps = {
@@ -12,9 +14,7 @@ const SuccessMessage = ({ onDone }: SuccessMessageProps) => (
       <br />
       and get in touch with you
     </p>
-    <button type="button" className={cls.submit} onClick={onDone}>
-      Done
-    </button>
+    <Button onClick={onDone}>Done</Button>
   </div>
 );
 
