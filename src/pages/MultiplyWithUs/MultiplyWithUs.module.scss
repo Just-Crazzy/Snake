@@ -138,12 +138,13 @@
 
 .panel {
   display: flex;
+    flex: 1 1 auto; 
+  min-height: 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: rem(16);
-  min-height: rem(616);
-  padding: rem(40);
+   padding: clamp(#{rem(24)}, 9vh, #{rem(90)}) rem(90);
   text-align: center;
   background: $c-main;
   border-radius: rem(8);
