@@ -1,12 +1,9 @@
-import { Hero } from '@/pages/index';
-
-import { ApplicationModal } from '@/widgets';
+import { MultiBenefits } from '@/pages/index';
 
 function Home() {
   return (
     <>
-      <Hero />
-      <ApplicationModal />
+      <MultiBenefits />
     </>
   );
 }

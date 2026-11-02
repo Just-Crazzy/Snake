@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => {
   return {
     base: '/',
     root: dirDev,
+    envDir: resolvePath('.'),
 
     resolve: {
       alias: {
