@@ -2,12 +2,29 @@ import cls from './Button.module.scss';
 
 import type { ComponentProps } from 'react';
 
-type ButtonProps = ComponentProps<'button'>;
+type ButtonAsButton = ComponentProps<'button'> & { href?: undefined };
+type ButtonAsLink = ComponentProps<'a'> & { href: string };
 
-const Button = ({ children, className, type = 'button', ...props }: ButtonProps) => (
-  <button {...props} type={type} className={[cls.button, className].filter(Boolean).join(' ')}>
-    {children}
-  </button>
-);
+type ButtonProps = ButtonAsButton | ButtonAsLink;
+
+const Button = (props: ButtonProps) => {
+  const classes = [cls.button, props.className].filter(Boolean).join(' ');
+
+  if (props.href !== undefined) {
+    const { children, className, ...rest } = props;
+    return (
+      <a {...rest} className={classes}>
+        {children}
+      </a>
+    );
+  }
+
+  const { children, className, type = 'button', ...rest } = props;
+  return (
+    <button {...rest} type={type} className={classes}>
+      {children}
+    </button>
+  );
+};
 
 export { Button };

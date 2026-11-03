@@ -1,20 +1,99 @@
+@use "sass:color";
 @use "vars" as *;
 @use "mixins" as *;
 
+$block-depth: rem(14);
+$block-bd: rem(3);
+$block-side: color.adjust($c-btn-main, $lightness: -12%);
+
 .button {
-  min-width: rem(138);
-  padding: rem(8) rem(24);
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
   font-family: $font-family-main;
   font-weight: 700;
-  font-size: rem(16);
   color: $c-text-third;
   background: $c-btn-main;
   border: 0;
-  border-radius: rem(8);
   cursor: pointer;
 
   &:disabled {
     opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+
+.primary {
+  min-width: rem(138);
+  padding: rem(8) rem(24);
+  font-size: rem(16);
+  border-radius: rem(8);
+
+  &:disabled {
     cursor: wait;
+  }
+}
+
+.block {
+  position: relative;
+  margin-top: $block-depth;
+  margin-right: $block-depth;
+  padding: rem(30) rem(56);
+  font-size: rem(24);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: $block-bd solid $c-bd-second;
+  transition:
+    transform 0.15s,
+    background 0.2s;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -$block-bd;
+    right: -$block-bd;
+    bottom: 100%;
+    height: calc(#{$block-depth} + #{$block-bd});
+    background: $block-side;
+    border: $block-bd solid $c-bd-second;
+    transform: skewX(-45deg);
+    transform-origin: bottom left;
+    transition: height 0.15s;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -$block-bd;
+    bottom: -$block-bd;
+    left: 100%;
+    width: calc(#{$block-depth} + #{$block-bd});
+    background: $block-side;
+    border: $block-bd solid $c-bd-second;
+    transform: skewY(-45deg);
+    transform-origin: top left;
+    transition: width 0.15s;
+  }
+
+  &:hover:not(:disabled) {
+    background: color.adjust($c-btn-main, $lightness: 5%);
+  }
+
+  &:active:not(:disabled) {
+    transform: translate(calc(#{$block-depth} / 2), calc(#{$block-depth} / -2));
+
+    &::before {
+      height: calc(#{$block-depth} / 2 + #{$block-bd});
+    }
+
+    &::after {
+      width: calc(#{$block-depth} / 2 + #{$block-bd});
+    }
+  }
+
+  @include max-media(1024) {
+    padding: rem(20) rem(32);
+    font-size: rem(18);
   }
 }
