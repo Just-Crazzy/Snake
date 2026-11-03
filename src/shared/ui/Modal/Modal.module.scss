@@ -2,8 +2,13 @@
 @use "mixins" as *;
 
 .modal {
+  position: fixed;
+  inset: 0;
   width: min(100% - #{rem(32)}, #{rem(558)});
   max-width: none;
+  max-height: calc(100% - #{rem(32)});
+  margin: auto;
+  overflow-y: auto;
   padding: rem(48) rem(30) rem(52);
   color: $c-text-third;
   background: $c-white;
@@ -20,6 +25,7 @@
     padding: rem(40) rem(16) rem(32);
   }
 }
+
 
 .close {
   position: absolute;

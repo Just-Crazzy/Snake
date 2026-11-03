@@ -5,9 +5,14 @@ const clearHash = () => {
 };
 
 const useHashModal = (hash: string) => {
-  const [isOpen, setIsOpen] = useState(() => window.location.hash === hash);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // Хэш, пришедший со ссылкой или после перезагрузки, форму не открывает
+    if (window.location.hash === hash) {
+      clearHash();
+    }
+
     const syncWithHash = () => setIsOpen(window.location.hash === hash);
 
     window.addEventListener('hashchange', syncWithHash);

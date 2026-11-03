@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { useParams } from 'react-router-dom';
+
+import { useContent } from '@/shared/api';
 import { Button, Logo } from '@/shared/ui';
 
 import { Footer, Header, HeaderNav } from '@/widgets';
@@ -8,31 +11,28 @@ import Arrow from '@public/icons/scroll-to-top.svg?react';
 
 import cls from './MultiplyWithUs.module.scss';
 
-const tabs = [
-  {
-    label: 'For Media Buyers',
-    question:
-      'Got experience with sweepstakes and large ad budgets? Looking for a team where you can grow and scale without limits?',
-    answer: 'Multiply your profits with MULTICPA — we provide the budget, all the tools and high profit shares',
-  },
-  {
-    label: 'For Businesses',
-    question: 'TODO: текст от дизайнера',
-    answer: 'TODO: текст от дизайнера',
-  },
-  {
-    label: 'For Partners',
-    question: 'TODO: текст от дизайнера',
-    answer: 'TODO: текст от дизайнера',
-  },
-];
+import type { ContentMap } from '@/shared/api';
+import type { Lang } from '@/shared/config';
 
-function MultiplyWithUs() {
+const tabLabels: Record<string, Record<Lang, string>> = {
+  for_media_buyers: { en: 'For Media Buyers', ru: 'Медиабайерам' },
+  for_businesses: { en: 'For Businesses', ru: 'Бизнесу' },
+  for_partners: { en: 'For Partners', ru: 'Партнёрам' },
+};
+
+const getTabLabel = (key: string, lang: Lang) => tabLabels[key]?.[lang] ?? key;
+
+type MultiplyWithUsContentProps = {
+  items: ContentMap['multiply'];
+};
+
+function MultiplyWithUsContent({ items }: MultiplyWithUsContentProps) {
+  const { lang = 'en' } = useParams<{ lang: Lang }>();
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeTab = tabs[activeIndex];
+  const activeTab = items[activeIndex] ?? items[0];
 
   return (
-    <section className={cls.page}>
+    <section id="join" className={cls.page}>
       <div className={cls.container}>
         <Header
           left={
@@ -52,20 +52,20 @@ function MultiplyWithUs() {
 
         <div className={cls.container__content}>
           <div className={cls.tabs} role="tablist">
-            {tabs.map((tab, index) => {
+            {items.map((tab, index) => {
               const isActive = index === activeIndex;
               const tabClassName = isActive ? `${cls.tab} ${cls.tabActive}` : cls.tab;
 
               return (
                 <button
-                  key={tab.label}
+                  key={tab.title}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
                   className={tabClassName}
                   onClick={() => setActiveIndex(index)}
                 >
-                  {tab.label}
+                  {getTabLabel(tab.title, lang)}
                   <Arrow className={cls.tabArrow} />
                 </button>
               );
@@ -74,11 +74,11 @@ function MultiplyWithUs() {
 
           <div className={cls.right}>
             <div className={cls.panel} role="tabpanel">
-              <p className={cls.text}>{activeTab.question}</p>
+              <p className={cls.text}>{activeTab.steps.step_1}</p>
               <Arrow className={cls.arrowDown} />
-              <p className={cls.text}>{activeTab.answer}</p>
+              <p className={cls.text}>{activeTab.steps.step_2}</p>
               <Arrow className={cls.arrowDown} />
-              <Button href="#joinUs" className={cls.button}>
+              <Button href="#joinUs" variant="block" className={cls.button}>
                 Join the team
               </Button>
             </div>
@@ -95,6 +95,15 @@ function MultiplyWithUs() {
       </div>
     </section>
   );
+}
+
+function MultiplyWithUs() {
+  const { data, loading, error } = useContent('multiply');
+
+  if (loading) return null;
+  if (error || !data?.length) return <p>Не удалось загрузить данные</p>;
+
+  return <MultiplyWithUsContent items={data} />;
 }
 
 export { MultiplyWithUs };

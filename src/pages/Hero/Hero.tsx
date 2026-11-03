@@ -33,7 +33,7 @@ function Hero() {
             on our own products and ad budgets
           </p>
 
-          <Button href="#joinUs" className={cls.button}>
+          <Button href="#joinUs" variant="block" className={cls.button}>
             Get in touch
           </Button>
         </div>

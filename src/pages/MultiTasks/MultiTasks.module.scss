@@ -5,6 +5,7 @@
   position: relative;
   overflow: hidden;
   flex: 1;
+  min-height: 100vh;
   padding: rem(62) 0 rem(120);
   background: linear-gradient(160deg, #0f0a14 0%, #1d0830 100%);
 
@@ -13,6 +14,7 @@
     background: linear-gradient(180deg, #5b0090 0%, #45006e 100%);
   }
 }
+
 
 .container {
   position: relative;

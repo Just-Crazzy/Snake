@@ -8,7 +8,7 @@
   flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
-
+  min-height: 100vh;
   background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
 
   @include max-media(1024) {
@@ -17,6 +17,7 @@
     background: linear-gradient(160deg, #7b21bb 0%, #3f0063 100%);
   }
 }
+
 
 .container {
   box-sizing: border-box;

@@ -14,7 +14,7 @@ function MultiTasks() {
   if (error || !data) return <p>Не удалось загрузить данные</p>;
 
   return (
-    <section className={cls.page}>
+    <section id="team" className={cls.page}>
       <div className={cls.container}>
         <div className={cls.header}>
           <Header left={<Logo />} right={<HeaderNav />} />
