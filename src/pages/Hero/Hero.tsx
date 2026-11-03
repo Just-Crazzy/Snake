@@ -1,4 +1,4 @@
-import { Link, Logo } from '@/shared/ui';
+import { Button, Logo } from '@/shared/ui';
 
 import { Header, HeaderNav } from '@/widgets';
 
@@ -33,9 +33,9 @@ function Hero() {
             on our own products and ad budgets
           </p>
 
-          <Link href="#joinUs" className={cls.button}>
+          <Button href="#joinUs" className={cls.button}>
             Get in touch
-          </Link>
+          </Button>
         </div>
 
         <ul className={cls.socials}>

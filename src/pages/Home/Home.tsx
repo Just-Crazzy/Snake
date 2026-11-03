@@ -1,9 +1,9 @@
-import { MultiBenefits } from '@/pages/index';
+import { MultiplyWithUs } from '@/pages/index';
 
 function Home() {
   return (
     <>
-      <MultiBenefits />
+      <MultiplyWithUs />
     </>
   );
 }
