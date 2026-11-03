@@ -7,6 +7,9 @@ $block-bd: rem(3);
 $block-side: color.adjust($c-btn-main, $lightness: -12%);
 
 .button {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
   font-family: $font-family-main;
   font-weight: 700;
   color: $c-text-third;
@@ -19,6 +22,7 @@ $block-side: color.adjust($c-btn-main, $lightness: -12%);
     cursor: not-allowed;
   }
 }
+
 
 .primary {
   min-width: rem(138);
