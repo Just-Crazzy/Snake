@@ -46,7 +46,9 @@ $block-side: color.adjust($c-btn-main, $lightness: -4%);      // ← было -1
   border: $block-bd solid $c-bd-second;
   transition:
     transform 0.15s,
-    background 0.2s;
+    color 0.2s,
+    background 0.2s,
+    border-color 0.2s;
 
   &::before {
     content: "";
@@ -59,7 +61,10 @@ $block-side: color.adjust($c-btn-main, $lightness: -4%);      // ← было -1
     border: $block-bd solid $c-bd-second;
     transform: skewX(-45deg);
     transform-origin: bottom left;
-    transition: height 0.15s;
+    transition:
+      height 0.15s,
+      background 0.2s,
+      border-color 0.2s;
   }
 
   &::after {
@@ -73,11 +78,22 @@ $block-side: color.adjust($c-btn-main, $lightness: -4%);      // ← было -1
     border: $block-bd solid $c-bd-second;
     transform: skewY(-45deg);
     transform-origin: top left;
-    transition: width 0.15s;
+    transition:
+      width 0.15s,
+      background 0.2s,
+      border-color 0.2s;
   }
 
   &:hover:not(:disabled) {
-    background: color.adjust($c-btn-main, $lightness: 5%);
+    color: $c-text-main;
+    background: $c-bd-second;
+    border-color: $c-bd-main;
+
+    &::before,
+    &::after {
+      background: $c-bd-second;
+      border-color: $c-bd-main;
+    }
   }
 
   &:active:not(:disabled) {
