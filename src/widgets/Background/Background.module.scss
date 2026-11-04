@@ -1,0 +1,71 @@
+@use 'vars' as *;
+@use 'mixins' as *;
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.-inset-3 {
+  inset: -0.75rem;
+}
+
+.inset-0 {
+  inset: 0;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.-z-1 {
+  z-index: -1;
+}
+
+.w-150 {
+  width: 37.5rem;
+}
+
+.h-150 {
+  height: 37.5rem;
+}
+
+.w-200 {
+  width: 50rem;
+}
+
+.h-200 {
+  height: 50rem;
+}
+
+// Аналог -right-37.5: точка в имени ломает генерацию vite-plugin-sass-dts.
+.-right-37-5 {
+  right: -9.375rem;
+}
+
+.-top-25 {
+  top: -6.25rem;
+}
+
+.-left-75 {
+  left: -18.75rem;
+}
+
+.top-25 {
+  top: 6.25rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}

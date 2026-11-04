@@ -6,6 +6,8 @@ import { Logo } from '@/shared/ui';
 
 import { Header, HeaderNav } from '@/widgets';
 
+import { Background } from '@/widgets';
+
 import cls from './Home.module.scss';
 
 function Home() {
@@ -15,6 +17,7 @@ function Home() {
         <Header left={<Logo />} right={<HeaderNav />} />
       </div>
 
+      <Background />
       <Hero />
       <MultiTasks />
       <MultiBenefits />
