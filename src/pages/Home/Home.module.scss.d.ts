@@ -1,5 +1,4 @@
 declare const classNames: {
-  readonly counter: 'counter';
-  readonly center: 'center';
+  readonly header: 'header';
 };
 export default classNames;

@@ -1,7 +1,6 @@
 declare const classNames: {
   readonly page: 'page';
   readonly container: 'container';
-  readonly header: 'header';
   readonly title: 'title';
   readonly grid: 'grid';
   readonly intro: 'intro';

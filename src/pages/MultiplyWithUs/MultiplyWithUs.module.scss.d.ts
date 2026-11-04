@@ -1,7 +1,5 @@
 declare const classNames: {
   readonly page: 'page';
-  readonly logo: 'logo';
-  readonly menu: 'menu';
   readonly label: 'label';
   readonly container__content: 'container__content';
   readonly tabs: 'tabs';

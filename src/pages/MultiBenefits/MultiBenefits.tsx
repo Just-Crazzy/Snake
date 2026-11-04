@@ -1,59 +1,31 @@
-import { Logo } from '@/shared/ui';
-
-import { Header, HeaderNav } from '@/widgets';
+import { useContent } from '@/shared/api';
 
 import line from '@public/img/line.png';
 
 import cls from './MultiBenefits.module.scss';
 
-const data = {
-  title: 'Results can only be *guaranteed* when you control every step',
-  description:
-    'That’s why we built a full-time in-house team and custom infrastructure – tailored for every task, tested daily in the sweepstakes vertical',
-  benefits: [
-    'We take on outsourced projects across any niche — from iGaming and dating to e-commerce and recruitment',
-    'We deliver what has already proven effective — many times over',
-    'We don’t learn at the client’s expense',
-  ],
-};
-
 function renderTitle(title: string) {
-  const parts = title.split('*');
-
-  return parts.map((part, index) => {
-    const isHighlighted = index % 2 === 1;
-
-    if (isHighlighted) {
-      return (
-        <span key={index} className={cls.accent}>
-          {part}
-        </span>
-      );
-    }
-
-    return part;
-  });
+  return title.split('*').map((part, index) =>
+    index % 2 === 1 ? (
+      <span key={index} className={cls.accent}>
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
 }
 
 function MultiBenefits() {
+  const { data, loading, error } = useContent('benefits');
+
+  if (loading) return null;
+  if (error || !data) return <p>Не удалось загрузить данные</p>;
+
   return (
-    <section className={cls.page}>
+    <section id="benefits" className={cls.page}>
       <div className={cls.container}>
-        <Header
-          left={
-            <div className={cls.logo}>
-              <Logo />
-            </div>
-          }
-          right={
-            <>
-              <h2 className={cls.label}>Multi-benefits</h2>
-              <div className={cls.menu}>
-                <HeaderNav />
-              </div>
-            </>
-          }
-        />
+        <h2 className={cls.label}>Multi-benefits</h2>
 
         <div className={cls.container__content}>
           <div className={cls.content}>

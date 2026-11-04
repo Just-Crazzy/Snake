@@ -4,16 +4,17 @@
 .page {
   position: relative;
   overflow: hidden;
+  flex: 1;
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
-  justify-content: space-between;
-
+  min-height: 100vh;
+  box-sizing: border-box;
   background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
 
   @include max-media(1024) {
+    min-height: auto;
     justify-content: flex-start;
-    padding: rem(16) rem(16) rem(60);
+    padding: rem(76) rem(16) rem(60);
     background: linear-gradient(160deg, #7b21bb 0%, #3f0063 100%);
   }
 }
@@ -25,8 +26,23 @@
   max-width: #{$maxWidthContainer}px;
   margin: 0 auto;
   padding: 10px;
+
   @include max-media(1024) {
     display: contents;
+  }
+}
+
+.label {
+  padding: rem(10) 0;
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(36);
+  text-align: right;
+  text-transform: uppercase;
+  color: $c-second;
+
+  @include max-media(1024) {
+    display: none;
   }
 }
 
@@ -127,7 +143,7 @@
 
   @include max-media(1024) {
     padding: rem(16);
-    font-size: rem(18);
+    font-size: rem(21);
     border-radius: rem(8);
   }
 }
@@ -141,35 +157,8 @@
   @include max-media(1024) {
     order: 1;
     align-self: center;
-    width: 160%;
+    width: 120%;
     max-width: none;
     margin: rem(32) 0 rem(40);
-  }
-}
-
-.label {
-  font-family: $font-family-main;
-  font-weight: 700;
-  font-size: rem(36);
-  text-transform: uppercase;
-  color: $c-second;
-
-  @include max-media(1024) {
-    display: none;
-  }
-}
-.logo {
-  display: none;
-
-  @include max-media(1024) {
-    display: flex;
-  }
-}
-
-.menu {
-  display: none;
-
-  @include max-media(1024) {
-    display: block;
   }
 }

@@ -1,3 +1,5 @@
+import { request } from './request';
+
 import type { Lang } from '@/shared/config';
 
 type Section = 'benefits' | 'multiply' | 'tasks';
@@ -30,20 +32,7 @@ type ContentMap = {
   tasks: TasksContent;
 };
 
-const API_URL = import.meta.env.VITE_API_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
-
-const getContent = async <S extends Section>(lang: Lang, section: S): Promise<ContentMap[S]> => {
-  const response = await fetch(`${API_URL}/${lang}/${section}`, {
-    headers: { 'x-api-key': API_KEY },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Ошибка запроса: ${response.status}`);
-  }
-
-  return response.json() as Promise<ContentMap[S]>;
-};
+const getContent = <S extends Section>(lang: Lang, section: S) => request<ContentMap[S]>(`/${lang}/${section}`);
 
 export { getContent };
 export type { ContentMap, Section };

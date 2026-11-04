@@ -1,6 +1,4 @@
-import { Button, Logo } from '@/shared/ui';
-
-import { Header, HeaderNav } from '@/widgets';
+import { Button } from '@/shared/ui';
 
 import Instagram from '@public/icons/instagram.svg?react';
 import Linkedin from '@public/icons/linkedin.svg?react';
@@ -19,8 +17,6 @@ function Hero() {
   return (
     <section className={cls.page}>
       <div className={cls.container}>
-        <Header left={<Logo />} right={<HeaderNav />} />
-
         <div className={cls.content}>
           <h1 className={cls.title}>
             Practice <br />
@@ -33,10 +29,12 @@ function Hero() {
             on our own products and ad budgets
           </p>
 
-          <Button href="#joinUs" className={cls.button}>
+          <Button href="#joinUs" variant="block" className={cls.button}>
             Get in touch
           </Button>
         </div>
+
+        <img className={cls.snake} src={snake} alt="" />
 
         <ul className={cls.socials}>
           {socials.map(({ href, label, Icon }) => (
@@ -48,8 +46,6 @@ function Hero() {
           ))}
         </ul>
       </div>
-
-      <img className={cls.snake} src={snake} alt="" />
     </section>
   );
 }

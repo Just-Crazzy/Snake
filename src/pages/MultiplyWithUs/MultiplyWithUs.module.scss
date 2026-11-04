@@ -4,8 +4,7 @@
 .page {
   position: relative;
   overflow: hidden;
-  height: 100vh;
- 
+  min-height: 100vh;
   background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
 
   &::before {
@@ -20,7 +19,7 @@
   }
 
   @include max-media(1024) {
-    padding: rem(16) rem(16) rem(40);
+    min-height: auto;
     background: linear-gradient(160deg, #7b21bb 0%, #3f0063 100%);
 
     &::before {
@@ -36,29 +35,15 @@
   width: 100%;
   max-width: rem(1344);
   margin: 0 auto;
-   padding: rem(40) rem(20);
-}
-
-.logo {
-  display: none;
-
-  @include max-media(1024) {
-    display: flex;
-  }
-}
-
-.menu {
-  display: none;
-
-  @include max-media(1024) {
-    display: block;
-  }
+  padding: rem(40) rem(10);
 }
 
 .label {
+  padding: rem(10) 0;
   font-family: $font-family-main;
   font-weight: 700;
   font-size: rem(36);
+  text-align: right;
   text-transform: uppercase;
   color: $c-second;
 
@@ -139,13 +124,13 @@
 
 .panel {
   display: flex;
-    flex: 1 1 auto; 
+  flex: 1 1 auto;
   min-height: 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: rem(16);
-   padding: clamp(#{rem(24)}, 9vh, #{rem(90)}) rem(90);
+  padding: clamp(#{rem(24)}, 9vh, #{rem(90)}) rem(90);
   text-align: center;
   background: $c-main;
   border-radius: rem(8);
@@ -196,7 +181,7 @@
     text-align: center;
     font-family: $font-family-main;
     font-weight: 700;
-    font-size: rem(24);
+    font-size: rem(20);
     text-transform: uppercase;
     color: $c-second;
   }

@@ -1,7 +1,4 @@
 import { useContent } from '@/shared/api';
-import { Logo } from '@/shared/ui';
-
-import { Header, HeaderNav } from '@/widgets';
 
 import snake from '@public/img/snake-gem.png';
 
@@ -14,12 +11,8 @@ function MultiTasks() {
   if (error || !data) return <p>Не удалось загрузить данные</p>;
 
   return (
-    <section className={cls.page}>
+    <section id="team" className={cls.page}>
       <div className={cls.container}>
-        <div className={cls.header}>
-          <Header left={<Logo />} right={<HeaderNav />} />
-        </div>
-
         <h2 className={cls.title}>Multi-tasks</h2>
 
         <div className={cls.grid}>
