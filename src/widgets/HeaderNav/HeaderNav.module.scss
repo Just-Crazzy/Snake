@@ -59,19 +59,63 @@
   }
 }
 
-
-
 .mobileMenu {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: rem(10) rem(20) rem(40);
+  background: linear-gradient(160deg, #5a1490 0%, #3f0063 100%);
+
+  @include min-media(1025) {
+    display: none;
+  }
+}
+
+.menuTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close {
+  padding: rem(10);
+  font-family: $font-family-main;
+  font-weight: 700;
+  font-size: rem(24);
+  line-height: 1;
+  color: $c-second;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.menuBody {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  width: 100%;
-  margin: 0;
-  padding: 24px #{$paddingLaptop}px;
-  list-style: none;
-  background: $c-bg-main;
+  justify-content: center;
+  gap: rem(48);
+
+  .anchors {
+    flex-direction: column;
+    gap: rem(48);
+
+    a {
+      font-size: rem(24);
+    }
+  }
+
+  .langs {
+    font-weight: 700;
+    font-size: rem(24);
+    color: $c-white;
+
+    a {
+      font-size: rem(24);
+    }
+  }
 }

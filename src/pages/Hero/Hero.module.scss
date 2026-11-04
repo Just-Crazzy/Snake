@@ -113,27 +113,7 @@
 .socials {
   position: relative;
   z-index: 1;
-  display: flex;
-  gap: rem(40);
   padding: 0 0 rem(56) rem(8);
-  color: $c-white;
-
-  a {
-    display: block;
-    line-height: 0;
-    color: inherit;
-    transition: color 0.2s;
-
-    &:hover {
-      color: $c-second;
-    }
-  }
-
-  svg {
-    width: rem(30);
-    height: auto;
-    fill: currentColor;
-  }
 
   @include max-media(1024) {
     display: none;

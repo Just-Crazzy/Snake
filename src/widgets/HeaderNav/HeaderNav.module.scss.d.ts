@@ -5,5 +5,8 @@ declare const classNames: {
   readonly langs: 'langs';
   readonly active: 'active';
   readonly mobileMenu: 'mobileMenu';
+  readonly menuTop: 'menuTop';
+  readonly close: 'close';
+  readonly menuBody: 'menuBody';
 };
 export default classNames;
