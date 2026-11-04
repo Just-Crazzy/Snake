@@ -1,17 +1,8 @@
-import { Button } from '@/shared/ui';
+import { Button, Socials } from '@/shared/ui';
 
-import Instagram from '@public/icons/instagram.svg?react';
-import Linkedin from '@public/icons/linkedin.svg?react';
-import Telegram from '@public/icons/telegram.svg?react';
 import snake from '@public/img/snake-hero.png';
 
 import cls from './Hero.module.scss';
-
-const socials = [
-  { href: '#', label: 'Instagram', Icon: Instagram },
-  { href: '#', label: 'Telegram', Icon: Telegram },
-  { href: '#', label: 'LinkedIn', Icon: Linkedin },
-];
 
 function Hero() {
   return (
@@ -36,15 +27,7 @@ function Hero() {
 
         <img className={cls.snake} src={snake} alt="" />
 
-        <ul className={cls.socials}>
-          {socials.map(({ href, label, Icon }) => (
-            <li key={label}>
-              <a href={href} aria-label={label} target="_blank" rel="noreferrer">
-                <Icon />
-              </a>
-            </li>
-          ))}
-        </ul>
+        <Socials className={cls.socials} />
       </div>
     </section>
   );

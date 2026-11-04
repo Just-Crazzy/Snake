@@ -1,0 +1,26 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: rem(40);
+  color: $c-white;
+
+  a {
+    display: block;
+    line-height: 0;
+    color: inherit;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $c-second;
+    }
+  }
+
+  svg {
+    width: rem(30);
+    height: auto;
+    fill: currentColor;
+  }
+}
