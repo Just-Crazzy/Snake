@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useContent } from '@/shared/api';
-import { Button, Logo } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 
-import { Footer, Header, HeaderNav } from '@/widgets';
+import { Footer } from '@/widgets';
 
 import Arrow from '@public/icons/scroll-to-top.svg?react';
 
@@ -34,21 +34,7 @@ function MultiplyWithUsContent({ items }: MultiplyWithUsContentProps) {
   return (
     <section id="join" className={cls.page}>
       <div className={cls.container}>
-        <Header
-          left={
-            <div className={cls.logo}>
-              <Logo />
-            </div>
-          }
-          right={
-            <>
-              <h2 className={cls.label}>Multiply with us</h2>
-              <div className={cls.menu}>
-                <HeaderNav />
-              </div>
-            </>
-          }
-        />
+        <h2 className={cls.label}>Multiply with us</h2>
 
         <div className={cls.container__content}>
           <div className={cls.tabs} role="tablist">

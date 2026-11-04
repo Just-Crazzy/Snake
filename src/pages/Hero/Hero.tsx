@@ -1,6 +1,4 @@
-import { Button, Logo } from '@/shared/ui';
-
-import { Header, HeaderNav } from '@/widgets';
+import { Button } from '@/shared/ui';
 
 import Instagram from '@public/icons/instagram.svg?react';
 import Linkedin from '@public/icons/linkedin.svg?react';
@@ -19,23 +17,25 @@ function Hero() {
   return (
     <section className={cls.page}>
       <div className={cls.container}>
-        <Header left={<Logo />} right={<HeaderNav />} />
+        <div className={cls.main}>
+          <div className={cls.content}>
+            <h1 className={cls.title}>
+              Practice <br />
+              makes <span className={cls.accent}>profit</span>
+            </h1>
 
-        <div className={cls.content}>
-          <h1 className={cls.title}>
-            Practice <br />
-            makes <span className={cls.accent}>profit</span>
-          </h1>
+            <p className={cls.text}>
+              We provide effective solutions, tested and refined
+              <br />
+              on our own products and ad budgets
+            </p>
 
-          <p className={cls.text}>
-            We provide effective solutions, tested and refined
-            <br />
-            on our own products and ad budgets
-          </p>
+            <Button href="#joinUs" variant="block" className={cls.button}>
+              Get in touch
+            </Button>
+          </div>
 
-          <Button href="#joinUs" variant="block" className={cls.button}>
-            Get in touch
-          </Button>
+          <img className={cls.snake} src={snake} alt="" />
         </div>
 
         <ul className={cls.socials}>
@@ -48,8 +48,6 @@ function Hero() {
           ))}
         </ul>
       </div>
-
-      <img className={cls.snake} src={snake} alt="" />
     </section>
   );
 }

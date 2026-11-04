@@ -1,7 +1,4 @@
 import { useContent } from '@/shared/api';
-import { Logo } from '@/shared/ui';
-
-import { Header, HeaderNav } from '@/widgets';
 
 import line from '@public/img/line.png';
 
@@ -28,21 +25,7 @@ function MultiBenefits() {
   return (
     <section id="benefits" className={cls.page}>
       <div className={cls.container}>
-        <Header
-          left={
-            <div className={cls.logo}>
-              <Logo />
-            </div>
-          }
-          right={
-            <>
-              <h2 className={cls.label}>Multi-benefits</h2>
-              <div className={cls.menu}>
-                <HeaderNav />
-              </div>
-            </>
-          }
-        />
+        <h2 className={cls.label}>Multi-benefits</h2>
 
         <div className={cls.container__content}>
           <div className={cls.content}>

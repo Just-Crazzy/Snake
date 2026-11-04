@@ -50,12 +50,15 @@
   font-weight: 700;
   text-transform: uppercase;
   color: $c-second;
+  text-decoration: underline 1px;   // ← подчёркивание толщиной 1px
+  text-underline-offset: 3px;       // ← отступ линии от текста
   cursor: pointer;
 
   @include max-media(1024) {
     display: block;
   }
 }
+
 
 
 .mobileMenu {

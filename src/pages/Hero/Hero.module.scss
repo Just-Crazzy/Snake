@@ -11,13 +11,13 @@
   background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
 
   @include max-media(1024) {
+    min-height: auto;
     background: linear-gradient(160deg, #7b21bb 0%, #3f0063 100%);
   }
 }
 
 .container {
-  position: relative;
-  z-index: 1;
+  box-sizing: border-box;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -26,21 +26,32 @@
   margin: 0 auto;
 
   @include max-media(1024) {
-    padding: 0 rem(20);
+    padding: rem(60) rem(20) rem(40);
+  }
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(40);
+
+  @include max-media(1024) {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
   }
 }
 
 .content {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
   gap: rem(20);
 
   @include max-media(1024) {
-    justify-content: flex-start;
-    gap: 0;
+    gap: 10px;
     margin-top: rem(48);
   }
 }
@@ -88,11 +99,27 @@
   }
 }
 
+.snake {
+  max-width: rem(977);
+  flex-grow: 1;
+  flex-shrink: 1;
+  align-self: end;
+  height: auto;
+  pointer-events: none;
+  transform: scaleX(-1);
+
+  @include max-media(1024) {
+    max-width: 100%;
+    align-self: center;
+  }
+}
+
 .socials {
   display: flex;
   gap: rem(32);
   color: $c-white;
   padding: 0 0 rem(30) rem(12);
+
   a {
     display: block;
     line-height: 0;
@@ -112,20 +139,5 @@
 
   @include max-media(1024) {
     display: none;
-  }
-}
-
-.snake {
-  position: absolute;
-  right: rem(28);
-  bottom: rem(-70);
-  width: 56vw;
-  height: auto;
-  pointer-events: none;
-  transform: scaleX(-1) scale(1.1);
-  @include max-media(1024) {
-    right: rem(-26);
-    bottom: rem(40);
-    width: 110vw;
   }
 }
