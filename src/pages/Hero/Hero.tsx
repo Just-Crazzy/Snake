@@ -17,26 +17,24 @@ function Hero() {
   return (
     <section className={cls.page}>
       <div className={cls.container}>
-        <div className={cls.main}>
-          <div className={cls.content}>
-            <h1 className={cls.title}>
-              Practice <br />
-              makes <span className={cls.accent}>profit</span>
-            </h1>
+        <div className={cls.content}>
+          <h1 className={cls.title}>
+            Practice <br />
+            makes <span className={cls.accent}>profit</span>
+          </h1>
 
-            <p className={cls.text}>
-              We provide effective solutions, tested and refined
-              <br />
-              on our own products and ad budgets
-            </p>
+          <p className={cls.text}>
+            We provide effective solutions, tested and refined
+            <br />
+            on our own products and ad budgets
+          </p>
 
-            <Button href="#joinUs" variant="block" className={cls.button}>
-              Get in touch
-            </Button>
-          </div>
-
-          <img className={cls.snake} src={snake} alt="" />
+          <Button href="#joinUs" variant="block" className={cls.button}>
+            Get in touch
+          </Button>
         </div>
+
+        <img className={cls.snake} src={snake} alt="" />
 
         <ul className={cls.socials}>
           {socials.map(({ href, label, Icon }) => (

@@ -7,8 +7,10 @@
   right: 0;
   left: 0;
   z-index: 100;
-  max-width: rem($maxWidthContainer);
+  box-sizing: border-box;
+  max-width: rem($maxWidth);
   margin: 0 auto;
+  padding: 0 rem(48);
 
   @include max-media(1024) {
     position: fixed;
