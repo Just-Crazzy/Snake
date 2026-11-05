@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useContent } from '@/shared/api';
 import { Button } from '@/shared/ui';
@@ -12,22 +12,13 @@ import Arrow from '@public/icons/scroll-to-top.svg?react';
 import cls from './MultiplyWithUs.module.scss';
 
 import type { ContentMap } from '@/shared/api';
-import type { Lang } from '@/shared/config';
-
-const tabLabels: Record<string, Record<Lang, string>> = {
-  for_media_buyers: { en: 'For Media Buyers', ru: 'Медиабайерам' },
-  for_businesses: { en: 'For Businesses', ru: 'Бизнесу' },
-  for_partners: { en: 'For Partners', ru: 'Партнёрам' },
-};
-
-const getTabLabel = (key: string, lang: Lang) => tabLabels[key]?.[lang] ?? key;
 
 type MultiplyWithUsContentProps = {
   items: ContentMap['multiply'];
 };
 
 function MultiplyWithUsContent({ items }: MultiplyWithUsContentProps) {
-  const { lang = 'en' } = useParams<{ lang: Lang }>();
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const activeTab = items[activeIndex] ?? items[0];
 
@@ -51,7 +42,7 @@ function MultiplyWithUsContent({ items }: MultiplyWithUsContentProps) {
                   className={tabClassName}
                   onClick={() => setActiveIndex(index)}
                 >
-                  {getTabLabel(tab.title, lang)}
+                  {t(`multiply.tabs.${tab.title}`, { defaultValue: tab.title })}
                   <Arrow className={cls.tabArrow} />
                 </button>
               );
@@ -65,7 +56,7 @@ function MultiplyWithUsContent({ items }: MultiplyWithUsContentProps) {
               <p className={cls.text}>{activeTab.steps.step_2}</p>
               <Arrow className={cls.arrowDown} />
               <Button href="#joinUs" variant="block" className={cls.button}>
-                Join the team
+                {t(`multiply.buttons.${activeIndex}`)}
               </Button>
             </div>
 
@@ -84,10 +75,11 @@ function MultiplyWithUsContent({ items }: MultiplyWithUsContentProps) {
 }
 
 function MultiplyWithUs() {
+  const { t } = useTranslation();
   const { data, loading, error } = useContent('multiply');
 
   if (loading) return null;
-  if (error || !data?.length) return <p>Не удалось загрузить данные</p>;
+  if (error || !data?.length) return <p>{t('common.loadError')}</p>;
 
   return <MultiplyWithUsContent items={data} />;
 }

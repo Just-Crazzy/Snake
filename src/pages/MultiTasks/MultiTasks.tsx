@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { useContent } from '@/shared/api';
 
 import snake from '@public/img/snake-gem.png';
@@ -5,10 +7,11 @@ import snake from '@public/img/snake-gem.png';
 import cls from './MultiTasks.module.scss';
 
 function MultiTasks() {
+  const { t } = useTranslation();
   const { data, loading, error } = useContent('tasks');
 
   if (loading) return null;
-  if (error || !data) return <p>Не удалось загрузить данные</p>;
+  if (error || !data) return <p>{t('common.loadError')}</p>;
 
   return (
     <section id="team" className={cls.page}>
