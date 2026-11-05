@@ -1,0 +1,60 @@
+{
+  "common": {
+    "loadError": "Failed to load data",
+    "close": "Close"
+  },
+  "nav": {
+    "home": "Home",
+    "main": "Main",
+    "team": "Team",
+    "benefits": "Benefits",
+    "join": "Join Us",
+    "menu": "Menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "text": "We provide effective solutions, tested and refined<br/>on our own products and ad budgets",
+    "button": "Get in touch"
+  },
+  "multiply": {
+    "tabs": {
+      "for_media_buyers": "For Media Buyers",
+      "for_businesses": "For Businesses",
+      "for_partners": "For Partners"
+    },
+    "buttons": ["Join the team", "Partner up", "Launch now"]
+  },
+  "footer": {
+    "scrollTop": "Scroll to top"
+  },
+  "form": {
+    "hint": "Fields with an asterisk (<star>*</star>) are mandatory",
+    "name": "Your Name",
+    "method": {
+      "placeholder": "Contact Method*",
+      "label": "Contact method",
+      "required": "Choose a contact method"
+    },
+    "contact": {
+      "placeholder": "Your Contact*",
+      "label": "Your contact",
+      "required": "Enter your contact",
+      "errors": {
+        "telegram": "Username must start with @, e.g. @john_dev",
+        "whatsapp": "Phone must look like +420123456789",
+        "email": "Enter a valid email"
+      }
+    },
+    "serverError": "Something went wrong. Please try again later",
+    "submit": "Submit",
+    "sending": "Sending..."
+  },
+  "success": {
+    "title": "We have received your application!",
+    "text": "We will process your request<br/>and get in touch with you",
+    "button": "Done"
+  },
+  "notFound": {
+    "back": "<oops>Oops, </oops>take me back"
+  }
+}
