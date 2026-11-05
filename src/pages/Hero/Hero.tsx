@@ -1,3 +1,5 @@
+import { Trans, useTranslation } from 'react-i18next';
+
 import { Button, Socials } from '@/shared/ui';
 
 import snake from '@public/img/snake-hero.png';
@@ -5,6 +7,8 @@ import snake from '@public/img/snake-hero.png';
 import cls from './Hero.module.scss';
 
 function Hero() {
+  const { t } = useTranslation();
+
   return (
     <section className={cls.page}>
       <div className={cls.container}>
@@ -15,13 +19,11 @@ function Hero() {
           </h1>
 
           <p className={cls.text}>
-            We provide effective solutions, tested and refined
-            <br />
-            on our own products and ad budgets
+            <Trans i18nKey="hero.text" />
           </p>
 
           <Button href="#joinUs" variant="block" className={cls.button}>
-            Get in touch
+            {t('hero.button')}
           </Button>
         </div>
 

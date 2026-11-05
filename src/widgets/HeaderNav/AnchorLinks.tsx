@@ -1,19 +1,17 @@
-import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Link } from '@/shared/ui';
 
 import cls from './HeaderNav.module.scss';
 
-import type { Lang } from '@/shared/config/index';
+type Anchor = { href: string; labelKey: string };
 
-type Anchor = { href: string; label: Record<Lang, string> };
-
-const mainLink: Anchor = { href: '#', label: { en: 'Main', ru: 'Главная' } };
+const mainLink: Anchor = { href: '#', labelKey: 'nav.main' };
 
 const anchors: Anchor[] = [
-  { href: '#team', label: { en: 'Team', ru: 'Команда' } },
-  { href: '#benefits', label: { en: 'Benefits', ru: 'Преимущества' } },
-  { href: '#join', label: { en: 'Join Us', ru: 'Присоединяйтесь' } },
+  { href: '#team', labelKey: 'nav.team' },
+  { href: '#benefits', labelKey: 'nav.benefits' },
+  { href: '#join', labelKey: 'nav.join' },
 ];
 
 type AnchorLinksProps = {
@@ -22,16 +20,15 @@ type AnchorLinksProps = {
 };
 
 const AnchorLinks = ({ onNavigate, withMain = false }: AnchorLinksProps) => {
-  const { lang } = useParams<{ lang: Lang }>();
-  const currentLang: Lang = lang ?? 'en';
+  const { t } = useTranslation();
   const items = withMain ? [mainLink, ...anchors] : anchors;
 
   return (
     <ul className={cls.anchors}>
-      {items.map(({ href, label }) => (
+      {items.map(({ href, labelKey }) => (
         <li key={href}>
           <Link href={href} onClick={onNavigate}>
-            {label[currentLang]}
+            {t(labelKey)}
           </Link>
         </li>
       ))}

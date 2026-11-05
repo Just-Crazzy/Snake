@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import cls from './Modal.module.scss';
 
 import type { ReactNode } from 'react';
@@ -24,6 +26,7 @@ const syncDialog = (dialog: HTMLDialogElement, isOpen: boolean) => {
 };
 
 const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
+  const { t } = useTranslation();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -38,7 +41,12 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
 
   return (
     <dialog ref={dialogRef} className={[cls.modal, className].filter(Boolean).join(' ')} onClose={onClose}>
-      <button type="button" className={cls.close} aria-label="Close" onClick={() => dialogRef.current?.close()}>
+      <button
+        type="button"
+        className={cls.close}
+        aria-label={t('common.close')}
+        onClick={() => dialogRef.current?.close()}
+      >
         X
       </button>
 

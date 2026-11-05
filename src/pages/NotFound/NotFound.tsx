@@ -1,3 +1,5 @@
+import { Trans, useTranslation } from 'react-i18next';
+
 import { Link, Logo } from '@/shared/ui';
 
 import { Header } from '@/widgets';
@@ -7,6 +9,8 @@ import snake from '@public/img/snake-hero.png';
 import cls from './NotFound.module.scss';
 
 function NotFound() {
+  const { t } = useTranslation();
+
   return (
     <div className={cls.page}>
       <div className={cls.container}>
@@ -14,7 +18,7 @@ function NotFound() {
           left={<Logo />}
           right={
             <Link href="#" className={cls.menu}>
-              Menu
+              {t('nav.menu')}
             </Link>
           }
         />
@@ -27,7 +31,7 @@ function NotFound() {
           </div>
 
           <Link href="/" className={cls.button}>
-            <span className={cls.oops}>Oops, </span>take me back
+            <Trans i18nKey="notFound.back" components={{ oops: <span className={cls.oops} /> }} />
           </Link>
         </main>
       </div>
