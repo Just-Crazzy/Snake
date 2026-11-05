@@ -1,0 +1,20 @@
+declare const classNames: {
+  readonly fixed: 'fixed';
+  readonly absolute: 'absolute';
+  readonly '-inset-3': '-inset-3';
+  readonly 'inset-0': 'inset-0';
+  readonly 'overflow-hidden': 'overflow-hidden';
+  readonly '-z-1': '-z-1';
+  readonly 'w-150': 'w-150';
+  readonly 'h-150': 'h-150';
+  readonly 'w-200': 'w-200';
+  readonly 'h-200': 'h-200';
+  readonly '-right-37-5': '-right-37-5';
+  readonly '-top-25': '-top-25';
+  readonly '-left-75': '-left-75';
+  readonly 'top-25': 'top-25';
+  readonly 'rounded-full': 'rounded-full';
+  readonly 'w-full': 'w-full';
+  readonly 'h-full': 'h-full';
+};
+export default classNames;
