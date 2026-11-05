@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { Logo, Socials } from '@/shared/ui';
 
 import { AnchorLinks } from './AnchorLinks';
@@ -7,6 +9,7 @@ import cls from './HeaderNav.module.scss';
 import { LangSwitcher } from './LangSwitcher';
 
 const HeaderNav = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = () => setIsOpen(false);
@@ -26,10 +29,10 @@ const HeaderNav = () => {
         className={cls.burger}
         type="button"
         aria-expanded={isOpen}
-        aria-label="Menu"
+        aria-label={t('nav.menu')}
         onClick={() => setIsOpen(true)}
       >
-        Menu
+        {t('nav.menu')}
       </button>
 
       {!!isOpen && (
@@ -37,7 +40,7 @@ const HeaderNav = () => {
           <div className={cls.menuTop}>
             <Logo />
 
-            <button className={cls.close} type="button" aria-label="Close menu" onClick={closeMenu}>
+            <button className={cls.close} type="button" aria-label={t('nav.closeMenu')} onClick={closeMenu}>
               X
             </button>
           </div>
