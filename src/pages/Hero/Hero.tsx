@@ -20,7 +20,7 @@ function Hero({ isReady = true }: HeroProps) {
   const wordsRef = useSwitchingWord(words, isReady);
 
   return (
-    <section className={cls.page}>
+    <section id="hero" className={cls.page}>
       <div className={cls.container}>
         <div className={cls.content}>
           <h1 className={cls.title}>

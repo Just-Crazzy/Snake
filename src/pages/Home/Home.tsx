@@ -15,6 +15,7 @@ import { Background } from '@/widgets';
 import snakeHero from '@public/img/snake-hero.png';
 
 import cls from './Home.module.scss';
+import { useFullpageScroll } from './useFullpageScroll';
 
 import type { Lang } from '@/shared/config';
 
@@ -28,6 +29,8 @@ function Home() {
   const contentClassName = isLoading ? cls.hidden : undefined;
 
   const handleDone = useCallback(() => setIsDone(true), []);
+
+  useFullpageScroll({ isEnabled: !isLoading });
 
   useEffect(() => {
     if (!showPreloader) removePreloaderShell();
