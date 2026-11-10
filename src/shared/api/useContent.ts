@@ -1,38 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getContent } from './getContent';
+import { getCachedContent, loadContent, subscribeContent } from './contentCache';
 
-import type { ContentMap, Section } from './getContent';
+import type { Section } from './getContent';
 import type { Lang } from '@/shared/config';
 
-type State<S extends Section> = {
-  data: ContentMap[S] | null;
-  error: Error | null;
-  loading: boolean;
+type Failure = {
+  key: string;
+  error: Error;
 };
 
 const useContent = <S extends Section>(section: S) => {
   const { lang } = useParams<{ lang: Lang }>();
-  const [state, setState] = useState<State<S>>({ data: null, error: null, loading: true });
+  const key = `${lang}/${section}`;
+  const data = useSyncExternalStore(subscribeContent, () => (lang ? getCachedContent(lang, section) : null));
+  const [failure, setFailure] = useState<Failure | null>(null);
 
   useEffect(() => {
     if (!lang) return;
     let cancelled = false;
 
-    getContent(lang, section)
-      .then((data) => {
-        if (!cancelled) setState({ data, error: null, loading: false });
-      })
-      .catch((error: Error) => {
-        if (!cancelled) setState({ data: null, error, loading: false });
-      });
+    loadContent(lang, section).catch((error: Error) => {
+      if (!cancelled) setFailure({ key, error });
+    });
 
     return () => {
       cancelled = true;
     };
-  }, [lang, section]);
+  }, [key, lang, section]);
 
-  return state;
+  const error = !data && failure?.key === key ? failure.error : null;
+
+  return { data, error, loading: !data && !error };
 };
+
 export { useContent };
