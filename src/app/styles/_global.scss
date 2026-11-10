@@ -135,6 +135,13 @@ img {
   image-rendering: -webkit-optimize-contrast;
 }
 
+img,
+svg {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 p {
   -ms-hyphens: auto;
   -moz-hyphens: auto;
