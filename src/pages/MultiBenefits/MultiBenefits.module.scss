@@ -24,7 +24,7 @@
   position: relative;
   width: 100%;
   max-width: #{$maxWidthContainer}px;
-  margin: 0 auto;
+  margin: 0 auto rem(60);
   padding: 10px;
 
   @include max-media(1024) {
@@ -139,7 +139,7 @@
   line-height: 1.3;
   color: $c-white;
   background: $c-main;
-  border-radius: rem(20);
+  border-radius: rem(4);
 
   @include max-media(1024) {
     padding: rem(16);
@@ -151,6 +151,7 @@
 .line {
   display: block;
   width: 100%;
+  margin: auto 0 rem(40);
   pointer-events: none;
 
   @include max-media(1024) {
