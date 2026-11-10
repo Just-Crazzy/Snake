@@ -1,7 +1,6 @@
 import { useContent } from '@/shared/api';
 
-import line from '@public/img/line.png';
-
+import { Marquee } from './Marquee';
 import cls from './MultiBenefits.module.scss';
 
 function renderTitle(title: string) {
@@ -43,7 +42,7 @@ function MultiBenefits() {
         </div>
       </div>
 
-      <img className={cls.line} src={line} alt="" />
+      <Marquee className={cls.line} />
     </section>
   );
 }

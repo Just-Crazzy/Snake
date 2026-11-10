@@ -1,0 +1,68 @@
+@use "vars" as *;
+@use "mixins" as *;
+
+.marquee {
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: rem(15) 0;
+  border-top: 3px solid $c-second;
+  border-bottom: 3px solid $c-second;
+  font-family: $font-family-main;
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: $c-second;
+  transform: rotate(1deg);
+
+  @include max-media(1024) {
+    padding: rem(10) 0;
+    border-width: 2px;
+  }
+
+  @include max-576 {
+    padding: rem(5) 0;
+  }
+}
+
+.track {
+  display: flex;
+  width: max-content;
+}
+
+.group,
+.item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.text {
+  font-size: rem(68);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+
+  @include max-media(1024) {
+    font-size: rem(44);
+  }
+
+  @include max-576 {
+    font-size: rem(22);
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  width: rem(59);
+  height: auto;
+  margin: 0 rem(60);
+
+  @include max-media(1024) {
+    width: rem(38);
+    margin: 0 rem(38);
+  }
+
+  @include max-576 {
+    width: rem(19);
+    margin: 0 rem(19);
+  }
+}
