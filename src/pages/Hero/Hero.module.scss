@@ -60,8 +60,20 @@
   }
 }
 
-.accent {
+.words {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: top;
   color: $c-second;
+}
+
+.word {
+  display: block;
+  grid-area: 1 / 1;
+
+  & + & {
+    transform: translateY(-100%);
+  }
 }
 
 .text {

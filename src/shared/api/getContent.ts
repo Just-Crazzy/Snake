@@ -33,12 +33,8 @@ type ContentMap = {
   tasks: TasksContent;
 };
 
-const getContent = async <S extends Section>(lang: Lang, section: S) => {
-  const data = await request<ContentMap[S]>(`/${lang}/${section}`);
-  const adapt = contentAdapters[section];
-
-  return adapt ? adapt(data) : data;
-};
+const getContent = <S extends Section>(lang: Lang, section: S, signal?: AbortSignal) =>
+  request<ContentMap[S]>(`/${lang}/${section}`, { signal });
 
 export { getContent };
 export type { ContentMap, Section };
