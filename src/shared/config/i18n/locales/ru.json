@@ -17,11 +17,6 @@
     "button": "Связаться"
   },
   "multiply": {
-    "tabs": {
-      "for_media_buyers": "Медиабайерам",
-      "for_businesses": "Бизнесу",
-      "for_partners": "Партнёрам"
-    },
     "buttons": ["В команду", "Стать партнёрами", "Запустить проект"]
   },
   "footer": {
