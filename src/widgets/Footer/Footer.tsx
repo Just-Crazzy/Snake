@@ -1,3 +1,4 @@
+import { requestScreen } from '@/shared/lib';
 import { Link } from '@/shared/ui';
 
 import ArrowIcon from '@public/icons/scroll-to-top.svg?react';
@@ -14,11 +15,7 @@ export const Footer = () => {
           <Link href="#">linkedin</Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className={cls.footer__topButton}
-        >
+        <button type="button" onClick={() => requestScreen('hero')} className={cls.footer__topButton}>
           Scroll to top <ArrowIcon />
         </button>
       </div>
