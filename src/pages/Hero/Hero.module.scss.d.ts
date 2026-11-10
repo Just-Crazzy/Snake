@@ -7,6 +7,7 @@ declare const classNames: {
   readonly button: 'button';
   readonly snake: 'snake';
   readonly socials: 'socials';
-  readonly accent: 'accent';
+  readonly words: 'words';
+  readonly word: 'word';
 };
 export default classNames;
