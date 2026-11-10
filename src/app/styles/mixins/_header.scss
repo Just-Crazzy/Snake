@@ -1,0 +1,14 @@
+@use "vars" as *;
+@use "media" as *;
+@use "pixtoem-rem" as *;
+
+@mixin header-container {
+  box-sizing: border-box;
+  max-width: rem($maxWidth);
+  margin: 0 auto;
+  padding: 0 rem(48);
+
+  @include max-media(1024) {
+    padding: 0 rem(20);
+  }
+}

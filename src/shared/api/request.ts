@@ -6,9 +6,10 @@ type HttpMethod = 'GET' | 'POST';
 type RequestOptions = {
   method?: HttpMethod;
   body?: unknown;
+  signal?: AbortSignal;
 };
 
-const request = async <T = void>(path: string, { method = 'GET', body }: RequestOptions = {}): Promise<T> => {
+const request = async <T = void>(path: string, { method = 'GET', body, signal }: RequestOptions = {}): Promise<T> => {
   const headers: Record<string, string> = { 'x-api-key': API_KEY };
 
   if (body !== undefined) {
@@ -19,6 +20,7 @@ const request = async <T = void>(path: string, { method = 'GET', body }: Request
     method,
     headers,
     body: body === undefined ? undefined : JSON.stringify(body),
+    signal,
   });
 
   if (!response.ok) {
