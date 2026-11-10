@@ -151,7 +151,6 @@
 .line {
   display: block;
   width: 100%;
-  height: auto;
   pointer-events: none;
 
   @include max-media(1024) {
