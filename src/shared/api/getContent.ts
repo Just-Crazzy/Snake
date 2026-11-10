@@ -32,7 +32,8 @@ type ContentMap = {
   tasks: TasksContent;
 };
 
-const getContent = <S extends Section>(lang: Lang, section: S) => request<ContentMap[S]>(`/${lang}/${section}`);
+const getContent = <S extends Section>(lang: Lang, section: S, signal?: AbortSignal) =>
+  request<ContentMap[S]>(`/${lang}/${section}`, { signal });
 
 export { getContent };
 export type { ContentMap, Section };

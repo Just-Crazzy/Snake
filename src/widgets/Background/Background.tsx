@@ -5,9 +5,7 @@ import GridMesh from './GridMesh';
 
 const Background = () => {
   return (
-    <div
-      className={`${cls.fixed} ${cls['-inset-3']} ${cls['overflow-hidden']} ${cls['-z-1']}`}
-    >
+    <div className={`${cls.fixed} ${cls['-inset-3']} ${cls['overflow-hidden']} ${cls['-z-1']}`}>
       <BackgroundBase />
       <BackgroundGlow />
       <GridMesh />
