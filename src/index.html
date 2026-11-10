@@ -4,9 +4,71 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preload" as="font" type="font/woff2" href="../public/fonts/HalvarBreit-Md.woff2" crossorigin />
     <title>snake</title>
+    <style>
+      #preloader-shell {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(111deg, #dc8400 -5%, #560080 50%, #220032 95%);
+        color: #fff;
+        font-family: 'Halvar Breitschrift', system-ui, sans-serif;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      #preloader-shell .preloader-shell__value {
+        font-size: 80px;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      #preloader-shell .preloader-shell__track {
+        position: relative;
+        width: 40%;
+        height: 20px;
+        margin-top: 48px;
+        border-radius: 10px;
+        background: #fff;
+      }
+
+      #preloader-shell .preloader-shell__fill {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 20px;
+        border-radius: 10px;
+        background: #fee97d;
+      }
+
+      @media (max-width: 1024px) {
+        #preloader-shell .preloader-shell__value {
+          font-size: 56px;
+        }
+
+        #preloader-shell .preloader-shell__track {
+          margin-top: 32px;
+        }
+      }
+
+      @media (max-width: 575.98px) {
+        #preloader-shell {
+          display: none;
+        }
+      }
+    </style>
   </head>
   <body>
+    <div id="preloader-shell" aria-hidden="true">
+      <span class="preloader-shell__value">0%</span>
+      <div class="preloader-shell__track"><div class="preloader-shell__fill"></div></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="./app/App.tsx"></script>
   </body>
