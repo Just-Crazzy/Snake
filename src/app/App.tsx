@@ -8,6 +8,10 @@ import { createRoot } from 'react-dom/client';
 
 import { AppRouter } from '@/app/router';
 
+import { preventImageDrag } from '@/shared/lib';
+
+document.addEventListener('dragstart', preventImageDrag);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
