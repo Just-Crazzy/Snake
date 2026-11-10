@@ -2,19 +2,20 @@
 @use "mixins" as *;
 
 .header {
+  @include header-container;
+
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   z-index: 100;
-  box-sizing: border-box;
-  max-width: rem($maxWidth);
-  margin: 0 auto;
-  padding: 0 rem(48);
 
   @include max-media(1024) {
     position: fixed;
     max-width: none;
-    padding: 0 rem(20);
   }
+}
+
+.hidden {
+  visibility: hidden;
 }
