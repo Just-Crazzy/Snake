@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+
+import { removePreloaderShell } from '@/shared/lib';
 import { Link, Logo } from '@/shared/ui';
 
 import { Header } from '@/widgets';
@@ -7,6 +10,10 @@ import snake from '@public/img/snake-hero.png';
 import cls from './NotFound.module.scss';
 
 function NotFound() {
+  useEffect(() => {
+    removePreloaderShell();
+  }, []);
+
   return (
     <div className={cls.page}>
       <div className={cls.container}>
