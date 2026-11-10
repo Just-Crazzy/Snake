@@ -42,7 +42,7 @@ function MultiplyWithUsContent({ items }: MultiplyWithUsContentProps) {
                   className={tabClassName}
                   onClick={() => setActiveIndex(index)}
                 >
-                  {t(`multiply.tabs.${tab.title}`, { defaultValue: tab.title })}
+                  {tab.title}
                   <Arrow className={cls.tabArrow} />
                 </button>
               );

@@ -17,11 +17,6 @@
     "button": "Get in touch"
   },
   "multiply": {
-    "tabs": {
-      "for_media_buyers": "For Media Buyers",
-      "for_businesses": "For Businesses",
-      "for_partners": "For Partners"
-    },
     "buttons": ["Join the team", "Partner up", "Launch now"]
   },
   "footer": {

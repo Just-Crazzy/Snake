@@ -1,3 +1,4 @@
+import { contentAdapters } from './adapters';
 import { request } from './request';
 
 import type { Lang } from '@/shared/config';
@@ -32,7 +33,12 @@ type ContentMap = {
   tasks: TasksContent;
 };
 
-const getContent = <S extends Section>(lang: Lang, section: S) => request<ContentMap[S]>(`/${lang}/${section}`);
+const getContent = async <S extends Section>(lang: Lang, section: S) => {
+  const data = await request<ContentMap[S]>(`/${lang}/${section}`);
+  const adapt = contentAdapters[section];
+
+  return adapt ? adapt(data) : data;
+};
 
 export { getContent };
 export type { ContentMap, Section };
