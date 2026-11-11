@@ -6,7 +6,11 @@ import { Hero, MultiBenefits, MultiplyWithUs, MultiTasks } from '@/pages/index';
 import { ApplicationModal } from '@/widgets/ApplicationModal';
 
 import { SCREENS } from '@/shared/config';
-import { removePreloaderShell, useFullpageScroll } from '@/shared/lib';
+import {
+  removePreloaderShell,
+  useFullpageScroll,
+  useHeroAnimation,
+} from '@/shared/lib';
 import { Logo } from '@/shared/ui';
 
 import { Header, HeaderNav, Preloader } from '@/widgets';
@@ -16,7 +20,6 @@ import { Background } from '@/widgets';
 import snakeHero from '@public/img/snake-hero.png';
 
 import cls from './Home.module.scss';
-import { useHeroAnimation } from './useHeroAnimation';
 
 import type { Lang } from '@/shared/config';
 
@@ -24,7 +27,9 @@ const FIRST_SCREEN_IMAGES = [snakeHero];
 
 function Home() {
   const { lang = 'en' } = useParams<{ lang: Lang }>();
-  const [showPreloader] = useState(() => window.matchMedia('(min-width: 576px)').matches);
+  const [showPreloader] = useState(
+    () => window.matchMedia('(min-width: 576px)').matches,
+  );
   const [isDone, setIsDone] = useState(false);
   const isLoading = showPreloader && !isDone;
   const contentClassName = isLoading ? cls.hidden : undefined;
@@ -61,7 +66,13 @@ function Home() {
         <ApplicationModal />
       </div>
 
-      {!!isLoading && <Preloader lang={lang} images={FIRST_SCREEN_IMAGES} onDone={handleDone} />}
+      {!!isLoading && (
+        <Preloader
+          lang={lang}
+          images={FIRST_SCREEN_IMAGES}
+          onDone={handleDone}
+        />
+      )}
     </>
   );
 }
