@@ -15,7 +15,7 @@
 
 Переименование `id` ломает навигацию шапки и хук одновременно.
 
-## 2. Хук `useFullpageScroll` (`src/pages/Home/useFullpageScroll.ts`)
+## 2. Хук `useFullpageScroll` (`src/shared/lib/useFullpageScroll.ts`)
 
 ```ts
 type UseFullpageScrollOptions = {

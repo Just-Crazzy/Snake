@@ -38,7 +38,7 @@
 | II. Мультиязычность | Фраза — `marqueeText: Record<Lang, string>` для en и ru (в обоих английская, Clarifications Q2); в компоненте нет проверок языка | ✅ PASS |
 | III. Чистый код и линтеры | Без комментариев и `console.log`; `yarn lint` | ✅ PASS |
 | III. Stylelint | Пакет `stylelint` в проекте не установлен, гейт не проверяется | ⚠️ WARN, вне рамок фичи |
-| IV. Анимации GSAP | Твин внутри `gsap.matchMedia()` (это `gsap.context`), `revert()` при размонтировании и при смене языка (зависимость от `lang`, R5); анимация лежит рядом с секцией; на mobile работает — бегущая строка прямо разрешена принципом IV | ✅ PASS |
+| IV. Анимации GSAP | Твин внутри `gsap.matchMedia()` (это `gsap.context`), `revert()` при размонтировании и при смене языка (зависимость от `lang`, R5); хук лежит в `shared/lib`, папка страницы только для страницы; на mobile работает — бегущая строка прямо разрешена принципом IV | ✅ PASS |
 | V. Макет и доступность | Размеры на 1440px по замерам `line.png` (R2); единицы rem, px, %; интерактивных элементов нет | ✅ PASS |
 | Lighthouse | Анимируется только `transform`; картинка 1440×132 удаляется | ✅ PASS (проверить на реализации) |
 
@@ -69,20 +69,25 @@ specs/003-marquee/
 public/img/line.png                         # удалить (используется только в MultiBenefits)
 src/
 ├── shared/
-│   └── config/
-│       ├── marqueeText.ts                  # новый: Record<Lang, string> — 'Dream big earn bigger!'
-│       └── index.ts                        # + экспорт marqueeText
+│   ├── config/
+│   │   ├── marqueeText.ts                  # новый: Record<Lang, string> — 'Dream big earn bigger!'
+│   │   └── index.ts                        # + экспорт marqueeText
+│   ├── lib/
+│   │   ├── useMarquee.ts                   # новый: GSAP-твин в gsap.matchMedia, ResizeObserver
+│   │   └── index.ts                        # + экспорт useMarquee
+│   └── ui/
+│       ├── Marquee/
+│       │   ├── Marquee.tsx                 # новый: полоса, дорожка, две группы по REPEATS повторов
+│       │   ├── Marquee.module.scss         # новый: наклон, линии, overflow, размеры по макету
+│       │   └── Marquee.module.scss.d.ts    # новый: классы для TypeScript
+│       └── index.ts                        # + экспорт Marquee
 └── pages/
     └── MultiBenefits/
-        ├── Marquee.tsx                     # новый: полоса, дорожка, две группы по REPEATS повторов
-        ├── Marquee.module.scss             # новый: наклон, линии, overflow, размеры по макету
-        ├── Marquee.module.scss.d.ts        # новый: классы для TypeScript
-        ├── useMarquee.ts                   # новый: GSAP-твин в gsap.matchMedia, ResizeObserver
         ├── MultiBenefits.tsx               # <img line> → <Marquee className={cls.line} />
         └── MultiBenefits.module.scss       # .line: убрать стили картинки, позиция и ширина остаются
 ```
 
-**Structure Decision**: `Marquee` и `useMarquee` лежат в `src/pages/MultiBenefits/` рядом с секцией (принцип IV) и в `shared/ui` не выносятся: используются в одном месте. Позиция полосы в секции остаётся в `MultiBenefits.module.scss` (класс `.line` передаётся пропом `className`), внешний вид — в `Marquee.module.scss`.
+**Structure Decision**: Компонент `Marquee` лежит в `src/shared/ui/Marquee/`, хук `useMarquee` — в `src/shared/lib/`: папки `pages` только для страниц. `Marquee` импортирует только `shared/config` и `@public`, поэтому FSD не нарушается. Позиция полосы в секции остаётся в `MultiBenefits.module.scss` (класс `.line` передаётся пропом `className`), внешний вид — в `Marquee.module.scss`.
 
 ## Complexity Tracking
 
