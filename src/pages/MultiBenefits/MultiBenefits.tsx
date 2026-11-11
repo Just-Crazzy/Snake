@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
 import { useContent } from '@/shared/api';
+import { Marquee } from '@/shared/ui';
 
-import { Marquee } from './Marquee';
 import cls from './MultiBenefits.module.scss';
 
 function renderTitle(title: string) {
