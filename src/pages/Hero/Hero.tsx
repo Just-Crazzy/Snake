@@ -24,8 +24,8 @@ function Hero({ isReady = true }: HeroProps) {
   return (
     <section id="hero" className={cls.page}>
       <div className={cls.container}>
-        <div className={cls.content}>
-          <h1 className={cls.title}>
+        <div className={cls.content} data-hero="content">
+          <h1 className={cls.title} data-hero="title">
             <span className="sr-only">Practice makes {words.join(', ')}</span>
             <span aria-hidden="true">
               Practice <br />
@@ -40,18 +40,23 @@ function Hero({ isReady = true }: HeroProps) {
             </span>
           </h1>
 
-          <p className={cls.text}>
+          <p className={cls.text} data-hero="text">
             <Trans i18nKey="hero.text" />
           </p>
 
-          <Button href="#joinUs" variant="block" className={cls.button}>
+          <Button
+            href="#joinUs"
+            variant="block"
+            className={cls.button}
+            data-hero="button"
+          >
             {t('hero.button')}
           </Button>
         </div>
 
-        <img className={cls.snake} src={snake} alt="" />
+        <img className={cls.snake} src={snake} alt="" data-hero="snake" />
 
-        <Socials className={cls.socials} />
+        <Socials className={cls.socials} data-hero="socials" />
       </div>
     </section>
   );

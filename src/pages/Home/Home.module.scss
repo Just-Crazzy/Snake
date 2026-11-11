@@ -9,6 +9,7 @@
   right: 0;
   left: 0;
   z-index: 100;
+  overflow-x: clip;
 
   @include max-media(1024) {
     position: fixed;
