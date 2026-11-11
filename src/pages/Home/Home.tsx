@@ -5,7 +5,8 @@ import { Hero, MultiBenefits, MultiplyWithUs, MultiTasks } from '@/pages/index';
 
 import { ApplicationModal } from '@/widgets/ApplicationModal';
 
-import { removePreloaderShell } from '@/shared/lib';
+import { SCREENS } from '@/shared/config';
+import { removePreloaderShell, useFullpageScroll } from '@/shared/lib';
 import { Logo } from '@/shared/ui';
 
 import { Header, HeaderNav, Preloader } from '@/widgets';
@@ -28,6 +29,8 @@ function Home() {
   const contentClassName = isLoading ? cls.hidden : undefined;
 
   const handleDone = useCallback(() => setIsDone(true), []);
+
+  useFullpageScroll({ screens: SCREENS, isEnabled: !isLoading });
 
   useEffect(() => {
     if (!showPreloader) removePreloaderShell();
