@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { requestScreen } from '@/shared/lib';
 import { Link } from '@/shared/ui';
 
@@ -17,8 +19,12 @@ export const Footer = () => {
           <Link href="#">linkedin</Link>
         </div>
 
-        <button type="button" onClick={() => requestScreen('hero')} className={cls.footer__topButton}>
-          Scroll to top <ArrowIcon />
+        <button
+          type="button"
+          onClick={() => requestScreen('hero')}
+          className={cls.footer__topButton}
+        >
+          {t('footer.scrollTop')} <ArrowIcon />
         </button>
       </div>
     </footer>

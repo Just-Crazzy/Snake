@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { removePreloaderShell } from '@/shared/lib';
 import { Link, Logo } from '@/shared/ui';
@@ -10,6 +11,8 @@ import snake from '@public/img/snake-hero.png';
 import cls from './NotFound.module.scss';
 
 function NotFound() {
+  const { t } = useTranslation();
+
   useEffect(() => {
     removePreloaderShell();
   }, []);
@@ -34,7 +37,10 @@ function NotFound() {
           </div>
 
           <Link href="/" className={cls.button}>
-            <Trans i18nKey="notFound.back" components={{ oops: <span className={cls.oops} /> }} />
+            <Trans
+              i18nKey="notFound.back"
+              components={{ oops: <span className={cls.oops} /> }}
+            />
           </Link>
         </main>
       </div>
