@@ -10,7 +10,6 @@
   "errorLens.messageTemplate": "[1/$count] $message [$source]<$code>",
   "editor.codeActionsOnSave": {
     "source.addMissingImports": "always",
-    "source.sortImports": "always",
     "source.fixAll.stylelint": "always",
     "source.fixAll.eslint": "always"
   },
