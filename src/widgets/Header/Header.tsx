@@ -10,8 +10,16 @@ type HeaderProps = {
 const Header = ({ left, right }: HeaderProps) => (
   <header>
     <nav className={cls.nav}>
-      {!!left && <div className={cls.left}>{left}</div>}
-      {!!right && <div className={cls.right}>{right}</div>}
+      {!!left && (
+        <div className={cls.left} data-header="left">
+          {left}
+        </div>
+      )}
+      {!!right && (
+        <div className={cls.right} data-header="right">
+          {right}
+        </div>
+      )}
     </nav>
   </header>
 );
