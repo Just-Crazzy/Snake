@@ -38,7 +38,7 @@
 | II. Мультиязычность | Новых текстов нет; в коде нет проверок языка, `lang` нужен только для пересоздания анимации | ✅ PASS |
 | III. Чистый код и линтеры | Без комментариев и `console.log`; `yarn lint` | ✅ PASS |
 | III. Stylelint | Пакет `stylelint` в проекте не установлен, гейт не проверяется | ⚠️ WARN, вне рамок фичи |
-| IV. Анимации GSAP | Всё внутри `gsap.matchMedia()`, `revert()` при размонтировании, смене языка и пересечении 1024px; хук лежит рядом с `Home`, который знает порядок экранов; на ≤ 1024px режим выключен (строже требования 576px) | ✅ PASS |
+| IV. Анимации GSAP | Всё внутри `gsap.matchMedia()`, `revert()` при размонтировании, смене языка и пересечении 1024px; хук лежит в `shared/lib` и вызывается из `Home`, который знает порядок экранов; на ≤ 1024px режим выключен (строже требования 576px) | ✅ PASS |
 | V. Макет и доступность | Вёрстка экранов не меняется (Multi-tasks не ужимается, у экрана одна остановка — верх секции); клавиатура — FR-007/FR-008 | ✅ PASS |
 | Lighthouse | Non-passive слушатель колеса может дать замечание в Best Practices (R14) | ⚠️ проверить на реализации |
 
@@ -68,7 +68,8 @@ src/
 ├── shared/
 │   └── lib/
 │       ├── screenNavigation.ts      # новый: requestScreen(id) и имя события screen:request
-│       └── index.ts                 # + экспорт requestScreen
+│       ├── useFullpageScroll.ts     # новый: Observer, ScrollTo, клавиатура, ссылки, адрес, ResizeObserver
+│       └── index.ts                 # + экспорт requestScreen и useFullpageScroll
 ├── widgets/
 │   └── Footer/
 │       └── Footer.tsx               # «Scroll to top»: requestScreen('hero') вместо window.scrollTo
@@ -76,11 +77,10 @@ src/
     ├── Hero/
     │   └── Hero.tsx                 # + id="hero" на <section>
     └── Home/
-        ├── Home.tsx                 # + вызов useFullpageScroll()
-        └── useFullpageScroll.ts     # новый: Observer, ScrollTo, клавиатура, ссылки, адрес, ResizeObserver
+        └── Home.tsx                 # + вызов useFullpageScroll({ screens: SCREENS })
 ```
 
-**Structure Decision**: Хук `useFullpageScroll` лежит в `src/pages/Home/` рядом со страницей, которая собирает экраны и знает их порядок. Экраны находятся по `id` секций (контракт §1), поэтому сами секции про режим не знают. Единственная точка связи со слоем `widgets` — `requestScreen` в `shared/lib`.
+**Structure Decision**: Хук `useFullpageScroll` лежит в `src/shared/lib/` (папки `pages` только для страниц), а вызывается из `Home`, которая собирает экраны и знает их порядок; список экранов — `SCREENS` в `src/shared/config/screens.ts`. Экраны находятся по `id` секций (контракт §1), поэтому сами секции про режим не знают. Единственная точка связи со слоем `widgets` — `requestScreen` в `shared/lib`.
 
 ## Complexity Tracking
 

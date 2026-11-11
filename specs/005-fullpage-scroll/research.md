@@ -94,7 +94,7 @@ Multi-tasks = 62 (padding-top) + 44 (заголовок) + 68 (отступ) + 6
   - `gsap.matchMedia()` с условиями `{ desktop: '(min-width: 1025px)', reduce: '(prefers-reduced-motion: reduce)' }`; если не `desktop` — ничего не создаётся; при `reduce` длительность 0.
   - Всё (Observer, слушатели, ResizeObserver, стиль `scroll-behavior`, `scrollRestoration`) создаётся внутри колбэка и удаляется в его функции очистки.
   - `useEffect` зависит от `lang` и `isEnabled`, при их изменении и при размонтировании вызывается `mm.revert()`.
-- **Rationale**: Тот же паттерн, что в [useSwitchingWord.ts](../../src/pages/Hero/useSwitchingWord.ts). `Home` не размонтируется при смене языка (меняется только `:lang`), поэтому без зависимости от `lang` очистки при смене языка не будет.
+- **Rationale**: Тот же паттерн, что в [useSwitchingWord.ts](../../src/shared/lib/useSwitchingWord.ts). `Home` не размонтируется при смене языка (меняется только `:lang`), поэтому без зависимости от `lang` очистки при смене языка не будет.
 
 ## R13. Длительность и плавность
 

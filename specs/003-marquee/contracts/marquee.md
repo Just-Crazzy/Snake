@@ -1,6 +1,6 @@
 # Contract: бегущая строка в MultiBenefits
 
-**Location**: `src/pages/MultiBenefits/`
+**Location**: `src/shared/ui/Marquee/` (компонент), `src/shared/lib/useMarquee.ts` (хук)
 
 ## Marquee props
 
