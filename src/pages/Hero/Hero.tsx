@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { heroWords } from '@/shared/config';
@@ -15,6 +16,7 @@ type HeroProps = {
 };
 
 function Hero({ isReady = true }: HeroProps) {
+  const { t } = useTranslation();
   const { lang = 'en' } = useParams<{ lang: Lang }>();
   const words = heroWords[lang];
   const wordsRef = useSwitchingWord(words, isReady);
