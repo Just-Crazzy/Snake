@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Hero, MultiBenefits, MultiplyWithUs, MultiTasks } from '@/pages/index';
@@ -16,6 +16,7 @@ import { Background } from '@/widgets';
 import snakeHero from '@public/img/snake-hero.png';
 
 import cls from './Home.module.scss';
+import { useHeroAnimation } from './useHeroAnimation';
 
 import type { Lang } from '@/shared/config';
 
@@ -27,10 +28,12 @@ function Home() {
   const [isDone, setIsDone] = useState(false);
   const isLoading = showPreloader && !isDone;
   const contentClassName = isLoading ? cls.hidden : undefined;
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleDone = useCallback(() => setIsDone(true), []);
 
   useFullpageScroll({ screens: SCREENS, isEnabled: !isLoading });
+  const isIntroDone = useHeroAnimation(contentRef, !isLoading);
 
   useEffect(() => {
     if (!showPreloader) removePreloaderShell();
@@ -46,12 +49,12 @@ function Home() {
     <>
       <Background />
 
-      <div className={contentClassName}>
+      <div ref={contentRef} className={contentClassName}>
         <div className={cls.header}>
           <Header left={<Logo />} right={<HeaderNav />} />
         </div>
 
-        <Hero />
+        <Hero isReady={isIntroDone} />
         <MultiTasks />
         <MultiBenefits />
         <MultiplyWithUs />

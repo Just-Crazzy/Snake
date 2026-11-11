@@ -44,12 +44,7 @@ function Hero({ isReady = true }: HeroProps) {
             <Trans i18nKey="hero.text" />
           </p>
 
-          <Button
-            href="#joinUs"
-            variant="block"
-            className={cls.button}
-            data-hero="button"
-          >
+          <Button href="#joinUs" variant="block" className={cls.button} data-hero="button">
             {t('hero.button')}
           </Button>
         </div>
