@@ -6,8 +6,6 @@ type ContactRule = {
   placeholder: string;
 };
 
-const DEFAULT_PLACEHOLDER = 'Your Contact*';
-
 const contactMethods: { value: ContactMethod; label: string }[] = [
   { value: 'telegram', label: 'Telegram' },
   { value: 'whatsapp', label: 'WhatsApp' },
@@ -17,28 +15,23 @@ const contactMethods: { value: ContactMethod; label: string }[] = [
 const contactRules: Record<ContactMethod, ContactRule> = {
   telegram: {
     pattern: /^@[a-zA-Z0-9_]{5,32}$/,
-    message: 'Username must start with @, e.g. @john_dev',
+    message: 'form.contact.errors.telegram',
     placeholder: '@username*',
   },
   whatsapp: {
     pattern: /^\+\d{10,15}$/,
-    message: 'Phone must look like +420123456789',
+    message: 'form.contact.errors.whatsapp',
     placeholder: '+420123456789*',
   },
   email: {
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    message: 'Enter a valid email',
+    message: 'form.contact.errors.email',
     placeholder: 'name@mail.com*',
   },
 };
 
-const getContactPlaceholder = (method: ContactMethod | undefined) => {
-  if (!method) {
-    return DEFAULT_PLACEHOLDER;
-  }
-
-  return contactRules[method].placeholder;
-};
+const getContactPlaceholder = (method: ContactMethod | undefined) =>
+  method ? contactRules[method].placeholder : undefined;
 
 const validateContact = (value: string, method: ContactMethod | undefined) => {
   if (!method) {

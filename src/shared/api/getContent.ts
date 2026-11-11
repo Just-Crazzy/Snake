@@ -1,3 +1,4 @@
+import { contentAdapters } from './adapters';
 import { request } from './request';
 
 import type { Lang } from '@/shared/config';

@@ -6,6 +6,8 @@ import ArrowIcon from '@public/icons/scroll-to-top.svg?react';
 import cls from './Footer.module.scss';
 
 export const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className={cls.footer}>
       <div className={cls.footer__wrapper}>

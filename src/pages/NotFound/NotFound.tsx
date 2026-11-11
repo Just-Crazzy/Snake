@@ -21,7 +21,7 @@ function NotFound() {
           left={<Logo />}
           right={
             <Link href="#" className={cls.menu}>
-              Menu
+              {t('nav.menu')}
             </Link>
           }
         />
@@ -34,7 +34,7 @@ function NotFound() {
           </div>
 
           <Link href="/" className={cls.button}>
-            <span className={cls.oops}>Oops, </span>take me back
+            <Trans i18nKey="notFound.back" components={{ oops: <span className={cls.oops} /> }} />
           </Link>
         </main>
       </div>

@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
-import { LANGUAGES } from '@/shared/config';
+import { i18n, LANGUAGES } from '@/shared/config';
 
 import { NotFound } from '@/pages';
 
@@ -8,8 +9,15 @@ import type { Lang } from '@/shared/config';
 
 const LangGuard = () => {
   const { lang } = useParams();
+  const isValid = LANGUAGES.includes(lang as Lang);
 
-  if (!LANGUAGES.includes(lang as Lang)) {
+  useEffect(() => {
+    if (isValid) {
+      i18n.changeLanguage(lang);
+    }
+  }, [lang, isValid]);
+
+  if (!isValid) {
     return <NotFound />;
   }
 

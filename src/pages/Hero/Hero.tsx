@@ -39,13 +39,11 @@ function Hero({ isReady = true }: HeroProps) {
           </h1>
 
           <p className={cls.text}>
-            We provide effective solutions, tested and refined
-            <br />
-            on our own products and ad budgets
+            <Trans i18nKey="hero.text" />
           </p>
 
           <Button href="#joinUs" variant="block" className={cls.button}>
-            Get in touch
+            {t('hero.button')}
           </Button>
         </div>
 

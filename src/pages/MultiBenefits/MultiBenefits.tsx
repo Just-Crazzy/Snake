@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { useContent } from '@/shared/api';
 
 import { Marquee } from './Marquee';
@@ -16,10 +18,11 @@ function renderTitle(title: string) {
 }
 
 function MultiBenefits() {
+  const { t } = useTranslation();
   const { data, loading, error } = useContent('benefits');
 
   if (loading) return null;
-  if (error || !data) return <p>Не удалось загрузить данные</p>;
+  if (error || !data) return <p>{t('common.loadError')}</p>;
 
   return (
     <section id="benefits" className={cls.page}>
