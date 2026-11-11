@@ -26,7 +26,7 @@
 
 **Constraints**: появление ≤ 2 с (FR-006); уход синхронен с переходом поэкранной прокрутки (0,8 с, `power2.inOut`) без собственной длительности; без горизонтальной прокрутки (FR-012); Lighthouse Performance ≥ 75 при змее как LCP-картинке (SC-006)
 
-**Scale/Scope**: 1 новый хук в `pages/Home`, правки `Home.tsx`, `Home.module.scss`, `Hero.tsx`; data-атрибуты в `widgets/Header` и проброс атрибутов в `shared/ui/Socials`
+**Scale/Scope**: 1 новый хук в `shared/lib`, правки `Home.tsx`, `Home.module.scss`, `Hero.tsx`; data-атрибуты в `widgets/Header` и проброс атрибутов в `shared/ui/Socials`
 
 ## Constitution Check
 
@@ -39,7 +39,7 @@
 | III. Чистый код и линтеры | Без комментариев и `console.log`; `yarn lint` | ✅ PASS |
 | III. Stylelint | Пакет `stylelint` в проекте не установлен, гейт не проверяется | ⚠️ WARN, вне рамок фичи |
 | IV. Уничтожение анимаций | Всё внутри одного `gsap.matchMedia()`, `mm.revert()` при размонтировании, смене `lang` и `isReady`; смена ширины и «уменьшить движение» обрабатываются условиями `matchMedia` | ✅ PASS |
-| IV. Анимация рядом со своим блоком | Хук лежит в `pages/Home`, а не в `pages/Hero` или `widgets/Header`: анимация одна на экран и шапку, а собирает их только Home (research R1) | ✅ PASS, с обоснованием |
+| IV. Анимация рядом со своим блоком | Хук лежит в `shared/lib` рядом с `useFullpageScroll`: анимация одна на экран и шапку, вызывается из Home и сверху ничего не импортирует (research R1) | ✅ PASS, с обоснованием |
 | IV. Mobile до 576px | При ширине ≤ 576px timeline не создаются, `isIntroDone` сразу `true`, слово переключается | ✅ PASS |
 | V. Макет и доступность | Размеры и вёрстка не меняются; конечное положение совпадает с макетом; интерактивные элементы остаются доступны с клавиатуры, после появления у них `visibility: inherit` | ✅ PASS |
 | Lighthouse | Змея — LCP-картинка и стартует с `autoAlpha: 0`; нужен замер, запасной вариант описан в research R9 | ⚠️ проверить на реализации |
@@ -72,21 +72,23 @@ src/
 ├── pages/
 │   ├── Home/
 │   │   ├── Home.tsx                 # ref на контейнер, isReady = !isLoading, useHeroAnimation, <Hero isReady={isIntroDone} />
-│   │   ├── Home.module.scss         # .header: overflow-x: clip
-│   │   └── useHeroAnimation.ts      # новый: gsap.matchMedia, timeline появления и ухода
+│   │   └── Home.module.scss         # .header: overflow-x: clip
 │   └── Hero/
 │       └── Hero.tsx                 # data-hero на content, title, text, button, snake, socials
 ├── widgets/
 │   └── Header/
 │       └── Header.tsx               # data-header="left" | "right" на слотах
 └── shared/
+    ├── lib/
+    │   ├── index.ts                 # экспорт useHeroAnimation
+    │   └── useHeroAnimation.ts      # новый: gsap.matchMedia, timeline появления и ухода
     └── ui/
         └── Socials/
             └── Socials.tsx          # проброс остальных атрибутов на <ul>
 ```
 
-**Structure Decision**: Хук `useHeroAnimation` лежит в `src/pages/Home/`: шапка — это виджет, который Home ставит над Hero, и только Home видит оба блока одновременно (research R1). Элементы находятся по data-атрибутам внутри контейнера Home (research R7), поэтому виджеты и `shared/ui` получают только разметку, а не логику. `useFullpageScroll` и `useSwitchingWord` не меняются.
+**Structure Decision**: Хук `useHeroAnimation` лежит в `src/shared/lib/`, как и `useFullpageScroll`: это отдельный функционал, который Home вызывает для первого экрана и шапки (research R1). Элементы находятся по data-атрибутам внутри контейнера Home (research R7), поэтому виджеты и `shared/ui` получают только разметку, а не логику. `useFullpageScroll` и `useSwitchingWord` не меняются.
 
 ## Complexity Tracking
 
-Нарушений constitution, требующих обоснования, нет. Расположение хука в `pages/Home` вместо папки одного блока обосновано в research R1.
+Нарушений constitution, требующих обоснования, нет. Расположение хука в `shared/lib` обосновано в research R1.

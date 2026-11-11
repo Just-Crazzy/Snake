@@ -45,7 +45,7 @@ description: "Task list for feature 006-hero-animation"
 **Проверка**: quickstart, сценарий 5, пункт 1 (на 375 слово переключается) и сценарий 6, пункт 1 (смена языка без ошибок в консоли); на 1440 слово начинает переключаться сразу после прелоадера, как до изменений.
 
 - [X] T006 Проверить отражение змеи (research R3): временно добавить в `src/pages/Hero/Hero.tsx` `useLayoutEffect(() => { gsap.set('[data-hero="snake"]', { xPercent: 0 }); }, [])`, открыть `/en` на 1440 и сравнить змею с `specs/006-hero-animation/mockup/hero.png` (голова смотрит влево), затем временный код удалить. Если отражение не изменилось — записать «проверено, работает» в R3 `specs/006-hero-animation/research.md`. Если сломалось — в T007 первой строкой callback `matchMedia` сделать `gsap.set(snake, { scaleX: -1 })`, а если и это не поможет — обёртка вокруг `<img>` в `src/pages/Hero/Hero.tsx` с `data-hero="snake"` на обёртке; выбранный вариант и причину записать в R3
-- [X] T007 Создать `src/pages/Home/useHeroAnimation.ts` (contract `useHeroAnimation(scopeRef, isReady)`; data-model «Состояние хука»; research R5, R6, R14):
+- [X] T007 Создать `src/shared/lib/useHeroAnimation.ts` (contract `useHeroAnimation(scopeRef, isReady)`; data-model «Состояние хука»; research R5, R6, R14):
   - `gsap.registerPlugin(ScrollTrigger)` (импорт из `gsap/ScrollTrigger`);
   - константы условий: `INTRO_QUERY = '(min-width: 577px) and (prefers-reduced-motion: no-preference)'`, `EXIT_QUERY = '(min-width: 1025px) and (prefers-reduced-motion: no-preference)'`, `STILL_QUERY = '(max-width: 576px), (prefers-reduced-motion: reduce)'`;
   - сигнатура `(scopeRef: RefObject<HTMLElement | null>, isReady: boolean) => boolean`; `lang` из `useParams<{ lang: Lang }>()`;
@@ -65,10 +65,10 @@ description: "Task list for feature 006-hero-animation"
 
 **Independent Test**: quickstart, сценарии 1 и 4
 
-- [X] T010 [US1] В `src/pages/Home/useHeroAnimation.ts` добавить константы появления (research R13): `INTRO_FADE = 0.6`, `INTRO_SLIDE = 0.6`, `INTRO_STAGGER = 0.15`, `INTRO_OFFSET = -80`, `INTRO_EASE = 'power3.out'`; и селекторы целей: `'[data-hero="snake"]'`, `'[data-header="left"]'`, `'[data-header="right"]'`, `'[data-hero="title"]'`, `'[data-hero="text"]'`, `'[data-hero="button"]'`, `'[data-hero="socials"]'` (data-model, AnimationTargets)
-- [X] T011 [US1] В callback `matchMedia` в `src/pages/Home/useHeroAnimation.ts` заменить безусловный `markIntroDone()`: если `ctx.conditions.intro && !introPlayedRef.current` — создать `const intro = gsap.timeline({ onComplete: markIntroDone })`: шаг 1 `fromTo([snake, headerLeft, headerRight], { autoAlpha: 0 }, { autoAlpha: 1, duration: INTRO_FADE })`; шаг 2 после него `fromTo([title, text, button, socials], { x: INTRO_OFFSET, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: INTRO_SLIDE, stagger: INTRO_STAGGER, ease: INTRO_EASE })`; иначе — `markIntroDone()`. Появление меняет только `autoAlpha` и `x` (research R3). Итог ≤ 2 с (FR-006)
-- [X] T012 [US1] Проверить, что начальное скрытое состояние ставится до первой отрисовки (research R8): эффект в `src/pages/Home/useHeroAnimation.ts` — именно `useLayoutEffect`, у `fromTo` не отключён `immediateRender`. DevTools → Performance со скриншотами: между исчезновением прелоадера и шагом 1 нет кадра с готовым экраном (FR-002; quickstart 1, пункты 2–3)
-- [X] T013 [US1] В ветке появления в `src/pages/Home/useHeroAnimation.ts` создать наблюдатель (research R10): `const watcher = ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: 'bottom top', onUpdate: (self) => { if (self.progress > 0 && intro.isActive()) intro.progress(1); } })`; сразу после создания `if (watcher.progress > 0) intro.progress(1)` (FR-010, FR-011)
+- [X] T010 [US1] В `src/shared/lib/useHeroAnimation.ts` добавить константы появления (research R13): `INTRO_FADE = 0.6`, `INTRO_SLIDE = 0.6`, `INTRO_STAGGER = 0.15`, `INTRO_OFFSET = -80`, `INTRO_EASE = 'power3.out'`; и селекторы целей: `'[data-hero="snake"]'`, `'[data-header="left"]'`, `'[data-header="right"]'`, `'[data-hero="title"]'`, `'[data-hero="text"]'`, `'[data-hero="button"]'`, `'[data-hero="socials"]'` (data-model, AnimationTargets)
+- [X] T011 [US1] В callback `matchMedia` в `src/shared/lib/useHeroAnimation.ts` заменить безусловный `markIntroDone()`: если `ctx.conditions.intro && !introPlayedRef.current` — создать `const intro = gsap.timeline({ onComplete: markIntroDone })`: шаг 1 `fromTo([snake, headerLeft, headerRight], { autoAlpha: 0 }, { autoAlpha: 1, duration: INTRO_FADE })`; шаг 2 после него `fromTo([title, text, button, socials], { x: INTRO_OFFSET, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: INTRO_SLIDE, stagger: INTRO_STAGGER, ease: INTRO_EASE })`; иначе — `markIntroDone()`. Появление меняет только `autoAlpha` и `x` (research R3). Итог ≤ 2 с (FR-006)
+- [X] T012 [US1] Проверить, что начальное скрытое состояние ставится до первой отрисовки (research R8): эффект в `src/shared/lib/useHeroAnimation.ts` — именно `useLayoutEffect`, у `fromTo` не отключён `immediateRender`. DevTools → Performance со скриншотами: между исчезновением прелоадера и шагом 1 нет кадра с готовым экраном (FR-002; quickstart 1, пункты 2–3)
+- [X] T013 [US1] В ветке появления в `src/shared/lib/useHeroAnimation.ts` создать наблюдатель (research R10): `const watcher = ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: 'bottom top', onUpdate: (self) => { if (self.progress > 0 && intro.isActive()) intro.progress(1); } })`; сразу после создания `if (watcher.progress > 0) intro.progress(1)` (FR-010, FR-011)
 - [X] T014 [US1] `yarn lint` и `yarn build` без новых ошибок; проверить quickstart, сценарии 1 и 4. **Стоп, ждать подтверждения**
 
 **Checkpoint**: появление работает и проверяется отдельно — это MVP
@@ -81,10 +81,10 @@ description: "Task list for feature 006-hero-animation"
 
 **Independent Test**: quickstart, сценарии 2, 3 и 7
 
-- [X] T015 [US2] В `src/pages/Home/useHeroAnimation.ts` добавить константы ухода (research R12; data-model, таблица целей): `EXIT_CONTENT = { xPercent: -110 }`, `EXIT_SOCIALS = { xPercent: -300 }`, `EXIT_SNAKE = { xPercent: 60 }`, `EXIT_LOGO = { yPercent: -200 }`, `EXIT_NAV = { xPercent: 40, yPercent: -200 }` и селектор `'[data-hero="content"]'`
-- [X] T016 [US2] В callback `matchMedia` в `src/pages/Home/useHeroAnimation.ts` при `ctx.conditions.exit` создать `gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }, defaults: { ease: 'none' } })` и добавить в позицию `0` твины `.to(content, EXIT_CONTENT, 0)`, `.to(socials, EXIT_SOCIALS, 0)`, `.to(snake, EXIT_SNAKE, 0)`, `.to(headerLeft, EXIT_LOGO, 0)`, `.to(headerRight, EXIT_NAV, 0)`. Уход меняет только `xPercent` и `yPercent` (research R2, R3; FR-007, FR-008). `src/shared/lib/useFullpageScroll.ts` не трогать
-- [X] T017 [US2] Проверить quickstart, сценарии 2 и 3: уход и прилетание синхронны с переходом, `/ru#join` → Home даёт прилетание без появления, «Scroll to top» — то же. Если после ухода прелоадера границы ScrollTrigger неверны (уход начинается не с начала перехода), вызвать `ScrollTrigger.refresh()` после создания timeline в `src/pages/Home/useHeroAnimation.ts`
-- [X] T018 [US2] Проверить quickstart, сценарий 7 на 1025, 1280, 1440, 1920: горизонтальной прокрутки нет. Если есть — подобрать смещения в `src/pages/Home/useHeroAnimation.ts` или поправить `overflow-x: clip` в `src/pages/Home/Home.module.scss` (FR-012)
+- [X] T015 [US2] В `src/shared/lib/useHeroAnimation.ts` добавить константы ухода (research R12; data-model, таблица целей): `EXIT_CONTENT = { xPercent: -110 }`, `EXIT_SOCIALS = { xPercent: -300 }`, `EXIT_SNAKE = { xPercent: 60 }`, `EXIT_LOGO = { yPercent: -200 }`, `EXIT_NAV = { xPercent: 40, yPercent: -200 }` и селектор `'[data-hero="content"]'`
+- [X] T016 [US2] В callback `matchMedia` в `src/shared/lib/useHeroAnimation.ts` при `ctx.conditions.exit` создать `gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }, defaults: { ease: 'none' } })` и добавить в позицию `0` твины `.to(content, EXIT_CONTENT, 0)`, `.to(socials, EXIT_SOCIALS, 0)`, `.to(snake, EXIT_SNAKE, 0)`, `.to(headerLeft, EXIT_LOGO, 0)`, `.to(headerRight, EXIT_NAV, 0)`. Уход меняет только `xPercent` и `yPercent` (research R2, R3; FR-007, FR-008). `src/shared/lib/useFullpageScroll.ts` не трогать
+- [X] T017 [US2] Проверить quickstart, сценарии 2 и 3: уход и прилетание синхронны с переходом, `/ru#join` → Home даёт прилетание без появления, «Scroll to top» — то же. Если после ухода прелоадера границы ScrollTrigger неверны (уход начинается не с начала перехода), вызвать `ScrollTrigger.refresh()` после создания timeline в `src/shared/lib/useHeroAnimation.ts`
+- [X] T018 [US2] Проверить quickstart, сценарий 7 на 1025, 1280, 1440, 1920: горизонтальной прокрутки нет. Если есть — подобрать смещения в `src/shared/lib/useHeroAnimation.ts` или поправить `overflow-x: clip` в `src/pages/Home/Home.module.scss` (FR-012)
 - [X] T019 [US2] `yarn lint` и `yarn build` без новых ошибок; проверить quickstart, сценарии 2, 3 и 7. **Стоп, ждать подтверждения**
 
 **Checkpoint**: US1 и US2 работают вместе, уход проверяется отдельно
@@ -97,9 +97,9 @@ description: "Task list for feature 006-hero-animation"
 
 **Independent Test**: quickstart, сценарии 5 и 6
 
-- [ ] T020 [US3] Проверить ветку `still` в callback `matchMedia` в `src/pages/Home/useHeroAnimation.ts`: при `ctx.conditions.still` не создаётся ни один timeline и наблюдатель, сразу вызывается `markIntroDone()`; порядок проверок — сначала `intro && !introPlayedRef.current`, иначе `markIntroDone()`; ветка `exit` проверяется отдельно и при `still` не срабатывает (research R14; FR-014, FR-016)
-- [ ] T021 [US3] Проверить quickstart, сценарий 5, пункты 1–3 (375, 800, reduce): на 375 и при reduce ничего не двигается, слово переключается; на 800 есть появление, ухода нет. Исправления — в `src/pages/Home/useHeroAnimation.ts` (FR-014, FR-015, FR-016)
-- [ ] T022 [US3] Проверить quickstart, сценарий 6 и сценарий 5, пункт 4: смена языка и сужение окна 1440 → 800 → 375 → 1440 не повторяют появление, элементы в конечном положении. Если появление повторяется — проверить, что `introPlayedRef` выставляется в `markIntroDone` до `mm.revert()`, в `src/pages/Home/useHeroAnimation.ts` (research R6; FR-013, FR-017, FR-018)
+- [ ] T020 [US3] Проверить ветку `still` в callback `matchMedia` в `src/shared/lib/useHeroAnimation.ts`: при `ctx.conditions.still` не создаётся ни один timeline и наблюдатель, сразу вызывается `markIntroDone()`; порядок проверок — сначала `intro && !introPlayedRef.current`, иначе `markIntroDone()`; ветка `exit` проверяется отдельно и при `still` не срабатывает (research R14; FR-014, FR-016)
+- [ ] T021 [US3] Проверить quickstart, сценарий 5, пункты 1–3 (375, 800, reduce): на 375 и при reduce ничего не двигается, слово переключается; на 800 есть появление, ухода нет. Исправления — в `src/shared/lib/useHeroAnimation.ts` (FR-014, FR-015, FR-016)
+- [ ] T022 [US3] Проверить quickstart, сценарий 6 и сценарий 5, пункт 4: смена языка и сужение окна 1440 → 800 → 375 → 1440 не повторяют появление, элементы в конечном положении. Если появление повторяется — проверить, что `introPlayedRef` выставляется в `markIntroDone` до `mm.revert()`, в `src/shared/lib/useHeroAnimation.ts` (research R6; FR-013, FR-017, FR-018)
 - [ ] T023 [US3] `yarn lint` и `yarn build` без новых ошибок; проверить quickstart, сценарии 5 и 6. **Стоп, ждать подтверждения**
 
 **Checkpoint**: все истории работают и проверены отдельно
@@ -112,9 +112,9 @@ description: "Task list for feature 006-hero-animation"
 
 **Проверка**: quickstart, сценарии 1–9
 
-- [ ] T024 Замер Lighthouse (quickstart, сценарий 8; research R9): `yarn build`, `yarn preview`, Desktop, Navigation, `/en`. Записать Performance, LCP-элемент и время LCP в R9 `specs/006-hero-animation/research.md`. Если Performance < 75 — в `src/pages/Home/useHeroAnimation.ts` стартовать змею с `alpha: 0.1` вместо `autoAlpha: 0` и замерить снова; если всё ещё < 75 — убрать змею из шага 1 появления; итоговое решение записать в R9
+- [ ] T024 Замер Lighthouse (quickstart, сценарий 8; research R9): `yarn build`, `yarn preview`, Desktop, Navigation, `/en`. Записать Performance, LCP-элемент и время LCP в R9 `specs/006-hero-animation/research.md`. Если Performance < 75 — в `src/shared/lib/useHeroAnimation.ts` стартовать змею с `alpha: 0.1` вместо `autoAlpha: 0` и замерить снова; если всё ещё < 75 — убрать змею из шага 1 появления; итоговое решение записать в R9
 - [ ] T025 Прогнать quickstart, сценарии 1–7 подряд на итоговой сборке; найденные расхождения исправить в файлах из задач выше и перепроверить сценарий
-- [ ] T026 Проверить отсутствие комментариев и `console.log` в `src/pages/Home/useHeroAnimation.ts`, `src/pages/Home/Home.tsx`, `src/pages/Home/Home.module.scss`, `src/pages/Hero/Hero.tsx`, `src/widgets/Header/Header.tsx`, `src/shared/ui/Socials/Socials.tsx` (constitution III)
+- [ ] T026 Проверить отсутствие комментариев и `console.log` в `src/shared/lib/useHeroAnimation.ts`, `src/pages/Home/Home.tsx`, `src/pages/Home/Home.module.scss`, `src/pages/Hero/Hero.tsx`, `src/widgets/Header/Header.tsx`, `src/shared/ui/Socials/Socials.tsx` (constitution III)
 - [ ] T027 `yarn lint` и `yarn build` без новых ошибок (quickstart, сценарий 9). **Стоп, ждать подтверждения**
 
 ---
@@ -135,7 +135,7 @@ description: "Task list for feature 006-hero-animation"
 - T003 после T002: `Socials` должен принимать атрибуты
 - T006 первым в фазе 2: от результата зависит, что писать в T007
 - T008 после T007
-- Задачи внутри US1, US2, US3 — по порядку: все правят `src/pages/Home/useHeroAnimation.ts`
+- Задачи внутри US1, US2, US3 — по порядку: все правят `src/shared/lib/useHeroAnimation.ts`
 
 ### Parallel Opportunities
 
@@ -147,7 +147,7 @@ T002 src/shared/ui/Socials/Socials.tsx
 T004 src/pages/Home/Home.module.scss
 ```
 
-- В фазах 2–6 параллельных задач нет: логика живёт в одном файле `src/pages/Home/useHeroAnimation.ts`
+- В фазах 2–6 параллельных задач нет: логика живёт в одном файле `src/shared/lib/useHeroAnimation.ts`
 
 ---
 

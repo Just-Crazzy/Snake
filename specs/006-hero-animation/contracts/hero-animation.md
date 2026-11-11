@@ -4,7 +4,7 @@
 
 ## `useHeroAnimation(scopeRef, isReady)`
 
-Файл: `src/pages/Home/useHeroAnimation.ts`.
+Файл: `src/shared/lib/useHeroAnimation.ts`.
 
 ```ts
 useHeroAnimation(scopeRef: RefObject<HTMLElement | null>, isReady: boolean): boolean
