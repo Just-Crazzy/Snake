@@ -5,7 +5,8 @@ import { Hero, MultiBenefits, MultiplyWithUs, MultiTasks } from '@/pages/index';
 
 import { ApplicationModal } from '@/widgets/ApplicationModal';
 
-import { removePreloaderShell } from '@/shared/lib';
+import { SCREENS } from '@/shared/config';
+import { removePreloaderShell, useFullpageScroll } from '@/shared/lib';
 import { Logo } from '@/shared/ui';
 
 import { Header, HeaderNav, Preloader } from '@/widgets';
@@ -15,7 +16,6 @@ import { Background } from '@/widgets';
 import snakeHero from '@public/img/snake-hero.png';
 
 import cls from './Home.module.scss';
-import { useFullpageScroll } from './useFullpageScroll';
 
 import type { Lang } from '@/shared/config';
 
@@ -30,7 +30,7 @@ function Home() {
 
   const handleDone = useCallback(() => setIsDone(true), []);
 
-  useFullpageScroll({ isEnabled: !isLoading });
+  useFullpageScroll({ screens: SCREENS, isEnabled: !isLoading });
 
   useEffect(() => {
     if (!showPreloader) removePreloaderShell();

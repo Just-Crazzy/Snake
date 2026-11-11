@@ -5,31 +5,30 @@ import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
-import { SCREEN_REQUEST } from '@/shared/lib';
+import { SCREEN_REQUEST } from './screenNavigation';
 
+import type { ScreenRequestDetail } from './screenNavigation';
 import type { Lang } from '@/shared/config';
-import type { ScreenRequestDetail } from '@/shared/lib';
 
 gsap.registerPlugin(Observer, ScrollToPlugin);
 
-const SCREEN_IDS = ['hero', 'team', 'benefits', 'join'] as const;
-
-type ScreenId = (typeof SCREEN_IDS)[number];
+type Screens = readonly string[];
 
 type Stop = {
   y: number;
-  screenId: ScreenId;
+  screenId: string;
 };
 
 type ResolveIndex = (stops: Stop[]) => number;
 
 type UseFullpageScrollOptions = {
+  screens: Screens;
   isEnabled?: boolean;
 };
 
 const TRANSITION_DURATION = 0.8;
 const TRANSITION_EASE = 'power2.inOut';
-const QUIET_PERIOD = 0.3;
+const QUIET_PERIOD = 0.25;
 const DESKTOP_MIN_WIDTH = 1025;
 const INVERT_WHEEL = -1;
 const GESTURE_TOLERANCE = 10;
@@ -39,28 +38,27 @@ const REDUCE_QUERY = '(prefers-reduced-motion: reduce)';
 const TYPING_TARGETS = 'input, textarea, select, [contenteditable]';
 const ACTIVATABLE_TARGETS = 'button, a';
 
-const LINK_SCREENS: Record<string, ScreenId> = {
-  '#': 'hero',
-  '#hero': 'hero',
-  '#team': 'team',
-  '#benefits': 'benefits',
-  '#join': 'join',
-};
-
-const isScreenId = (value: string): value is ScreenId => SCREEN_IDS.includes(value as ScreenId);
-
 const getOpenDialog = () => document.querySelector('dialog[open]');
 
-const getScreenStop = (screenId: ScreenId): Stop | null => {
+const getLinkScreen = (screens: Screens, href: string): string | undefined => {
+  if (href === '#') return screens[0];
+
+  const screenId = href.slice(1);
+
+  return href.startsWith('#') && screens.includes(screenId) ? screenId : undefined;
+};
+
+const getScreenStop = (screenId: string): Stop | null => {
   const section = document.getElementById(screenId);
 
   return section ? { y: section.getBoundingClientRect().top + window.scrollY, screenId } : null;
 };
 
-const getStops = () => {
+const getStops = (screens: Screens) => {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
 
-  return SCREEN_IDS.map(getScreenStop)
+  return screens
+    .map(getScreenStop)
     .filter((stop): stop is Stop => stop !== null)
     .map((stop) => ({ ...stop, y: gsap.utils.clamp(0, maxScroll, stop.y) }));
 };
@@ -71,14 +69,14 @@ const getNearestIndex: ResolveIndex = (stops) => {
   return stops.reduce((nearest, _, index) => (distance(index) < distance(nearest) ? index : nearest), 0);
 };
 
-const getScreenIndex = (stops: Stop[], screenId: ScreenId) => stops.findIndex((stop) => stop.screenId === screenId);
+const getScreenIndex = (stops: Stop[], screenId: string) => stops.findIndex((stop) => stop.screenId === screenId);
 
 const toNext: ResolveIndex = (stops) => getNearestIndex(stops) + 1;
 const toPrev: ResolveIndex = (stops) => getNearestIndex(stops) - 1;
 const toFirst: ResolveIndex = () => 0;
 const toLast: ResolveIndex = (stops) => stops.length - 1;
 const toScreen =
-  (screenId: ScreenId): ResolveIndex =>
+  (screenId: string): ResolveIndex =>
   (stops) =>
     getScreenIndex(stops, screenId);
 
@@ -91,14 +89,14 @@ const KEY_TARGETS: Record<string, ResolveIndex> = {
   End: toLast,
 };
 
-const getHashScreen = (): ScreenId | null => {
-  const screenId = LINK_SCREENS[window.location.hash] ?? null;
+const getHashScreen = (screens: Screens) => {
+  const screenId = getLinkScreen(screens, window.location.hash);
 
-  return screenId === 'hero' ? null : screenId;
+  return screenId && screenId !== screens[0] ? screenId : null;
 };
 
-const syncHash = (screenId: ScreenId) => {
-  const hash = screenId === 'hero' ? '' : `#${screenId}`;
+const syncHash = (screens: Screens, screenId: string) => {
+  const hash = screenId === screens[0] ? '' : `#${screenId}`;
 
   if (hash === window.location.hash) return;
 
@@ -138,14 +136,14 @@ const listen = <E extends Event>(target: EventTarget, type: string, handler: (ev
   return () => target.removeEventListener(type, listener);
 };
 
-const createFullpage = (duration: number, isEnabled: boolean) => {
+const createFullpage = (screens: Screens, duration: number, isEnabled: boolean) => {
   const root = document.documentElement;
   const prevScrollBehavior = root.style.scrollBehavior;
   const prevScrollRestoration = window.history.scrollRestoration;
   let isLocked = false;
   let isMoving = false;
   let tween: gsap.core.Tween | null = null;
-  let pendingScreen = getHashScreen();
+  let pendingScreen = getHashScreen(screens);
 
   const quietTimer = gsap
     .delayedCall(QUIET_PERIOD, () => {
@@ -160,7 +158,7 @@ const createFullpage = (duration: number, isEnabled: boolean) => {
 
   const jumpTo = (stop: Stop) => {
     window.scrollTo(0, stop.y);
-    syncHash(stop.screenId);
+    syncHash(screens, stop.screenId);
   };
 
   const animateTo = (stop: Stop) => {
@@ -173,7 +171,7 @@ const createFullpage = (duration: number, isEnabled: boolean) => {
       ease: TRANSITION_EASE,
       onComplete: () => {
         isMoving = false;
-        syncHash(stop.screenId);
+        syncHash(screens, stop.screenId);
         quietTimer.restart(true);
       },
     });
@@ -182,7 +180,7 @@ const createFullpage = (duration: number, isEnabled: boolean) => {
   const goTo = (resolveIndex: ResolveIndex) => {
     if (isBlocked()) return;
 
-    const stops = getStops();
+    const stops = getStops(screens);
     const index = resolveIndex(stops);
     const stop: Stop | undefined = stops[index];
 
@@ -209,7 +207,7 @@ const createFullpage = (duration: number, isEnabled: boolean) => {
   const align = () => {
     if (isMoving) return;
 
-    const stops = getStops();
+    const stops = getStops(screens);
 
     if (!stops.length || alignPending(stops)) return;
 
@@ -220,7 +218,7 @@ const createFullpage = (duration: number, isEnabled: boolean) => {
 
   const onClick = (event: MouseEvent) => {
     const link = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
-    const screenId = link ? LINK_SCREENS[link.getAttribute('href') ?? ''] : undefined;
+    const screenId = link ? getLinkScreen(screens, link.getAttribute('href') ?? '') : undefined;
 
     if (!screenId) return;
 
@@ -240,7 +238,7 @@ const createFullpage = (duration: number, isEnabled: boolean) => {
   const onScreenRequest = (event: CustomEvent<ScreenRequestDetail>) => {
     const { id } = event.detail;
 
-    if (!isScreenId(id)) return;
+    if (!screens.includes(id)) return;
 
     event.preventDefault();
     goTo(toScreen(id));
@@ -282,7 +280,7 @@ const createFullpage = (duration: number, isEnabled: boolean) => {
   };
 };
 
-const useFullpageScroll = ({ isEnabled = true }: UseFullpageScrollOptions = {}) => {
+const useFullpageScroll = ({ screens, isEnabled = true }: UseFullpageScrollOptions) => {
   const { lang } = useParams<{ lang: Lang }>();
 
   useEffect(() => {
@@ -291,11 +289,11 @@ const useFullpageScroll = ({ isEnabled = true }: UseFullpageScrollOptions = {}) 
     mm.add({ desktop: DESKTOP_QUERY, reduce: REDUCE_QUERY }, (ctx) => {
       if (!ctx.conditions?.desktop) return;
 
-      return createFullpage(ctx.conditions.reduce ? 0 : TRANSITION_DURATION, isEnabled);
+      return createFullpage(screens, ctx.conditions.reduce ? 0 : TRANSITION_DURATION, isEnabled);
     });
 
     return () => mm.revert();
-  }, [lang, isEnabled]);
+  }, [lang, isEnabled, screens]);
 };
 
 export { useFullpageScroll };
