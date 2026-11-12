@@ -4,4 +4,5 @@ export type { ScreenRequestDetail } from './screenNavigation';
 export { useFullpageScroll } from './useFullpageScroll';
 export { useHashModal } from './useHashModal';
 export { useMarquee } from './useMarquee';
+export { useMultitasksAnimation } from './useMultitasksAnimation';
 export { useSwitchingWord } from './useSwitchingWord';
