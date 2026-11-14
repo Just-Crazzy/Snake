@@ -9,7 +9,7 @@
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
-  background: linear-gradient(122deg, #dc8400 0%, #560080 56%, #220032 100%);
+  background: transparent;
 
   @include max-media(1024) {
     min-height: auto;
@@ -47,6 +47,9 @@
 }
 
 .container__content {
+  --snake-x: 0px;
+  --snake-opacity: 1;
+
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -61,6 +64,8 @@
     width: 28%;
     aspect-ratio: 1;
     background: url('@public/img/snake-tongue.png') center / contain no-repeat;
+    opacity: var(--snake-opacity);
+    transform: translateX(var(--snake-x));
     pointer-events: none;
   }
 
