@@ -1,43 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
-import gsap from 'gsap';
+import { useGridMeshAnimation } from '@/shared/lib';
 
 import cls from './Background.module.scss';
 
 const GridMesh = () => {
   const maskRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!maskRef.current) return;
-
-    const positions = [
-      { x: '0%', y: '50%' },
-      { x: '85%', y: '90%' },
-      { x: '0%', y: '50%' },
-      { x: '85%', y: '10%' },
-    ];
-
-    const tl = gsap.timeline({
-      repeat: -1,
-      defaults: {
-        duration: 4,
-        ease: 'power2.inOut',
-      },
-    });
-
-    positions.forEach((pos) => {
-      tl.to(maskRef.current, {
-        '--x': pos.x,
-        '--y': pos.y,
-      });
-
-      tl.to({}, { duration: 1.5 });
-    });
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
+  useGridMeshAnimation(maskRef);
 
   return (
     <div className={`${cls.absolute} ${cls['inset-0']} ${cls['overflow-hidden']}`}>
