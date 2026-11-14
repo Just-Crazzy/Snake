@@ -6,5 +6,6 @@ export { useGridMeshAnimation } from './useGridMeshAnimation';
 export { useHashModal } from './useHashModal';
 export { useHeroAnimation } from './useHeroAnimation';
 export { useMarquee } from './useMarquee';
+export { useMultitasksAnimation } from './useMultitasksAnimation';
 export { useMultibenefitsAnimation } from './useMultibenefitsAnimation';
 export { useSwitchingWord } from './useSwitchingWord';
