@@ -2,10 +2,11 @@ import { useParams } from 'react-router-dom';
 
 import { marqueeText } from '@/shared/config';
 
+import { useMarquee } from '@/shared/lib';
+
 import Mask from '@public/icons/mask.svg?react';
 
 import cls from './Marquee.module.scss';
-import { useMarquee } from './useMarquee';
 
 import type { Lang } from '@/shared/config';
 import type { Ref } from 'react';

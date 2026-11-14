@@ -47,7 +47,7 @@ description: "Task list for feature implementation: Переключающеес
 - [X] T003 [P] [US1] В `src/pages/Hero/Hero.module.scss` заменить `.accent` на `.words` и добавить `.word` (research R2, R3): `.words` — `display: inline-grid`, `overflow: hidden`, `vertical-align: top`, `color: $c-second`; `.word` — `grid-area: 1 / 1`, `display: block`; `.word + .word` — `transform: translateY(-100%)`, чтобы до старта анимации и при `isReady = false` было видно только первое слово. Если края букв обрезаются — вертикальный `padding` в `em` и такой же отрицательный `margin` у `.words`
 - [X] T004 [P] [US1] Обновить `src/pages/Hero/Hero.module.scss.d.ts` под классы из T003: убрать `accent`, добавить `words` и `word` (формат как у соседних `.module.scss.d.ts`; плагин `vite-plugin-sass-dts` перегенерирует файл при `yarn dev`, итог должен совпасть)
 - [X] T005 [US1] Разметка заголовка в `src/pages/Hero/Hero.tsx` (contract, раздел «Разметка заголовка»; research R8): язык из `useParams<{ lang: Lang }>()`, `const words = heroWords[lang]`; внутри `h1` — `<span className="sr-only">Practice makes {words.join(', ')}</span>` и видимая строка `<span aria-hidden="true">Practice <br /> makes <span className={cls.words}>…</span></span>`, где в `cls.words` для каждого слова `<span key={word} className={cls.word}>{word}</span>`; `aria-live` не использовать (FR-009). Зависит от T002, T003, T004
-- [X] T006 [P] [US1] Создать `src/pages/Hero/useSwitchingWord.ts` (contract `useSwitchingWord(words, isReady)`; research R4, R5; data-model SwitchingWord): `useRef<HTMLSpanElement>(null)` для контейнера; в `useEffect` при `!isReady` или пустом ref — выход; `const mm = gsap.matchMedia()`; `mm.add({ motion: '(prefers-reduced-motion: no-preference)', reduce: '(prefers-reduced-motion: reduce)' }, (ctx) => {…}, ref.current)`; внутри: элементы — прямые потомки контейнера; `gsap.set` каждому `{ y: 0, yPercent: index === 0 ? 0 : -100 }` (`y: 0` обнуляет `translateY` из CSS T003); `gsap.timeline({ repeat: -1 })`; для каждого слова `i` в позиции `i * (HOLD + switchDuration) + HOLD` два `fromTo` с `immediateRender: false`, `ease: 'power2.inOut'`: слово `i` — `yPercent 0 → 100`, слово `(i + 1) % n` — `yPercent -100 → 0`; `HOLD = 2.5`, `SWITCH = 0.6`, при `ctx.conditions.reduce` длительность `0` (FR-004, FR-005, FR-010); cleanup — `mm.revert()`; зависимости `[words, isReady]` (FR-011); вернуть `ref`
+- [X] T006 [P] [US1] Создать `src/shared/lib/useSwitchingWord.ts` (contract `useSwitchingWord(words, isReady)`; research R4, R5; data-model SwitchingWord): `useRef<HTMLSpanElement>(null)` для контейнера; в `useEffect` при `!isReady` или пустом ref — выход; `const mm = gsap.matchMedia()`; `mm.add({ motion: '(prefers-reduced-motion: no-preference)', reduce: '(prefers-reduced-motion: reduce)' }, (ctx) => {…}, ref.current)`; внутри: элементы — прямые потомки контейнера; `gsap.set` каждому `{ y: 0, yPercent: index === 0 ? 0 : -100 }` (`y: 0` обнуляет `translateY` из CSS T003); `gsap.timeline({ repeat: -1 })`; для каждого слова `i` в позиции `i * (HOLD + switchDuration) + HOLD` два `fromTo` с `immediateRender: false`, `ease: 'power2.inOut'`: слово `i` — `yPercent 0 → 100`, слово `(i + 1) % n` — `yPercent -100 → 0`; `HOLD = 2.5`, `SWITCH = 0.6`, при `ctx.conditions.reduce` длительность `0` (FR-004, FR-005, FR-010); cleanup — `mm.revert()`; зависимости `[words, isReady]` (FR-011); вернуть `ref`
 - [X] T007 [US1] В `src/pages/Hero/Hero.tsx` добавить проп `isReady?: boolean` со значением по умолчанию `true` (contract, «Hero props»; research R7), вызвать `const wordsRef = useSwitchingWord(words, isReady)` и повесить `ref={wordsRef}` на контейнер `cls.words`. Зависит от T005, T006
 
 **Checkpoint**: сценарий 1 из quickstart проходит — это MVP
@@ -72,7 +72,7 @@ description: "Task list for feature implementation: Переключающеес
 
 **Independent Test**: quickstart, сценарии 7 и 8
 
-- [X] T009 [US3] Проверить сценарии 7 и 8 из quickstart; если чтец объявляет смены или при «уменьшить движение» есть пролистывание, исправить разметку в `src/pages/Hero/Hero.tsx` или условие `reduce` в `src/pages/Hero/useSwitchingWord.ts` (FR-009, FR-010)
+- [X] T009 [US3] Проверить сценарии 7 и 8 из quickstart; если чтец объявляет смены или при «уменьшить движение» есть пролистывание, исправить разметку в `src/pages/Hero/Hero.tsx` или условие `reduce` в `src/shared/lib/useSwitchingWord.ts` (FR-009, FR-010)
 
 **Checkpoint**: сценарии 7 и 8 проходят
 
@@ -81,7 +81,7 @@ description: "Task list for feature implementation: Переключающеес
 ## Phase 6: Polish & Cross-Cutting Concerns
 
 - [ ] T010 Пройти сценарии 1, 3, 5, 6 из [quickstart.md](./quickstart.md) (цикл слов, обрезка букв, смена языка, вкладка в фоне)
-- [ ] T011 Проверить, что в `src/pages/Hero/useSwitchingWord.ts`, `src/pages/Hero/Hero.tsx`, `src/pages/Hero/Hero.module.scss`, `src/shared/config/heroWords.ts` нет комментариев и `console.log`; `yarn lint` без ошибок
+- [ ] T011 Проверить, что в `src/shared/lib/useSwitchingWord.ts`, `src/pages/Hero/Hero.tsx`, `src/pages/Hero/Hero.module.scss`, `src/shared/config/heroWords.ts` нет комментариев и `console.log`; `yarn lint` без ошибок
 - [X] T012 `yarn build` без ошибок TypeScript
 
 ---
@@ -122,7 +122,7 @@ description: "Task list for feature implementation: Переключающеес
 ```text
 Task: "T003 .words и .word в src/pages/Hero/Hero.module.scss"
 Task: "T004 классы в src/pages/Hero/Hero.module.scss.d.ts"
-Task: "T006 хук src/pages/Hero/useSwitchingWord.ts"
+Task: "T006 хук src/shared/lib/useSwitchingWord.ts"
 ```
 
 ---

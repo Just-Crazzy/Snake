@@ -1,8 +1,8 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 1.0.1
-- Modified principles: II. Мультиязычность — список языков приведён к реальному коду
-  (языки из LANGUAGES, сейчас en и ru)
+- Version change: 1.0.1 → 2.0.0
+- Modified principles: IV. Анимации GSAP — правило «сложная анимация рядом со своим widget»
+  заменено: хуки анимаций и логика лежат в shared/lib, папки pages только для страниц
 - Added sections: нет
 - Removed sections: нет
 - Templates: .specify/templates/* читают constitution во время выполнения, не изменялись
@@ -45,7 +45,9 @@ Sync Impact Report
 
 - Каждая GSAP-анимация MUST уничтожаться при размонтировании компонента, при смене языка
   и при смене responsive-состояния.
-- Сложная анимация MUST лежать рядом со своим widget, а не в общем слое.
+- Хуки анимаций и любая другая логика MUST лежать в `src/shared/lib` и экспортироваться через
+  `src/shared/lib/index.ts`; константы — в `src/shared/config`, переиспользуемые компоненты —
+  в `src/shared/ui`. Папки `src/pages/*` MUST содержать только страницы и их стили.
 - На mobile (ширина экрана до 576px) MUST быть отключены все анимации, кроме бегущей и
   переключающейся строк.
 
@@ -84,4 +86,4 @@ Sync Impact Report
 - Каждый план (`/speckit-plan`) и каждый PR MUST проверяться на соответствие принципам;
   отступление допускается только с письменным обоснованием в плане.
 
-**Version**: 1.0.1 | **Ratified**: 2026-11-09 | **Last Amended**: 2026-11-09
+**Version**: 2.0.0 | **Ratified**: 2026-11-09 | **Last Amended**: 2026-11-11

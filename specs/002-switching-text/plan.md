@@ -39,7 +39,7 @@
 | II. Мультиязычность | Начало заголовка «Practice makes» захардкожено в `Hero.tsx` ещё до этой фичи и не переводится (слоган, Q2); перевод заголовка вне рамок спеки | ⚠️ WARN, существующее, вне рамок |
 | III. Чистый код и линтеры | Без комментариев и `console.log`; `yarn lint` | ✅ PASS |
 | III. Stylelint | Пакет `stylelint` в проекте не установлен, гейт не проверяется | ⚠️ WARN, вне рамок фичи |
-| IV. Анимации GSAP | Всё внутри `gsap.matchMedia()` (это `gsap.context`), `revert()` при размонтировании и смене языка; анимация лежит рядом с секцией; на mobile работает — переключающаяся строка прямо разрешена принципом IV | ✅ PASS |
+| IV. Анимации GSAP | Всё внутри `gsap.matchMedia()` (это `gsap.context`), `revert()` при размонтировании и смене языка; хук лежит в `shared/lib`, папка страницы только для страницы; на mobile работает — переключающаяся строка прямо разрешена принципом IV | ✅ PASS |
 | V. Макет и доступность | Шрифт и размеры заголовка не меняются; единицы `rem`, `em`, `%`; интерактивных элементов нет | ✅ PASS |
 | Lighthouse | Анимируется только `transform`, раскладка не пересчитывается | ✅ PASS (проверить на реализации) |
 
@@ -69,17 +69,19 @@ specs/002-switching-text/
 ```text
 src/
 ├── shared/
-│   └── config/
-│       ├── heroWords.ts              # новый: Record<Lang, string[]> — skills, profit, growth
-│       └── index.ts                  # + экспорт heroWords
+│   ├── config/
+│   │   ├── heroWords.ts              # новый: Record<Lang, string[]> — skills, profit, growth
+│   │   └── index.ts                  # + экспорт heroWords
+│   └── lib/
+│       ├── useSwitchingWord.ts       # новый: GSAP timeline внутри gsap.matchMedia
+│       └── index.ts                  # + экспорт useSwitchingWord
 └── pages/
     └── Hero/
         ├── Hero.tsx                  # h1: .sr-only с полной фразой + видимая строка с aria-hidden; проп isReady
-        ├── Hero.module.scss          # + .words (grid-стопка, overflow: hidden) и .word
-        └── useSwitchingWord.ts       # новый: GSAP timeline внутри gsap.matchMedia
+        └── Hero.module.scss          # + .words (grid-стопка, overflow: hidden) и .word
 ```
 
-**Structure Decision**: Хук `useSwitchingWord` лежит в `src/pages/Hero/` рядом с секцией (принцип IV: анимация рядом со своим блоком), `Hero.tsx` только размечает слова и отдаёт хуку ref. Слова — в `src/shared/config/heroWords.ts` по образцу `preloaderTexts`, потому что `feature/internalization` ещё не в `dev`; после слияния i18n они переносятся в `hero.words` в locales, а хук не меняется.
+**Structure Decision**: Хук `useSwitchingWord` лежит в `src/shared/lib/`: папки `pages` только для страниц, хуки и анимации — в `shared/lib`. `Hero.tsx` только размечает слова и отдаёт хуку ref. Слова — в `src/shared/config/heroWords.ts` по образцу `preloaderTexts`, потому что `feature/internalization` ещё не в `dev`; после слияния i18n они переносятся в `hero.words` в locales, а хук не меняется.
 
 ## Complexity Tracking
 

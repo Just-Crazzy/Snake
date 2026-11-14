@@ -44,11 +44,11 @@ description: "Task list for feature implementation: Бегущая строка 
 
 **Independent Test**: quickstart, сценарии 1 и 4
 
-- [X] T003 [P] [US1] Создать `src/pages/MultiBenefits/Marquee.module.scss` по замерам research R2: `.marquee` — `overflow: hidden`, `transform: rotate(1deg)`, `border-top` и `border-bottom: 3px solid $c-second`, `color: $c-second`, `font-family: $font-family-main`, `text-transform: uppercase`, `white-space: nowrap`, `line-height: 1`, вертикальные `padding`, чтобы расстояние между линиями было ≈ 101px; `.track` — `display: flex`, `width: max-content`; `.group` и `.item` — `display: flex`, `align-items: center`, `flex-shrink: 0`; `.text` — `font-size: rem(68)`; `.icon` — `width: rem(59)`, `height: auto`, `margin: 0 rem(60)`, `flex-shrink: 0`; в `@include max-media(1024)` уменьшенные значения: шрифт ≈ `rem(24)`, змея ≈ `rem(21)`, отступы ≈ `rem(20)`, `padding` пропорционально
-- [X] T004 [P] [US1] Создать `src/pages/MultiBenefits/Marquee.module.scss.d.ts` с классами `marquee`, `track`, `group`, `item`, `text`, `icon` (формат как у соседних `.module.scss.d.ts`; плагин `vite-plugin-sass-dts` перегенерирует файл при `yarn dev`, итог должен совпасть)
-- [X] T005 [US1] Создать `src/pages/MultiBenefits/Marquee.tsx` (contract «Marquee props», «Разметка»): проп `className?: string`; язык из `useParams<{ lang: Lang }>()` с `lang = 'en'` по умолчанию, `const text = marqueeText[lang]`; константа `REPEATS = 4` (data-model: «Повторов «фраза + змея» в одной группе; группа шире экрана 3840px»); корень `<div className={[cls.marquee, className].filter(Boolean).join(' ')} aria-hidden="true">`, внутри `<div className={cls.track}>` с двумя одинаковыми `<div className={cls.group}>`, в каждой `REPEATS` раз `<span className={cls.item}><span className={cls.text}>{text}</span><Mask className={cls.icon} /></span>`, где `Mask` — `@public/icons/mask.svg?react` (research R6, R7). Зависит от T002, T003, T004
-- [X] T006 [P] [US1] Создать `src/pages/MultiBenefits/useMarquee.ts` (contract `useMarquee(lang, text)`; research R3, R4, R5): `trackRef` и `groupRef` через `useRef<HTMLDivElement>(null)`; константа `SPEED = 100`; в `useEffect` при пустых ref — выход; `const mm = gsap.matchMedia()`; `mm.add({ motion: '(prefers-reduced-motion: no-preference)', reduce: '(prefers-reduced-motion: reduce)' }, (ctx) => {…}, track)`; внутри: при `ctx.conditions?.reduce` — выход без анимации (FR-009); `const tween = gsap.to(track, { xPercent: -50, ease: 'none', repeat: -1, duration: group.offsetWidth / SPEED })` (FR-001, FR-002, FR-006); `ResizeObserver` на группе: `const progress = tween.progress(); tween.duration(group.offsetWidth / SPEED).progress(progress);` (FR-012); функция `mm.add` возвращает `() => observer.disconnect()`; cleanup эффекта — `mm.revert()`; зависимости `[lang, text]` (FR-010, принцип IV); вернуть `{ trackRef, groupRef }`
-- [X] T007 [US1] В `src/pages/MultiBenefits/Marquee.tsx` вызвать `const { trackRef, groupRef } = useMarquee(lang, text)`, повесить `ref={trackRef}` на `cls.track` и `ref={groupRef}` на первую `cls.group`. Зависит от T005, T006
+- [X] T003 [P] [US1] Создать `src/shared/ui/Marquee/Marquee.module.scss` по замерам research R2: `.marquee` — `overflow: hidden`, `transform: rotate(1deg)`, `border-top` и `border-bottom: 3px solid $c-second`, `color: $c-second`, `font-family: $font-family-main`, `text-transform: uppercase`, `white-space: nowrap`, `line-height: 1`, вертикальные `padding`, чтобы расстояние между линиями было ≈ 101px; `.track` — `display: flex`, `width: max-content`; `.group` и `.item` — `display: flex`, `align-items: center`, `flex-shrink: 0`; `.text` — `font-size: rem(68)`; `.icon` — `width: rem(59)`, `height: auto`, `margin: 0 rem(60)`, `flex-shrink: 0`; в `@include max-media(1024)` уменьшенные значения: шрифт ≈ `rem(24)`, змея ≈ `rem(21)`, отступы ≈ `rem(20)`, `padding` пропорционально
+- [X] T004 [P] [US1] Создать `src/shared/ui/Marquee/Marquee.module.scss.d.ts` с классами `marquee`, `track`, `group`, `item`, `text`, `icon` (формат как у соседних `.module.scss.d.ts`; плагин `vite-plugin-sass-dts` перегенерирует файл при `yarn dev`, итог должен совпасть)
+- [X] T005 [US1] Создать `src/shared/ui/Marquee/Marquee.tsx` (contract «Marquee props», «Разметка»): проп `className?: string`; язык из `useParams<{ lang: Lang }>()` с `lang = 'en'` по умолчанию, `const text = marqueeText[lang]`; константа `REPEATS = 4` (data-model: «Повторов «фраза + змея» в одной группе; группа шире экрана 3840px»); корень `<div className={[cls.marquee, className].filter(Boolean).join(' ')} aria-hidden="true">`, внутри `<div className={cls.track}>` с двумя одинаковыми `<div className={cls.group}>`, в каждой `REPEATS` раз `<span className={cls.item}><span className={cls.text}>{text}</span><Mask className={cls.icon} /></span>`, где `Mask` — `@public/icons/mask.svg?react` (research R6, R7). Зависит от T002, T003, T004
+- [X] T006 [P] [US1] Создать `src/shared/lib/useMarquee.ts` (contract `useMarquee(lang, text)`; research R3, R4, R5): `trackRef` и `groupRef` через `useRef<HTMLDivElement>(null)`; константа `SPEED = 100`; в `useEffect` при пустых ref — выход; `const mm = gsap.matchMedia()`; `mm.add({ motion: '(prefers-reduced-motion: no-preference)', reduce: '(prefers-reduced-motion: reduce)' }, (ctx) => {…}, track)`; внутри: при `ctx.conditions?.reduce` — выход без анимации (FR-009); `const tween = gsap.to(track, { xPercent: -50, ease: 'none', repeat: -1, duration: group.offsetWidth / SPEED })` (FR-001, FR-002, FR-006); `ResizeObserver` на группе: `const progress = tween.progress(); tween.duration(group.offsetWidth / SPEED).progress(progress);` (FR-012); функция `mm.add` возвращает `() => observer.disconnect()`; cleanup эффекта — `mm.revert()`; зависимости `[lang, text]` (FR-010, принцип IV); вернуть `{ trackRef, groupRef }`
+- [X] T007 [US1] В `src/shared/ui/Marquee/Marquee.tsx` вызвать `const { trackRef, groupRef } = useMarquee(lang, text)`, повесить `ref={trackRef}` на `cls.track` и `ref={groupRef}` на первую `cls.group`. Зависит от T005, T006
 - [X] T008 [US1] В `src/pages/MultiBenefits/MultiBenefits.tsx` удалить импорт `line` из `@public/img/line.png` и заменить `<img className={cls.line} src={line} alt="" />` на `<Marquee className={cls.line} />` (импорт `import { Marquee } from './Marquee';`). Зависит от T007
 - [X] T009 [P] [US1] В `src/pages/MultiBenefits/MultiBenefits.module.scss` в `.line` убрать стиль картинки `height: auto`; позицию и ширину (`width: 100%`, `pointer-events: none`, правила `max-media(1024)` с `width: 120%`) оставить (research R8)
 - [X] T010 [US1] Удалить файл `public/img/line.png` и убедиться поиском, что `line.png` больше нигде не упоминается в `src` (research R8, quickstart сценарий 9). Зависит от T008
@@ -63,7 +63,7 @@ description: "Task list for feature implementation: Бегущая строка 
 
 **Independent Test**: quickstart, сценарии 3 и 4
 
-- [X] T011 [US2] Сравнить полосу на 1440px с `specs/003-marquee/mockup/marquee.png` и замерами research R2; подогнать в `src/pages/MultiBenefits/Marquee.module.scss` `font-size`, начертание (`font-weight`), `letter-spacing` так, чтобы ширина фразы была ≈ 1044px, высота заглавных ≈ 45px, расстояние между линиями ≈ 101px; проверить 375px и 1024px (FR-004, SC-003)
+- [X] T011 [US2] Сравнить полосу на 1440px с `specs/003-marquee/mockup/marquee.png` и замерами research R2; подогнать в `src/shared/ui/Marquee/Marquee.module.scss` `font-size`, начертание (`font-weight`), `letter-spacing` так, чтобы ширина фразы была ≈ 1044px, высота заглавных ≈ 45px, расстояние между линиями ≈ 101px; проверить 375px и 1024px (FR-004, SC-003)
 
 **Checkpoint**: сценарии 3 и 4 проходят
 
@@ -75,7 +75,7 @@ description: "Task list for feature implementation: Бегущая строка 
 
 **Independent Test**: quickstart, сценарии 7 и 8
 
-- [X] T012 [US3] Проверить сценарии 7 и 8 из quickstart; если фраза есть в дереве доступности или при «уменьшить движение» строка бежит, исправить `aria-hidden` в `src/pages/MultiBenefits/Marquee.tsx` или условие `reduce` в `src/pages/MultiBenefits/useMarquee.ts` (FR-008, FR-009)
+- [X] T012 [US3] Проверить сценарии 7 и 8 из quickstart; если фраза есть в дереве доступности или при «уменьшить движение» строка бежит, исправить `aria-hidden` в `src/shared/ui/Marquee/Marquee.tsx` или условие `reduce` в `src/shared/lib/useMarquee.ts` (FR-008, FR-009)
 
 **Checkpoint**: сценарии 7 и 8 проходят
 
@@ -84,7 +84,7 @@ description: "Task list for feature implementation: Бегущая строка 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
 - [X] T013 Пройти сценарии 2, 5, 6, 9 из [quickstart.md](./quickstart.md) (скорость, ресайз через 1024px, смена языка, отсутствие `line.png`)
-- [X] T014 Проверить, что в `src/pages/MultiBenefits/Marquee.tsx`, `src/pages/MultiBenefits/useMarquee.ts`, `src/pages/MultiBenefits/Marquee.module.scss`, `src/shared/config/marqueeText.ts` нет комментариев и `console.log`; `yarn lint` без ошибок в изменённых файлах
+- [X] T014 Проверить, что в `src/shared/ui/Marquee/Marquee.tsx`, `src/shared/lib/useMarquee.ts`, `src/shared/ui/Marquee/Marquee.module.scss`, `src/shared/config/marqueeText.ts` нет комментариев и `console.log`; `yarn lint` без ошибок в изменённых файлах
 - [X] T015 `yarn build` без ошибок TypeScript
 
 ---
@@ -116,9 +116,9 @@ description: "Task list for feature implementation: Бегущая строка 
 ## Parallel Example: User Story 1
 
 ```text
-Task: "T003 стили полосы в src/pages/MultiBenefits/Marquee.module.scss"
-Task: "T004 классы в src/pages/MultiBenefits/Marquee.module.scss.d.ts"
-Task: "T006 хук src/pages/MultiBenefits/useMarquee.ts"
+Task: "T003 стили полосы в src/shared/ui/Marquee/Marquee.module.scss"
+Task: "T004 классы в src/shared/ui/Marquee/Marquee.module.scss.d.ts"
+Task: "T006 хук src/shared/lib/useMarquee.ts"
 Task: "T009 .line в src/pages/MultiBenefits/MultiBenefits.module.scss"
 ```
 

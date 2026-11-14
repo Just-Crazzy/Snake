@@ -18,7 +18,7 @@ description: "Task list for feature implementation: Поэкранная про�
 - **[P]**: можно делать параллельно (разные файлы, нет зависимости от незавершённых задач)
 - **[Story]**: к какой user story относится задача (US1–US4)
 - Во всех файлах: без комментариев и `console.log` (constitution, принцип III)
-- Большая часть задач правит один файл `src/pages/Home/useFullpageScroll.ts`, поэтому внутри него задачи идут строго по порядку
+- Большая часть задач правит один файл `src/shared/lib/useFullpageScroll.ts`, поэтому внутри него задачи идут строго по порядку
 
 ---
 
@@ -35,18 +35,18 @@ description: "Task list for feature implementation: Поэкранная про�
 **⚠️ CRITICAL**: задачи US1–US4 опираются на функции из T002–T004
 
 - [X] T001 [P] В `src/pages/Hero/Hero.tsx` добавить `id="hero"` на корневой `<section className={cls.page}>` (contract §1). Больше ничего в файле не менять
-- [X] T002 Создать `src/pages/Home/useFullpageScroll.ts` — каркас (research R12; contract §2):
+- [X] T002 Создать `src/shared/lib/useFullpageScroll.ts` — каркас (research R12; contract §2):
   - `gsap.registerPlugin(Observer, ScrollToPlugin)` на уровне модуля;
   - константы `SCREEN_IDS = ['hero', 'team', 'benefits', 'join']` (порядок из data-model «Screen»), `DURATION = 0.8`, `QUIET = 0.3`, `EASE = 'power2.inOut'`;
   - тип `UseFullpageScrollOptions = { isEnabled?: boolean }`, сигнатура `useFullpageScroll({ isEnabled = true }: UseFullpageScrollOptions = {})`, ничего не возвращает;
   - `const { lang } = useParams<{ lang: Lang }>()`;
   - `useEffect` с зависимостями `[lang, isEnabled]`: `const mm = gsap.matchMedia()`; `mm.add({ desktop: '(min-width: 1025px)', reduce: '(prefers-reduced-motion: reduce)' }, (ctx) => {…})`; внутри колбэка — выход, если `!ctx.conditions?.desktop`; `duration = ctx.conditions?.reduce ? 0 : DURATION`; колбэк возвращает функцию очистки; cleanup эффекта — `mm.revert()`;
   - внутри колбэка сохранить прежние `document.documentElement.style.scrollBehavior` и `history.scrollRestoration`, поставить `'auto'` и `'manual'` (research R6, R9), в функции очистки вернуть прежние значения
-- [X] T003 В `src/pages/Home/useFullpageScroll.ts` добавить чистые функции остановок (research R3; data-model «Stop» — правила цитатой):
+- [X] T003 В `src/shared/lib/useFullpageScroll.ts` добавить чистые функции остановок (research R3; data-model «Stop» — правила цитатой):
   - `getStops(): Stop[]`, где `type Stop = { y: number; screenId: string; kind: 'top' | 'bottom' }`. Для каждого `id` из `SCREEN_IDS`, у которого `document.getElementById(id)` существует: «У каждого экрана есть остановка `top`: `y = section.offsetTop`». «Если `section.offsetHeight > innerHeight + 1`, есть остановка `bottom`: `y = offsetTop + offsetHeight − innerHeight`». «Список отсортирован по `y`; `y` ограничен `0 … scrollHeight − innerHeight`»;
   - `getNearestIndex(stops)`: «Текущая остановка — ближайшая к `window.scrollY`»;
   - `getScreenTopIndex(stops, screenId)`: индекс остановки `top` нужного экрана или `-1`
-- [X] T004 В `src/pages/Home/useFullpageScroll.ts` внутри колбэка `mm.add` добавить блокировку и переход (research R5, R13; data-model «TransitionLock», «Состояния»):
+- [X] T004 В `src/shared/lib/useFullpageScroll.ts` внутри колбэка `mm.add` добавить блокировку и переход (research R5, R13; data-model «TransitionLock», «Состояния»):
   - `let isLocked = false`; `const quietTimer = gsap.delayedCall(QUIET, () => { isLocked = false }).pause()`;
   - `isBlocked()`: `!isEnabled || isLocked || Boolean(document.querySelector('dialog[open]'))` (FR-014, research R7);
   - `goToIndex(index, instant = false)`: взять `getStops()`; выйти, если индекс вне `0 … stops.length − 1` (FR-006); при `!instant` выйти ещё и если индекс совпадает с `getNearestIndex(stops)`; `isLocked = true`; `gsap.to(window, { scrollTo: { y: stops[index].y, autoKill: false }, duration: instant ? 0 : duration, ease: EASE, onComplete })`; в `onComplete` — `quietTimer.restart(true)`;
@@ -64,9 +64,9 @@ description: "Task list for feature implementation: Поэкранная про�
 
 **Independent Test**: quickstart, сценарии 1, 2, 3
 
-- [X] T006 [US1] В `src/pages/Home/useFullpageScroll.ts` внутри колбэка `mm.add` создать Observer (research R4, R7): `Observer.create({ target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 10, preventDefault: true, ignoreCheck, onUp: () => goToStep(1), onDown: () => goToStep(-1), onChange: extendQuiet })`. `ignoreCheck(event)` возвращает `true`, если есть открытый `dialog[open]` и `event.target` — потомок этого диалога, но не сам диалог (тогда форма прокручивается сама, а затемнение — нет). В функции очистки `observer.kill()`, `quietTimer.kill()`. Зависит от T004
-- [X] T007 [US1] Проверить направление на реализации (research R4): колесо вниз → `onUp` → следующая остановка. Если направление обратное — поменять местами `onUp` и `onDown` в `src/pages/Home/useFullpageScroll.ts`
-- [X] T008 [US1] В `src/pages/Home/useFullpageScroll.ts` выравнивание при изменении размеров (FR-022; research R10): функция `align()` — если `!isLocked`, `goToIndex(getNearestIndex(getStops()), true)`; `ResizeObserver` на `document.body` и слушатель `resize` на `window` вызывают `align()`; при входе в колбэк `mm.add` один раз вызвать `align()` (US4 сценарий 3). В функции очистки `disconnect()` и `removeEventListener`
+- [X] T006 [US1] В `src/shared/lib/useFullpageScroll.ts` внутри колбэка `mm.add` создать Observer (research R4, R7): `Observer.create({ target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 10, preventDefault: true, ignoreCheck, onUp: () => goToStep(1), onDown: () => goToStep(-1), onChange: extendQuiet })`. `ignoreCheck(event)` возвращает `true`, если есть открытый `dialog[open]` и `event.target` — потомок этого диалога, но не сам диалог (тогда форма прокручивается сама, а затемнение — нет). В функции очистки `observer.kill()`, `quietTimer.kill()`. Зависит от T004
+- [X] T007 [US1] Проверить направление на реализации (research R4): колесо вниз → `onUp` → следующая остановка. Если направление обратное — поменять местами `onUp` и `onDown` в `src/shared/lib/useFullpageScroll.ts`
+- [X] T008 [US1] В `src/shared/lib/useFullpageScroll.ts` выравнивание при изменении размеров (FR-022; research R10): функция `align()` — если `!isLocked`, `goToIndex(getNearestIndex(getStops()), true)`; `ResizeObserver` на `document.body` и слушатель `resize` на `window` вызывают `align()`; при входе в колбэк `mm.add` один раз вызвать `align()` (US4 сценарий 3). В функции очистки `disconnect()` и `removeEventListener`
 
 **Checkpoint**: сценарии 1, 2, 3 из quickstart проходят — это MVP
 
@@ -81,10 +81,10 @@ description: "Task list for feature implementation: Поэкранная про�
 - [X] T009 [P] [US2] Создать `src/shared/lib/screenNavigation.ts` (contract §3; research R8): `const SCREEN_REQUEST = 'screen:request'`; `requestScreen(id: string)` — `const event = new CustomEvent(SCREEN_REQUEST, { detail: { id }, cancelable: true })`; `if (window.dispatchEvent(event))` — нативно: `document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })`. Экспорт `export { requestScreen, SCREEN_REQUEST };`
 - [X] T010 [US2] Экспортировать `requestScreen` и `SCREEN_REQUEST` из `src/shared/lib/index.ts`. Зависит от T009
 - [X] T011 [US2] В `src/widgets/Footer/Footer.tsx` заменить `onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}` на `onClick={() => requestScreen('hero')}`, импорт `requestScreen` из `@/shared/lib` (FR-010). Зависит от T010
-- [X] T012 [US2] В `src/pages/Home/useFullpageScroll.ts` функция `goToScreen(screenId)`: `if (isBlocked()) return`; `const stops = getStops()`; `const index = getScreenTopIndex(stops, screenId)`; при `index >= 0` — `goToIndex(index)`. Слушатель `SCREEN_REQUEST` на `window`: если экран из `detail.id` есть в `SCREEN_IDS` — `event.preventDefault()` и `goToScreen(detail.id)` (contract §3, шаг 3). Удалить слушатель в очистке. Зависит от T010
-- [X] T013 [US2] В `src/pages/Home/useFullpageScroll.ts` делегированный `click` на `document` (contract §4; research R9): `const link = (event.target as Element).closest('a[href^="#"]')`; выйти, если `link` нет; `hash = link.getAttribute('href')`; `'#'` и `'#hero'` → `'hero'`; `'#team'`, `'#benefits'`, `'#join'` → id без `#`; для них `event.preventDefault()` и `goToScreen(id)`; всё остальное, включая `'#joinUs'`, не трогать (FR-015). Удалить слушатель в очистке
-- [X] T014 [US2] В `src/pages/Home/useFullpageScroll.ts` обновление адреса (FR-013; contract §5): функция `syncHash()` — хеш экрана текущей остановки (`screenId === 'hero'` → `''`, иначе `'#' + screenId`); если отличается от `location.hash` — `history.replaceState(null, '', location.pathname + location.search + hash)`. Вызывать в `onComplete` перехода из T004. Новые записи в историю не добавлять
-- [X] T015 [US2] В `src/pages/Home/useFullpageScroll.ts` загрузка с якорем (FR-011; research R9, R10; data-model `pendingHash`): при входе в колбэк `mm.add` прочитать `location.hash`; если это `#team`, `#benefits` или `#join` — `pendingHash = id`; в `align()` из T008 сначала: если `pendingHash` и секция есть в DOM — `goToIndex(getScreenTopIndex(getStops(), pendingHash), true)` и `pendingHash = null`; неизвестный хеш → обычное выравнивание (Hero). Зависит от T008
+- [X] T012 [US2] В `src/shared/lib/useFullpageScroll.ts` функция `goToScreen(screenId)`: `if (isBlocked()) return`; `const stops = getStops()`; `const index = getScreenTopIndex(stops, screenId)`; при `index >= 0` — `goToIndex(index)`. Слушатель `SCREEN_REQUEST` на `window`: если экран из `detail.id` есть в `SCREEN_IDS` — `event.preventDefault()` и `goToScreen(detail.id)` (contract §3, шаг 3). Удалить слушатель в очистке. Зависит от T010
+- [X] T013 [US2] В `src/shared/lib/useFullpageScroll.ts` делегированный `click` на `document` (contract §4; research R9): `const link = (event.target as Element).closest('a[href^="#"]')`; выйти, если `link` нет; `hash = link.getAttribute('href')`; `'#'` и `'#hero'` → `'hero'`; `'#team'`, `'#benefits'`, `'#join'` → id без `#`; для них `event.preventDefault()` и `goToScreen(id)`; всё остальное, включая `'#joinUs'`, не трогать (FR-015). Удалить слушатель в очистке
+- [X] T014 [US2] В `src/shared/lib/useFullpageScroll.ts` обновление адреса (FR-013; contract §5): функция `syncHash()` — хеш экрана текущей остановки (`screenId === 'hero'` → `''`, иначе `'#' + screenId`); если отличается от `location.hash` — `history.replaceState(null, '', location.pathname + location.search + hash)`. Вызывать в `onComplete` перехода из T004. Новые записи в историю не добавлять
+- [X] T015 [US2] В `src/shared/lib/useFullpageScroll.ts` загрузка с якорем (FR-011; research R9, R10; data-model `pendingHash`): при входе в колбэк `mm.add` прочитать `location.hash`; если это `#team`, `#benefits` или `#join` — `pendingHash = id`; в `align()` из T008 сначала: если `pendingHash` и секция есть в DOM — `goToIndex(getScreenTopIndex(getStops(), pendingHash), true)` и `pendingHash = null`; неизвестный хеш → обычное выравнивание (Hero). Зависит от T008
 
 **Checkpoint**: сценарии 5 и 6 из quickstart проходят, сценарии 1–3 не сломались
 
@@ -96,7 +96,7 @@ description: "Task list for feature implementation: Поэкранная про�
 
 **Independent Test**: quickstart, сценарий 4
 
-- [X] T016 [US3] В `src/pages/Home/useFullpageScroll.ts` слушатель `keydown` на `window` (FR-007, FR-008; research R11):
+- [X] T016 [US3] В `src/shared/lib/useFullpageScroll.ts` слушатель `keydown` на `window` (FR-007, FR-008; research R11):
   - пропустить, если `document.querySelector('dialog[open]')`, или `event.target` подходит под `input, textarea, select, [contenteditable]`, или (для Space) под `button, a`;
   - `ArrowDown`, `PageDown`, `' '` без Shift → `goToStep(1)`; `ArrowUp`, `PageUp`, `' '` с Shift → `goToStep(-1)`; `Home` → `goToIndex(0)`; `End` → `goToIndex(getStops().length − 1)`; для `Home`/`End` сначала `if (isBlocked()) return`;
   - для обработанных клавиш — `event.preventDefault()`, чтобы не было нативной прокрутки;
@@ -112,7 +112,7 @@ description: "Task list for feature implementation: Поэкранная про�
 
 **Independent Test**: quickstart, сценарий 7
 
-- [X] T017 [US4] Проверить по `src/pages/Home/useFullpageScroll.ts`, что всё созданное в колбэке `mm.add` (Observer, `quietTimer`, `ResizeObserver`, слушатели `resize`, `click`, `keydown`, `SCREEN_REQUEST`, стили `scrollBehavior` и `scrollRestoration`) удаляется в его функции очистки, а активный `gsap.to(window, …)` создан внутри контекста и тоже отменяется (FR-017). Пройти quickstart, сценарий 7
+- [X] T017 [US4] Проверить по `src/shared/lib/useFullpageScroll.ts`, что всё созданное в колбэке `mm.add` (Observer, `quietTimer`, `ResizeObserver`, слушатели `resize`, `click`, `keydown`, `SCREEN_REQUEST`, стили `scrollBehavior` и `scrollRestoration`) удаляется в его функции очистки, а активный `gsap.to(window, …)` создан внутри контекста и тоже отменяется (FR-017). Пройти quickstart, сценарий 7
 
 **Checkpoint**: сценарий 7 из quickstart проходит
 
@@ -122,8 +122,8 @@ description: "Task list for feature implementation: Поэкранная про�
 
 **Purpose**: язык, «уменьшить движение», качество
 
-- [ ] T018 Пройти quickstart, сценарии 8 (смена языка, FR-019) и 9 (`prefers-reduced-motion`, FR-018). Если при смене языка переход делается дважды — проверить зависимость `[lang, isEnabled]` в `src/pages/Home/useFullpageScroll.ts`
-- [X] T019 [P] `yarn lint` без ошибок; проверить, что в `src/pages/Home/useFullpageScroll.ts`, `src/shared/lib/screenNavigation.ts` и изменённых файлах нет комментариев и `console.log` (принцип III)
+- [ ] T018 Пройти quickstart, сценарии 8 (смена языка, FR-019) и 9 (`prefers-reduced-motion`, FR-018). Если при смене языка переход делается дважды — проверить зависимость `[lang, isEnabled]` в `src/shared/lib/useFullpageScroll.ts`
+- [X] T019 [P] `yarn lint` без ошибок; проверить, что в `src/shared/lib/useFullpageScroll.ts`, `src/shared/lib/screenNavigation.ts` и изменённых файлах нет комментариев и `console.log` (принцип III)
 - [X] T020 [P] `yarn build` без ошибок
 - [ ] T021 Lighthouse desktop на `yarn preview` (SC-007; research R14): Performance ≥ 75; Accessibility, Best Practices, SEO ≥ 90. Если Best Practices < 90 из-за non-passive wheel — записать результат и решение в `specs/005-fullpage-scroll/research.md`, R14
 - [ ] T022 Полный прогон `specs/005-fullpage-scroll/quickstart.md`, сценарии 1–10
@@ -159,7 +159,7 @@ description: "Task list for feature implementation: Поэкранная про�
 
 ```bash
 Task: "T001 Добавить id=\"hero\" в src/pages/Hero/Hero.tsx"
-Task: "T002 Создать каркас src/pages/Home/useFullpageScroll.ts"
+Task: "T002 Создать каркас src/shared/lib/useFullpageScroll.ts"
 Task: "T009 Создать src/shared/lib/screenNavigation.ts"
 ```
 
@@ -197,5 +197,5 @@ Task: "T009 Создать src/shared/lib/screenNavigation.ts"
 
 ### Изменение после реализации (2026-11-10)
 
-- [X] T023 [US1] Убрать вторую остановку у высоких экранов в `src/pages/Home/useFullpageScroll.ts`: у каждого экрана одна остановка — верх секции. Удалены остановка `bottom` и поле `kind` у `Stop`; `getScreenStops` → `getScreenStop`, `getScreenTopIndex` → `getScreenIndex`. Документация: spec.md (Clarifications, US1 сценарии 7–8, Edge Cases, FR-002, FR-003; FR-022 и SC-008 удалены), research.md R2 и R3, data-model.md «Stop», quickstart.md сценарий 3. Описания T003 и T008 выше отражают первую версию
+- [X] T023 [US1] Убрать вторую остановку у высоких экранов в `src/shared/lib/useFullpageScroll.ts`: у каждого экрана одна остановка — верх секции. Удалены остановка `bottom` и поле `kind` у `Stop`; `getScreenStops` → `getScreenStop`, `getScreenTopIndex` → `getScreenIndex`. Документация: spec.md (Clarifications, US1 сценарии 7–8, Edge Cases, FR-002, FR-003; FR-022 и SC-008 удалены), research.md R2 и R3, data-model.md «Stop», quickstart.md сценарий 3. Описания T003 и T008 выше отражают первую версию
 - Следствие: часть экрана ниже окна не видна; у Multiply with us это футер с «Scroll to top» на окнах ниже 724px (1440) и ниже 887px (1025) — research R2

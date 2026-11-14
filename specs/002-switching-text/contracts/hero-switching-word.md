@@ -1,6 +1,6 @@
 # Contract: переключающееся слово в Hero
 
-**Location**: `src/pages/Hero/`
+**Location**: `src/shared/lib/useSwitchingWord.ts` (хук), `src/pages/Hero/Hero.tsx` (разметка)
 
 ## Hero props
 

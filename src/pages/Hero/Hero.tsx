@@ -2,12 +2,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { heroWords } from '@/shared/config';
+import { useSwitchingWord } from '@/shared/lib';
 import { Button, Socials } from '@/shared/ui';
 
 import snake from '@public/img/snake-hero.png';
 
 import cls from './Hero.module.scss';
-import { useSwitchingWord } from './useSwitchingWord';
 
 import type { Lang } from '@/shared/config';
 
