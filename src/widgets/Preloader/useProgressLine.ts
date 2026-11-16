@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import gsap from 'gsap';
 
+import { MEDIA } from '@/shared/config';
+
 const WAIT_TARGET = 90;
 const WAIT_DURATION = 40;
 const FINISH_DURATION = 0.4;
@@ -25,7 +27,7 @@ const useProgressLine = () => {
   useEffect(() => {
     ctxRef.current = gsap.context(() => undefined);
     shownAtRef.current = performance.now();
-    reducedRef.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    reducedRef.current = window.matchMedia(MEDIA.reduce).matches;
 
     return () => {
       ctxRef.current?.revert();
@@ -88,7 +90,7 @@ const useProgressLine = () => {
           });
       });
     },
-    [render]
+    [render],
   );
 
   return { rootRef, barRef, fillRef, valueRef, startWaiting, pause, finish };

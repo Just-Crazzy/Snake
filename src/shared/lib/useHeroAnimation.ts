@@ -2,22 +2,23 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import { INTRO } from '@/shared/config';
+
+import {
+  fadeFrom,
+  fadeTo,
+  finishOnLeave,
+  INTRO_CONDITIONS,
+  slideFrom,
+  slideTo,
+} from './intro';
 
 import type { Lang } from '@/shared/config';
 import type { RefObject } from 'react';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const INTRO_QUERY = '(min-width: 577px) and (prefers-reduced-motion: no-preference)';
-const EXIT_QUERY = '(min-width: 1025px) and (prefers-reduced-motion: no-preference)';
-const STILL_QUERY = '(max-width: 576px), (prefers-reduced-motion: reduce)';
-
-const INTRO_FADE = 0.6;
-const INTRO_SLIDE = 0.6;
-const INTRO_STAGGER = 0.15;
-const INTRO_OFFSET = -80;
-const INTRO_EASE = 'power3.out';
+const HERO_DURATION = 0.6;
+const HERO_STAGGER = 0.15;
 
 const EXIT_CONTENT = { xPercent: -110 };
 const EXIT_SOCIALS = { xPercent: -300 };
@@ -52,33 +53,20 @@ const createExit = () =>
     .to(HEADER_LEFT, EXIT_LOGO, 0)
     .to(HEADER_RIGHT, EXIT_NAV, 0);
 
-const createIntro = (onComplete: () => void) => {
-  const intro = gsap
-    .timeline({ onComplete })
-    .fromTo(FADE_TARGETS, { autoAlpha: 0 }, { autoAlpha: 1, duration: INTRO_FADE })
+const createIntro = () =>
+  gsap
+    .timeline()
+    .fromTo(FADE_TARGETS, fadeFrom(), fadeTo({ duration: HERO_DURATION }))
     .fromTo(
       SLIDE_TARGETS,
-      { x: INTRO_OFFSET, autoAlpha: 0 },
-      {
-        x: 0,
-        autoAlpha: 1,
-        duration: INTRO_SLIDE,
-        stagger: INTRO_STAGGER,
-        ease: INTRO_EASE,
-      }
+      slideFrom(-INTRO.offset),
+      slideTo({ duration: HERO_DURATION, stagger: HERO_STAGGER }),
     );
 
-  const watcher = ScrollTrigger.create({
-    ...HERO_RANGE,
-    onUpdate: (self) => {
-      if (self.progress > 0 && intro.isActive()) intro.progress(1);
-    },
-  });
-
-  if (watcher.progress > 0) intro.progress(1);
-};
-
-const useHeroAnimation = (scopeRef: RefObject<HTMLElement | null>, isReady: boolean) => {
+const useHeroAnimation = (
+  scopeRef: RefObject<HTMLElement | null>,
+  isReady: boolean,
+) => {
   const { lang } = useParams<{ lang: Lang }>();
   const [isIntroDone, setIsIntroDone] = useState(false);
   const introPlayedRef = useRef(false);
@@ -96,16 +84,25 @@ const useHeroAnimation = (scopeRef: RefObject<HTMLElement | null>, isReady: bool
     const mm = gsap.matchMedia();
 
     mm.add(
-      { intro: INTRO_QUERY, exit: EXIT_QUERY, still: STILL_QUERY },
+      INTRO_CONDITIONS,
       (ctx) => {
-        const { intro: isIntro, exit: isExit } = ctx.conditions ?? {};
+        if (!ctx.conditions?.animated) {
+          markIntroDone();
 
-        if (isExit) createExit();
+          return;
+        }
 
-        if (isIntro && !introPlayedRef.current) createIntro(markIntroDone);
-        else markIntroDone();
+        createExit();
+
+        if (introPlayedRef.current) {
+          markIntroDone();
+
+          return;
+        }
+
+        finishOnLeave(HERO, createIntro(), markIntroDone);
       },
-      scope
+      scope,
     );
 
     return () => mm.revert();

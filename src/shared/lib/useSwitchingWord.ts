@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import gsap from 'gsap';
 
+import { MEDIA } from '@/shared/config';
+
 const HOLD = 2.5;
 const SWITCH = 0.6;
 
@@ -16,10 +18,7 @@ const useSwitchingWord = (words: string[], isReady: boolean) => {
     const mm = gsap.matchMedia();
 
     mm.add(
-      {
-        motion: '(prefers-reduced-motion: no-preference)',
-        reduce: '(prefers-reduced-motion: reduce)',
-      },
+      { motion: MEDIA.motion, reduce: MEDIA.reduce },
       (ctx) => {
         const items = Array.from(container.children);
         const duration = ctx.conditions?.reduce ? 0 : SWITCH;
@@ -32,14 +31,28 @@ const useSwitchingWord = (words: string[], isReady: boolean) => {
         items.forEach((item, index) => {
           const next = items[(index + 1) % items.length];
           const position = index * (HOLD + duration) + HOLD;
-          const options = { duration, ease: 'power2.inOut', immediateRender: false };
+          const options = {
+            duration,
+            ease: 'power2.inOut',
+            immediateRender: false,
+          };
 
           timeline
-            .fromTo(item, { yPercent: 0 }, { ...options, yPercent: 100 }, position)
-            .fromTo(next, { yPercent: -100 }, { ...options, yPercent: 0 }, position);
+            .fromTo(
+              item,
+              { yPercent: 0 },
+              { ...options, yPercent: 100 },
+              position,
+            )
+            .fromTo(
+              next,
+              { yPercent: -100 },
+              { ...options, yPercent: 0 },
+              position,
+            );
         });
       },
-      container
+      container,
     );
 
     return () => mm.revert();

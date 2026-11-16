@@ -6,3 +6,4 @@ export { marqueeText } from './marqueeText';
 export { preloaderTexts } from './preloaderTexts';
 export type { PreloaderTexts } from './preloaderTexts';
 export { SCREENS } from './screens';
+export { INTRO, MEDIA } from './animation';
