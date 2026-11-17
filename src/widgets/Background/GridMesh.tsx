@@ -10,39 +10,15 @@ const GridMesh = () => {
   useGridMeshAnimation(maskRef);
 
   return (
-    <div className={`${cls.absolute} ${cls['inset-0']} ${cls['overflow-hidden']}`}>
+    <div
+      className={`${cls.absolute} ${cls['inset-0']} ${cls['overflow-hidden']}`}
+    >
       <div
         ref={maskRef}
-        className={`${cls.absolute} ${cls['inset-0']}`}
-        style={
-          {
-            '--x': '85%',
-            '--y': '10%',
-            maskImage: `
-							radial-gradient(
-								circle 20rem at var(--x) var(--y),
-								rgba(0,0,0,1) 0%,
-								rgba(0,0,0,0.95) 20%,
-								rgba(0,0,0,0.7) 40%,
-								rgba(0,0,0,0.25) 60%,
-								transparent 80%
-							)
-						`,
-            WebkitMaskImage: `
-							radial-gradient(
-								circle 20rem at var(--x) var(--y),
-								rgba(0,0,0,1) 0%,
-								rgba(0,0,0,0.95) 20%,
-								rgba(0,0,0,0.7) 40%,
-								rgba(0,0,0,0.25) 60%,
-								transparent 80%
-							)
-						`,
-          } as React.CSSProperties
-        }
+        className={`${cls.absolute} ${cls['inset-0']} ${cls['grid-window']}`}
       >
         <svg
-          className={`${cls.absolute} ${cls['inset-0']} ${cls['w-full']} ${cls['h-full']}`}
+          className={`${cls.absolute} ${cls['inset-0']} ${cls['w-full']} ${cls['h-full']} ${cls['grid-canvas']}`}
           viewBox="0 0 1463 1313"
           preserveAspectRatio="xMidYMin slice"
           fill="none"

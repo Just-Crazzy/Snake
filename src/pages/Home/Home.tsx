@@ -5,7 +5,7 @@ import { Hero, MultiBenefits, MultiplyWithUs, MultiTasks } from '@/pages/index';
 
 import { ApplicationModal } from '@/widgets/ApplicationModal';
 
-import { SCREENS } from '@/shared/config';
+import { MEDIA, SCREENS } from '@/shared/config';
 import {
   removePreloaderShell,
   useFullpageScroll,
@@ -28,7 +28,7 @@ const FIRST_SCREEN_IMAGES = [snakeHero];
 function Home() {
   const { lang = 'en' } = useParams<{ lang: Lang }>();
   const [showPreloader] = useState(
-    () => window.matchMedia('(min-width: 576px)').matches,
+    () => window.matchMedia(MEDIA.notMobile).matches,
   );
   const [isDone, setIsDone] = useState(false);
   const isLoading = showPreloader && !isDone;

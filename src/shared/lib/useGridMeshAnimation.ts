@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 
 import gsap from 'gsap';
 
+import { MEDIA } from '@/shared/config';
+
 import type { RefObject } from 'react';
 
-const MOTION_QUERY = '(min-width: 577px) and (prefers-reduced-motion: no-preference)';
 const MOVE_DURATION = 4;
 const PAUSE_DURATION = 1.5;
 const MOVE_EASE = 'power2.inOut';
@@ -24,7 +25,7 @@ const useGridMeshAnimation = (maskRef: RefObject<HTMLElement | null>) => {
 
     const mm = gsap.matchMedia();
 
-    mm.add(MOTION_QUERY, () => {
+    mm.add(MEDIA.animated, () => {
       const tl = gsap.timeline({
         repeat: -1,
         defaults: { duration: MOVE_DURATION, ease: MOVE_EASE },

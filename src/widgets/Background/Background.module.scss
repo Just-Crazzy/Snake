@@ -25,41 +25,83 @@
   z-index: -1;
 }
 
-.w-150 {
-  width: 37.5rem;
+.glow-right {
+  top: -28.125rem;
+  right: -31.25rem;
+  width: 81.25rem;
+  height: 81.25rem;
+  background: radial-gradient(
+    circle closest-side,
+    rgb(20 9 26 / 89.9%) 0%,
+    rgb(20 9 26 / 87.4%) 10%,
+    rgb(20 9 26 / 79.8%) 20%,
+    rgb(20 9 26 / 67.1%) 30%,
+    rgb(20 9 26 / 50.9%) 40%,
+    rgb(20 9 26 / 34%) 50%,
+    rgb(20 9 26 / 19.7%) 60%,
+    rgb(20 9 26 / 9.7%) 70%,
+    rgb(20 9 26 / 4%) 80%,
+    rgb(20 9 26 / 1.4%) 90%,
+    rgb(20 9 26 / 0%) 100%
+  );
+  opacity: 0.4;
 }
 
-.h-150 {
-  height: 37.5rem;
+.glow-left {
+  top: -18.75rem;
+  left: -43.75rem;
+  width: 100rem;
+  height: 100rem;
+  background: radial-gradient(
+    circle closest-side,
+    rgb(20 9 26 / 95.6%) 0%,
+    rgb(20 9 26 / 93.8%) 10%,
+    rgb(20 9 26 / 87.9%) 20%,
+    rgb(20 9 26 / 76.8%) 30%,
+    rgb(20 9 26 / 60.6%) 40%,
+    rgb(20 9 26 / 41.9%) 50%,
+    rgb(20 9 26 / 24.6%) 60%,
+    rgb(20 9 26 / 12.1%) 70%,
+    rgb(20 9 26 / 4.9%) 80%,
+    rgb(20 9 26 / 1.6%) 90%,
+    rgb(20 9 26 / 0%) 100%
+  );
+  opacity: 0.3;
 }
 
-.w-200 {
-  width: 50rem;
+.grid-window {
+  --x: 85%;
+  --y: 10%;
+
+  transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%));
+  -webkit-mask-image: radial-gradient(
+    circle 20rem at center,
+    rgb(0 0 0 / 100%) 0%,
+    rgb(0 0 0 / 95%) 20%,
+    rgb(0 0 0 / 70%) 40%,
+    rgb(0 0 0 / 25%) 60%,
+    transparent 80%
+  );
+  mask-image: radial-gradient(
+    circle 20rem at center,
+    rgb(0 0 0 / 100%) 0%,
+    rgb(0 0 0 / 95%) 20%,
+    rgb(0 0 0 / 70%) 40%,
+    rgb(0 0 0 / 25%) 60%,
+    transparent 80%
+  );
+
+  @include min-media(1025) {
+    will-change: transform;
+  }
 }
 
-.h-200 {
-  height: 50rem;
-}
+.grid-canvas {
+  transform: translate(calc(50% - var(--x)), calc(50% - var(--y)));
 
-// Аналог -right-37.5: точка в имени ломает генерацию vite-plugin-sass-dts.
-.-right-37-5 {
-  right: -9.375rem;
-}
-
-.-top-25 {
-  top: -6.25rem;
-}
-
-.-left-75 {
-  left: -18.75rem;
-}
-
-.top-25 {
-  top: 6.25rem;
-}
-
-.rounded-full {
-  border-radius: 9999px;
+  @include min-media(1025) {
+    will-change: transform;
+  }
 }
 
 .w-full {

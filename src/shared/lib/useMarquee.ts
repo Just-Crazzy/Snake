@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import gsap from 'gsap';
 
+import { MEDIA } from '@/shared/config';
+
 import type { Lang } from '@/shared/config';
 
 const SPEED = 100;
@@ -19,10 +21,7 @@ const useMarquee = (lang: Lang, text: string) => {
     const mm = gsap.matchMedia();
 
     mm.add(
-      {
-        motion: '(prefers-reduced-motion: no-preference)',
-        reduce: '(prefers-reduced-motion: reduce)',
-      },
+      { motion: MEDIA.motion, reduce: MEDIA.reduce },
       (ctx) => {
         if (ctx.conditions?.reduce) return;
 
@@ -43,7 +42,7 @@ const useMarquee = (lang: Lang, text: string) => {
 
         return () => observer.disconnect();
       },
-      track
+      track,
     );
 
     return () => mm.revert();
