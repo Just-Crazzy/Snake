@@ -19,11 +19,7 @@ export const Footer = () => {
           <Link href="#">linkedin</Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => requestScreen('hero')}
-          className={cls.footer__topButton}
-        >
+        <button type="button" onClick={() => requestScreen('hero')} className={cls.footer__topButton}>
           {t('footer.scrollTop')} <ArrowIcon />
         </button>
       </div>

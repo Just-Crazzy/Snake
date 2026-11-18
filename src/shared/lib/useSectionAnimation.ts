@@ -5,12 +5,7 @@ import gsap from 'gsap';
 
 import { SCREENS } from '@/shared/config';
 
-import {
-  finishOnLeave,
-  INTRO_CONDITIONS,
-  observeLayout,
-  playOnEnter,
-} from './intro';
+import { finishOnLeave, INTRO_CONDITIONS, observeLayout, playOnEnter } from './intro';
 
 import type { Lang } from '@/shared/config';
 import type { RefObject } from 'react';
@@ -24,13 +19,12 @@ type SectionAnimation = {
 };
 
 const isScreenPassed = (screenId: ScreenId) =>
-  SCREENS.findIndex((screen) => screen === window.location.hash.slice(1)) >=
-  SCREENS.indexOf(screenId);
+  SCREENS.findIndex((screen) => screen === window.location.hash.slice(1)) >= SCREENS.indexOf(screenId);
 
 const useSectionAnimation = (
   scopeRef: RefObject<HTMLElement | null>,
   isReady: boolean,
-  animation: SectionAnimation,
+  animation: SectionAnimation
 ) => {
   const { lang } = useParams<{ lang: Lang }>();
   const [isAnchored] = useState(() => isScreenPassed(animation.screenId));
@@ -67,7 +61,7 @@ const useSectionAnimation = (
 
         return observeLayout();
       },
-      scope,
+      scope
     );
 
     return () => mm.revert();

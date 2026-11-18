@@ -42,7 +42,7 @@ const useMarquee = (lang: Lang, text: string) => {
 
         return () => observer.disconnect();
       },
-      track,
+      track
     );
 
     return () => mm.revert();

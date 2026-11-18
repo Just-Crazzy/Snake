@@ -19,17 +19,12 @@ const getCardColumns = (scope: HTMLElement) => {
   const columns = new Map<number, HTMLElement[]>();
 
   scope.querySelectorAll<HTMLElement>(CARD).forEach((card) => {
-    columns.set(card.offsetLeft, [
-      ...(columns.get(card.offsetLeft) ?? []),
-      card,
-    ]);
+    columns.set(card.offsetLeft, [...(columns.get(card.offsetLeft) ?? []), card]);
   });
 
   return [...columns.entries()]
     .sort(([left], [right]) => left - right)
-    .map(([, cards]) =>
-      cards.sort((top, bottom) => top.offsetTop - bottom.offsetTop),
-    );
+    .map(([, cards]) => cards.sort((top, bottom) => top.offsetTop - bottom.offsetTop));
 };
 
 const createExit = (scope: HTMLElement) =>
@@ -53,12 +48,7 @@ const createIntro = (scope: HTMLElement) => {
     .fromTo(TITLE, fadeFrom(), fadeTo(), 0);
 
   getCardColumns(scope).forEach((column) => {
-    intro.fromTo(
-      column,
-      slideFrom(INTRO.offset),
-      slideTo({ stagger: INTRO.stagger }),
-      INTRO.next,
-    );
+    intro.fromTo(column, slideFrom(INTRO.offset), slideTo({ stagger: INTRO.stagger }), INTRO.next);
   });
 
   return intro;
@@ -70,9 +60,7 @@ const MULTITASKS: SectionAnimation = {
   createExit,
 };
 
-const useMultitasksAnimation = (
-  scopeRef: RefObject<HTMLElement | null>,
-  isReady: boolean,
-) => useSectionAnimation(scopeRef, isReady, MULTITASKS);
+const useMultitasksAnimation = (scopeRef: RefObject<HTMLElement | null>, isReady: boolean) =>
+  useSectionAnimation(scopeRef, isReady, MULTITASKS);
 
 export { useMultitasksAnimation };

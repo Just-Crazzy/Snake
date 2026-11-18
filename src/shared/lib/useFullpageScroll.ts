@@ -44,17 +44,13 @@ const getLinkScreen = (screens: Screens, href: string): string | undefined => {
 
   const screenId = href.slice(1);
 
-  return href.startsWith('#') && screens.includes(screenId)
-    ? screenId
-    : undefined;
+  return href.startsWith('#') && screens.includes(screenId) ? screenId : undefined;
 };
 
 const getScreenStop = (screenId: string): Stop | null => {
   const section = document.getElementById(screenId);
 
-  return section
-    ? { y: section.getBoundingClientRect().top + window.scrollY, screenId }
-    : null;
+  return section ? { y: section.getBoundingClientRect().top + window.scrollY, screenId } : null;
 };
 
 const getStops = (screens: Screens) => {
@@ -69,15 +65,10 @@ const getStops = (screens: Screens) => {
 const getNearestIndex: ResolveIndex = (stops) => {
   const distance = (index: number) => Math.abs(stops[index].y - window.scrollY);
 
-  return stops.reduce(
-    (nearest, _, index) =>
-      distance(index) < distance(nearest) ? index : nearest,
-    0,
-  );
+  return stops.reduce((nearest, _, index) => (distance(index) < distance(nearest) ? index : nearest), 0);
 };
 
-const getScreenIndex = (stops: Stop[], screenId: string) =>
-  stops.findIndex((stop) => stop.screenId === screenId);
+const getScreenIndex = (stops: Stop[], screenId: string) => stops.findIndex((stop) => stop.screenId === screenId);
 
 const toNext: ResolveIndex = (stops) => getNearestIndex(stops) + 1;
 const toPrev: ResolveIndex = (stops) => getNearestIndex(stops) - 1;
@@ -108,41 +99,27 @@ const syncHash = (screens: Screens, screenId: string) => {
 
   if (hash === window.location.hash) return;
 
-  window.history.replaceState(
-    window.history.state,
-    '',
-    window.location.pathname + window.location.search + hash,
-  );
+  window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search + hash);
 };
 
 const isIgnoredInDialog = (event: Event) => {
   const dialog = getOpenDialog();
   const { target } = event;
 
-  return Boolean(
-    dialog &&
-    target instanceof Node &&
-    target !== dialog &&
-    dialog.contains(target),
-  );
+  return Boolean(dialog && target instanceof Node && target !== dialog && dialog.contains(target));
 };
 
-const hasModifier = (event: KeyboardEvent) =>
-  event.metaKey || event.ctrlKey || event.altKey;
+const hasModifier = (event: KeyboardEvent) => event.metaKey || event.ctrlKey || event.altKey;
 
 const isKeyForTarget = (event: KeyboardEvent) => {
   const { target } = event;
 
   if (!(target instanceof Element)) return false;
 
-  return Boolean(
-    target.closest(TYPING_TARGETS) ??
-    (event.key === ' ' && target.closest(ACTIVATABLE_TARGETS)),
-  );
+  return Boolean(target.closest(TYPING_TARGETS) ?? (event.key === ' ' && target.closest(ACTIVATABLE_TARGETS)));
 };
 
-const shouldSkipKey = (event: KeyboardEvent) =>
-  hasModifier(event) || Boolean(getOpenDialog()) || isKeyForTarget(event);
+const shouldSkipKey = (event: KeyboardEvent) => hasModifier(event) || Boolean(getOpenDialog()) || isKeyForTarget(event);
 
 const getKeyTarget = (event: KeyboardEvent): ResolveIndex | undefined => {
   if (event.key === ' ') return event.shiftKey ? toPrev : toNext;
@@ -150,11 +127,7 @@ const getKeyTarget = (event: KeyboardEvent): ResolveIndex | undefined => {
   return KEY_TARGETS[event.key];
 };
 
-const listen = <E extends Event>(
-  target: EventTarget,
-  type: string,
-  handler: (event: E) => void,
-) => {
+const listen = <E extends Event>(target: EventTarget, type: string, handler: (event: E) => void) => {
   const listener = handler as EventListener;
 
   target.addEventListener(type, listener);
@@ -162,11 +135,7 @@ const listen = <E extends Event>(
   return () => target.removeEventListener(type, listener);
 };
 
-const createFullpage = (
-  screens: Screens,
-  duration: number,
-  isEnabled: boolean,
-) => {
+const createFullpage = (screens: Screens, duration: number, isEnabled: boolean) => {
   const root = document.documentElement;
   const prevScrollBehavior = root.style.scrollBehavior;
   const prevScrollRestoration = window.history.scrollRestoration;
@@ -247,13 +216,8 @@ const createFullpage = (
   };
 
   const onClick = (event: MouseEvent) => {
-    const link =
-      event.target instanceof Element
-        ? event.target.closest('a[href^="#"]')
-        : null;
-    const screenId = link
-      ? getLinkScreen(screens, link.getAttribute('href') ?? '')
-      : undefined;
+    const link = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
+    const screenId = link ? getLinkScreen(screens, link.getAttribute('href') ?? '') : undefined;
 
     if (!screenId) return;
 
@@ -315,10 +279,7 @@ const createFullpage = (
   };
 };
 
-const useFullpageScroll = ({
-  screens,
-  isEnabled = true,
-}: UseFullpageScrollOptions) => {
+const useFullpageScroll = ({ screens, isEnabled = true }: UseFullpageScrollOptions) => {
   const { lang } = useParams<{ lang: Lang }>();
 
   useEffect(() => {
@@ -327,11 +288,7 @@ const useFullpageScroll = ({
     mm.add({ desktop: MEDIA.desktop, reduce: MEDIA.reduce }, (ctx) => {
       if (!ctx.conditions?.desktop) return;
 
-      return createFullpage(
-        screens,
-        ctx.conditions.reduce ? 0 : TRANSITION_DURATION,
-        isEnabled,
-      );
+      return createFullpage(screens, ctx.conditions.reduce ? 0 : TRANSITION_DURATION, isEnabled);
     });
 
     return () => mm.revert();

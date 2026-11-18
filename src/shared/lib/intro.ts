@@ -50,11 +50,7 @@ const playOnEnter = (trigger: gsap.DOMTarget, intro: gsap.core.Timeline) => {
   }
 };
 
-const finishOnLeave = (
-  trigger: gsap.DOMTarget,
-  intro: gsap.core.Timeline,
-  onDone: () => void,
-) => {
+const finishOnLeave = (trigger: gsap.DOMTarget, intro: gsap.core.Timeline, onDone: () => void) => {
   const finish = () => {
     if (intro.isActive()) intro.progress(1);
   };
@@ -102,13 +98,4 @@ const observeLayout = () => {
   };
 };
 
-export {
-  fadeFrom,
-  fadeTo,
-  finishOnLeave,
-  INTRO_CONDITIONS,
-  observeLayout,
-  playOnEnter,
-  slideFrom,
-  slideTo,
-};
+export { fadeFrom, fadeTo, finishOnLeave, INTRO_CONDITIONS, observeLayout, playOnEnter, slideFrom, slideTo };

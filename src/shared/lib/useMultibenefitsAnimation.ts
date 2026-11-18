@@ -31,20 +31,13 @@ const createIntro = () =>
         duration: INTRO.duration,
         ease: INTRO.ease,
       },
-      INTRO.next,
+      INTRO.next
     )
-    .fromTo(
-      CARD,
-      slideFrom(INTRO.offset),
-      slideTo({ stagger: INTRO.stagger }),
-      INTRO.next,
-    );
+    .fromTo(CARD, slideFrom(INTRO.offset), slideTo({ stagger: INTRO.stagger }), INTRO.next);
 
 const MULTIBENEFITS: SectionAnimation = { screenId: 'benefits', createIntro };
 
-const useMultibenefitsAnimation = (
-  scopeRef: RefObject<HTMLElement | null>,
-  isReady: boolean,
-) => useSectionAnimation(scopeRef, isReady, MULTIBENEFITS);
+const useMultibenefitsAnimation = (scopeRef: RefObject<HTMLElement | null>, isReady: boolean) =>
+  useSectionAnimation(scopeRef, isReady, MULTIBENEFITS);
 
 export { useMultibenefitsAnimation };
