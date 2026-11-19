@@ -23,9 +23,7 @@ const createIntro = () =>
 
 const MULTIPLY: SectionAnimation = { screenId: 'join', createIntro };
 
-const useMultiplyAnimation = (
-  scopeRef: RefObject<HTMLElement | null>,
-  isReady: boolean,
-) => useSectionAnimation(scopeRef, isReady, MULTIPLY);
+const useMultiplyAnimation = (scopeRef: RefObject<HTMLElement | null>, isReady: boolean) =>
+  useSectionAnimation(scopeRef, isReady, MULTIPLY);
 
 export { useMultiplyAnimation };

@@ -90,7 +90,7 @@ const useProgressLine = () => {
           });
       });
     },
-    [render],
+    [render]
   );
 
   return { rootRef, barRef, fillRef, valueRef, startWaiting, pause, finish };

@@ -38,21 +38,11 @@ const useSwitchingWord = (words: string[], isReady: boolean) => {
           };
 
           timeline
-            .fromTo(
-              item,
-              { yPercent: 0 },
-              { ...options, yPercent: 100 },
-              position,
-            )
-            .fromTo(
-              next,
-              { yPercent: -100 },
-              { ...options, yPercent: 0 },
-              position,
-            );
+            .fromTo(item, { yPercent: 0 }, { ...options, yPercent: 100 }, position)
+            .fromTo(next, { yPercent: -100 }, { ...options, yPercent: 0 }, position);
         });
       },
-      container,
+      container
     );
 
     return () => mm.revert();

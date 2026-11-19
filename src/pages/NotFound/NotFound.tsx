@@ -37,10 +37,7 @@ function NotFound() {
           </div>
 
           <Link href="/" className={cls.button}>
-            <Trans
-              i18nKey="notFound.back"
-              components={{ oops: <span className={cls.oops} /> }}
-            />
+            <Trans i18nKey="notFound.back" components={{ oops: <span className={cls.oops} /> }} />
           </Link>
         </main>
       </div>

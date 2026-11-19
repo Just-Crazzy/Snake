@@ -5,14 +5,7 @@ import gsap from 'gsap';
 
 import { INTRO } from '@/shared/config';
 
-import {
-  fadeFrom,
-  fadeTo,
-  finishOnLeave,
-  INTRO_CONDITIONS,
-  slideFrom,
-  slideTo,
-} from './intro';
+import { fadeFrom, fadeTo, finishOnLeave, INTRO_CONDITIONS, slideFrom, slideTo } from './intro';
 
 import type { Lang } from '@/shared/config';
 import type { RefObject } from 'react';
@@ -57,16 +50,9 @@ const createIntro = () =>
   gsap
     .timeline()
     .fromTo(FADE_TARGETS, fadeFrom(), fadeTo({ duration: HERO_DURATION }))
-    .fromTo(
-      SLIDE_TARGETS,
-      slideFrom(-INTRO.offset),
-      slideTo({ duration: HERO_DURATION, stagger: HERO_STAGGER }),
-    );
+    .fromTo(SLIDE_TARGETS, slideFrom(-INTRO.offset), slideTo({ duration: HERO_DURATION, stagger: HERO_STAGGER }));
 
-const useHeroAnimation = (
-  scopeRef: RefObject<HTMLElement | null>,
-  isReady: boolean,
-) => {
+const useHeroAnimation = (scopeRef: RefObject<HTMLElement | null>, isReady: boolean) => {
   const { lang } = useParams<{ lang: Lang }>();
   const [isIntroDone, setIsIntroDone] = useState(false);
   const introPlayedRef = useRef(false);
@@ -102,7 +88,7 @@ const useHeroAnimation = (
 
         finishOnLeave(HERO, createIntro(), markIntroDone);
       },
-      scope,
+      scope
     );
 
     return () => mm.revert();

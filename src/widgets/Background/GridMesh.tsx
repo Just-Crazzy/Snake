@@ -10,13 +10,8 @@ const GridMesh = () => {
   useGridMeshAnimation(maskRef);
 
   return (
-    <div
-      className={`${cls.absolute} ${cls['inset-0']} ${cls['overflow-hidden']}`}
-    >
-      <div
-        ref={maskRef}
-        className={`${cls.absolute} ${cls['inset-0']} ${cls['grid-window']}`}
-      >
+    <div className={`${cls.absolute} ${cls['inset-0']} ${cls['overflow-hidden']}`}>
+      <div ref={maskRef} className={`${cls.absolute} ${cls['inset-0']} ${cls['grid-window']}`}>
         <svg
           className={`${cls.absolute} ${cls['inset-0']} ${cls['w-full']} ${cls['h-full']} ${cls['grid-canvas']}`}
           viewBox="0 0 1463 1313"
