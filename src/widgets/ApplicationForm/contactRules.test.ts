@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { validateContact } from './contactRules';
+import { getContactPlaceholder, validateContact } from './contactRules';
 
 type Case = { value: string; reason: string };
 
@@ -82,5 +82,15 @@ describe('validateContact', () => {
     it.each(invalid)('rejects $value ($reason)', ({ value }) => {
       expect(validateContact(value, 'email')).toBe('form.contact.errors.email');
     });
+  });
+});
+
+describe('getContactPlaceholder', () => {
+  it('returns nothing while no method is selected', () => {
+    expect(getContactPlaceholder(undefined)).toBeUndefined();
+  });
+
+  it.each(['telegram', 'whatsapp', 'email'] as const)('returns a method-specific hint for %s', (method) => {
+    expect(getContactPlaceholder(method)).toBeTruthy();
   });
 });
